@@ -8,6 +8,7 @@ public class Player {
   private final String playerName;
   private final int ID;
   private int health;
+  private int speed;
   private Coordinate playerPosition;
   ArrayList<Entity> entities = new ArrayList<Entity>();
 
