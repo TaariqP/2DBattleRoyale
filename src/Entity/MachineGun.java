@@ -3,6 +3,7 @@ package Entity;
 import Map.Coordinate;
 import States.Camera;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +26,13 @@ public class MachineGun extends Weapon {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public Rectangle getBounds() {
+    return new Rectangle(position.getX(), position.getY(), image
+        .getWidth(),
+        image.getHeight());
   }
 
   public void draw(Graphics2D g) {

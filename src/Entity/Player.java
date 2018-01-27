@@ -27,10 +27,12 @@ public class Player {
   private Camera camera;
   private int MAX_BAG_SIZE = 10;
   private Weapon weapon;
+  private double rotation;
+  private boolean isPlayable;
 
   public Player(String PLAYER_NAME, int ID, Coordinate playerPosition,
       Coordinate mousePosition, Camera camera, int screenWidth, int
-      screenHeight) {
+      screenHeight, boolean isPlayable) {
     this.PLAYER_NAME = PLAYER_NAME;
     this.ID = ID;
     this.playerPosition = playerPosition;
@@ -50,6 +52,8 @@ public class Player {
     this.camera = camera;
     inventory = new ArrayList<>();
     weapon = null;
+    this.rotation = 0;
+    this.isPlayable = isPlayable;
   }
 
 
@@ -66,14 +70,10 @@ public class Player {
     }
     double onScreenX = playerPosition.getX() - camera.getX() + 640;
     double onScreenY = playerPosition.getY() - camera.getY() + 480;
-
     double drawX = onScreenX - currentState.getWidth() / 2;
     double drawY = onScreenY - currentState.getHeight() / 2;
-    double angle = Math.atan2(mousePosition.getY() -
-        onScreenY, mousePosition.getX() -
-        onScreenX);
     AffineTransform at = new AffineTransform();
-    at.rotate(angle, onScreenX, onScreenY);
+    at.rotate(rotation, onScreenX, onScreenY);
     at.translate(drawX, drawY);
     graphics.drawImage(currentState, at, null);
     graphics.drawString(PLAYER_NAME , (int)drawX - currentState.getWidth() / 5,
@@ -103,6 +103,19 @@ public class Player {
     return playerPosition;
   }
 
+  public void update() {
+    if (isPlayable) {
+      double onScreenX = playerPosition.getX() - camera.getX() + 640;
+      double onScreenY = playerPosition.getY() - camera.getY() + 480;
+
+      double drawX = onScreenX - currentState.getWidth() / 2;
+      double drawY = onScreenY - currentState.getHeight() / 2;
+      rotation = Math.atan2(mousePosition.getY() -
+          onScreenY, mousePosition.getX() -
+          onScreenX);
+    }
+  }
+
   public int getHealth() {
     return health;
   }
@@ -119,7 +132,7 @@ public class Player {
   public boolean pickUp(Entity e) {
     if (e.type == EntityType.WEAPON && equippedWeapon()) {
       return false;
-    } else if (inventory.size() >= 10) {
+    } else if (inventory.size() >= MAX_BAG_SIZE) {
       return false;
     }
     else {
