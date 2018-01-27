@@ -15,6 +15,11 @@ public class Player {
 
   private final String PLAYER_NAME;
   private final PlayerType PLAYER_TYPE;
+
+  public int getID() {
+    return ID;
+  }
+
   private final int ID;
   private int health;
   private Coordinate playerPosition;
@@ -58,8 +63,9 @@ public class Player {
 
 
   public Rectangle getBounds() {
-    return new Rectangle(playerPosition.getX(), playerPosition.getY(), currentState
-        .getWidth(), currentState.getHeight());
+    return new Rectangle(playerPosition.getX(), playerPosition.getY(),
+        currentState
+            .getWidth(), currentState.getHeight());
   }
 
   public void draw(Graphics2D graphics) {
@@ -76,9 +82,9 @@ public class Player {
     at.rotate(rotation, onScreenX, onScreenY);
     at.translate(drawX, drawY);
     graphics.drawImage(currentState, at, null);
-    graphics.drawString(PLAYER_NAME , (int)drawX - currentState.getWidth() / 5,
+    graphics.drawString(PLAYER_NAME, (int) drawX - currentState.getWidth() / 5,
         (int)
-        drawY);
+            drawY);
   }
 
   private String location() {
@@ -134,8 +140,7 @@ public class Player {
       return false;
     } else if (inventory.size() >= MAX_BAG_SIZE) {
       return false;
-    }
-    else {
+    } else {
       if (e.type == EntityType.WEAPON) {
         weapon = (Weapon) e;
         return true;
@@ -145,5 +150,5 @@ public class Player {
       }
     }
   }
-  }
+}
 

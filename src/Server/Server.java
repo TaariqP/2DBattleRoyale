@@ -4,6 +4,8 @@ import Entity.Player;
 import Map.Coordinate;
 import Server.Packet.Connects;
 import Server.Packet.PacketMove;
+import Server.Packet.PacketOtherPlayer;
+import Server.Packet.PacketYourPlayer;
 import States.Game;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -21,7 +23,8 @@ public class Server extends Thread{
   private Game game;
   private List<Connects> connects;
   private int currentPlayerId = 0;
-  private Map<InetAddress,Player> players;
+  private Map<Player, InetAddress> players;
+  private Map<String,Player> playersIdMap;
 
 
   public static void main(String[] args) {
@@ -60,19 +63,39 @@ public class Server extends Thread{
     String datas = new String(data);
     switch (datas.substring(0,2)){
       case  "01" :
+        int id = currentPlayerId;
+        currentPlayerId++;
         System.out.println("A player has joined");
         connects.add(new Connects(address, port));
-        players.put(address, new Player(datas.substring(2), currentPlayerId++,
-            new Coordinate(3000,3000), null, null,0, 0, false));
+        players.put(new Player(datas.substring(2), id,
+            new Coordinate(64*64, 64*64)
+            , null, null,0, 0, false), address);
+        System.out.println("Sending a player back");
+        PacketYourPlayer p = new PacketYourPlayer("Dave", id);
+        sendData(p.getData(), address, port);
+        System.out.println("Current id " + currentPlayerId);
+        for(int oldID = 0; oldID < currentPlayerId - 1; oldID++){
+          Player pl = playersIdMap.get(Integer.toString(oldID));
+          Connects connect = getConnectFromIp(players.get(pl));
+          PacketOtherPlayer other = new PacketOtherPlayer(pl.getName(),
+              pl.getID(), pl.getPlayerPosition().getX(), pl.getPlayerPosition().getY());
+        }
+        for(Connects c : connects){
+          if(c.getIp() != address){
+            PacketOtherPlayer other = new PacketOtherPlayer("Dave", id, 64*64, 64*64);
+            sendData(other.getData(), c.getIp(), c.getPort());
+          }
+        }
         break;
       case "02":
-        System.out.print("Player moved " + players.get(address).getName());
         String[] parts = datas.split(",");
+        System.out.print("Player moved " + playersIdMap.get(parts[1]).getName());
         PacketMove move = new PacketMove(Integer.valueOf(parts[2]), Integer.valueOf(parts[3]), parts[1]);
         for(Connects cs: connects){
           sendData(move.getData(), cs.getIp(), cs.getPort());
         }
     }
+
   }
 
   private void sendData(byte[] data ,InetAddress ip, int port){
@@ -82,5 +105,14 @@ public class Server extends Thread{
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  private Connects getConnectFromIp(InetAddress ip){
+    for(Connects c : connects){
+      if(c.getIp().toString().equals(ip.toString())){
+        return c;
+      }
+    }
+    return null;
   }
 }
