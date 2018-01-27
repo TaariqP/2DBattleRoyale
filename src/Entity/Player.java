@@ -16,33 +16,46 @@ public class Player {
   private final PlayerType PLAYER_TYPE;
   private final int ID;
   private int health;
-  private int speed;
+  //private int speed;
   private Coordinate playerPosition;
+  private Coordinate mousePosition;
   private PlayerState state;
   ArrayList<Entity> inventory = new ArrayList<>();
+  BufferedImage currentState;
 
-  public Player(String PLAYER_NAME, int ID, PlayerType PLAYER_TYPE, int health,
-      int speed, Coordinate playerPosition) {
+  public Player(String PLAYER_NAME, int ID, Coordinate playerPosition,
+      Coordinate mousePosition) {
     this.PLAYER_NAME = PLAYER_NAME;
     this.ID = ID;
-    this.PLAYER_TYPE = PLAYER_TYPE;
-
+    this.playerPosition = playerPosition;
+    this.health = 100;
+    this.mousePosition = mousePosition;
+    this.PLAYER_TYPE = PlayerType.randomType();
+    this.state = PlayerState.STAND;
+    System.out.println(location());
+    File location = new File(location());
+    currentState = null;
+    try {
+      currentState = ImageIO.read(location);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 
   public void draw(Graphics2D graphics) {
-    BufferedImage image;
     try {
-      image = ImageIO.read(new File(location()));
-      graphics.drawImage(image, playerPosition.getX(),
-          playerPosition.getY(), null);
+      currentState = ImageIO.read(new File(location()));
     } catch (IOException e) {
+      e.printStackTrace();
     }
-
+    graphics.drawImage(currentState, playerPosition.getX(),
+        playerPosition.getY(), null);
   }
 
   private String location() {
-    String location = "PNG/" + PLAYER_TYPE.get() + "/" + state.get() + ".png";
+    String location = "PNG/" + PLAYER_TYPE.getLocation() + "/" + PLAYER_TYPE
+        .getLowerLocation() + "_" + state.get() + ".png";
     return location;
   }
 

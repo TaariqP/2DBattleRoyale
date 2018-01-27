@@ -4,13 +4,12 @@ import Entity.Player;
 import Map.Coordinate;
 import Map.Map;
 import java.awt.Graphics2D;
-import java.awt.List;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class Game extends State {
 
-  private Map.Coordinate mousePos = new Coordinate(0,0);
+  private Coordinate mousePos = new Coordinate(0,0);
   private Map map;
   private Camera camera;
   private Player player;
@@ -19,7 +18,8 @@ public class Game extends State {
     super("Game", width, height, manager);
     camera = new Camera(64*64, 64*64);
     map = new Map("Maps/map.txt", camera);
-    player = new Player(,,,,,mousePos);
+    player = new Player("Player 1", 1, new Coordinate(width / 2, height /
+        2), mousePos);
   }
 
   @Override
