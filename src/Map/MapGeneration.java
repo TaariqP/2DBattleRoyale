@@ -50,8 +50,8 @@ public class MapGeneration {
     out.print(MAP_WIDTH + " " +
         MAP_HEIGHT);
     out.println();
-    for (int y = 0; y < mapWithOtherElements.getHeight(); y++) {
-      for (int x = 0; x < mapWithOtherElements.getWidth(); x++) {
+    for (int y = 0; y < mapWithOtherElements.getTileHeight(); y++) {
+      for (int x = 0; x < mapWithOtherElements.getTileWidth(); x++) {
         out.print(mapWithOtherElements.getTileAtPosition(y, x).getTileType()
             .getRepresentation());
       }
@@ -69,11 +69,11 @@ public class MapGeneration {
     final int LAKE_RATIO = 10;
     final int MAX_LAKE_SIZE = 20;
     final int MIN_LAKE_SIZE = 5;
-    int bound = map.getHeight() * map.getWidth() / (MAX_LAKE_SIZE * LAKE_RATIO);
+    int bound = map.getTileHeight() * map.getTileWidth() / (MAX_LAKE_SIZE * LAKE_RATIO);
     int numberOfLakesOnMap = generator.nextInt(bound);
     for (int i = 0; i < numberOfLakesOnMap; i++) {
-      int x = generator.nextInt(map.getWidth() - 1);
-      int y = generator.nextInt(map.getHeight() - 1);
+      int x = generator.nextInt(map.getTileWidth() - 1);
+      int y = generator.nextInt(map.getTileHeight() - 1);
       if (map.getTileAtPosition(x, y).getTileType() == TileType.GRASS) {
         int maxLength = generator.nextInt(MAX_LAKE_SIZE - MIN_LAKE_SIZE) +
             MIN_LAKE_SIZE;
@@ -83,11 +83,11 @@ public class MapGeneration {
     final int BUSH_RATIO = 10;
     final int MAX_BUSH_SIZE = 20;
     final int MIN_BUSH_SIZE = 5;
-    int numberOfBushesOnMap = generator.nextInt((map.getHeight() *
-        map.getWidth() / (MAX_BUSH_SIZE * BUSH_RATIO)));
+    int numberOfBushesOnMap = generator.nextInt((map.getTileHeight() *
+        map.getTileWidth() / (MAX_BUSH_SIZE * BUSH_RATIO)));
     for (int i = 0; i <numberOfBushesOnMap; i++) {
-      int x = generator.nextInt(map.getWidth() - 1);
-      int y = generator.nextInt(map.getHeight() - 1);
+      int x = generator.nextInt(map.getTileWidth() - 1);
+      int y = generator.nextInt(map.getTileHeight() - 1);
       if (map.getTileAtPosition(x, y).getTileType() == TileType.GRASS){
         int maxLength = generator.nextInt(MAX_BUSH_SIZE - MIN_BUSH_SIZE) +
             MIN_BUSH_SIZE;
@@ -111,7 +111,7 @@ public class MapGeneration {
             break;
           }
         case DOWN:
-          if (y < map.getHeight() - 1) {
+          if (y < map.getTileHeight() - 1) {
             createPath(x, y + 1, tileType, maxLength - 1);
             break;
           }
@@ -121,7 +121,7 @@ public class MapGeneration {
             break;
           }
         case RIGHT:
-          if (x < map.getWidth() - 1) {
+          if (x < map.getTileWidth() - 1) {
             createPath(x + 1, y, tileType, maxLength - 1);
             break;
           }
