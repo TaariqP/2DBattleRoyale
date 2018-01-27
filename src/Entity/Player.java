@@ -59,9 +59,7 @@ public class Player {
     }
     double onScreenX = playerPosition.getX() - camera.getX() + 640;
     double onScreenY = playerPosition.getY() - camera.getY() + 480;
-    System.out.println(onScreenX);
-    System.out.println(onScreenY);
-    
+
     double drawX = onScreenX - currentState.getWidth() / 2;
     double drawY = onScreenY - currentState.getHeight() / 2;
     double angle = Math.atan2(mousePosition.getY() -

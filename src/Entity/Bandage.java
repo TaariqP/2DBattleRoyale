@@ -14,7 +14,7 @@ public class Bandage extends Entity{
 
   public Bandage(Coordinate position, Camera camera){
     super(position, camera);
-    File location = new File("PNG/bandage.png");
+    File location = new File("PNG/Bandage_RS.png");
     image = null;
     try {
       image = ImageIO.read(location);
@@ -25,9 +25,9 @@ public class Bandage extends Entity{
 
   @Override
   public void draw(Graphics2D g) {
-    if (position.getX() >= camera.getX() - 800 && position.getX() <= camera
-        .getX() + 800 && position.getY() >= camera.getY() - 600 && position
-        .getY() <= camera.getY() + 600)
+    if (position.getX() >= camera.getX() - 2000 && position.getX() <= camera
+        .getX() + 2000 && position.getY() >= camera.getY() - 2000 && position
+        .getY() <= camera.getY() + 2000)
     g.drawImage(image, position.getX() - camera.getX(), position.getY() -
             camera.getY(),
         null);
