@@ -20,6 +20,14 @@ public class Map {
     convertStringToMap();
   }
 
+  public int getWidth() {
+    return map.length * 64;
+  }
+
+  public int getHeight() {
+    return map[0].length * 64;
+  }
+
 
   public void convertStringToMap() {
 

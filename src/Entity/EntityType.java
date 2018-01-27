@@ -1,7 +1,7 @@
 package Entity;
 
 public enum EntityType {
-  NONE, PLAYER;
+  ITEM, NONE, PLAYER;
 
   public static class Entity {
 
