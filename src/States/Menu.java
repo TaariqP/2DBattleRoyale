@@ -49,7 +49,7 @@ public class Menu extends State {
     Clickable startClick = new Clickable() {
       @Override
       public void click() {
-        System.out.println("Start!");
+        getManager().SwitchState(StateManager.Game_ID);
       }
     };
     File file = new File("PNG/buttons/button_start.png");

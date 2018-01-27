@@ -43,4 +43,8 @@ public abstract class State {
   public abstract void keyPressed(KeyEvent e);
 
   public abstract void clickAt(MouseEvent mouseEvent);
+
+  public StateManager getManager(){
+    return manager;
+  }
 }

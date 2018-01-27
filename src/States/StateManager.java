@@ -14,8 +14,8 @@ public class StateManager {
   private static int height;
   private String CurrentStateId;
   Map<String, State> states = new HashMap<>();
-  public final String Menu_ID = "Menu";
-  public final String Game_ID = "Game";
+  public static final String Menu_ID = "Menu";
+  public static final String Game_ID = "Game";
   public StateManager(int width, int height){
     this.width = width;
     this.height = height;
