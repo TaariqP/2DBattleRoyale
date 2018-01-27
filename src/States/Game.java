@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 
 public class Game extends State {
 
+  //private Map map;
+
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
   }
