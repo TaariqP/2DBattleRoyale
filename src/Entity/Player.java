@@ -1,5 +1,7 @@
 package Entity;
 
+import Map.Coordinate;
+import Map.Tile;
 import States.Camera;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -8,7 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import Map.Coordinate;
 import javax.imageio.ImageIO;
 
 public class Player {
@@ -54,8 +55,9 @@ public class Player {
 
 
   public Rectangle getBounds() {
-    return new Rectangle(playerPosition.getX(), playerPosition.getY(), currentState
-        .getWidth(), currentState.getHeight());
+    return new Rectangle(playerPosition.getX(), playerPosition.getY(),
+        currentState
+            .getWidth(), currentState.getHeight());
   }
 
   public void draw(Graphics2D graphics) {
@@ -76,9 +78,9 @@ public class Player {
     at.rotate(angle, onScreenX, onScreenY);
     at.translate(drawX, drawY);
     graphics.drawImage(currentState, at, null);
-    graphics.drawString(PLAYER_NAME , (int)drawX - currentState.getWidth() / 5,
+    graphics.drawString(PLAYER_NAME, (int) drawX - currentState.getWidth() / 5,
         (int)
-        drawY);
+            drawY);
   }
 
   private String location() {
@@ -121,8 +123,7 @@ public class Player {
       return false;
     } else if (inventory.size() >= 10) {
       return false;
-    }
-    else {
+    } else {
       if (e.type == EntityType.WEAPON) {
         weapon = (Weapon) e;
         return true;
@@ -132,5 +133,5 @@ public class Player {
       }
     }
   }
-  }
+}
 
