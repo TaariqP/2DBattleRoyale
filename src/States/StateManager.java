@@ -21,7 +21,7 @@ public class StateManager {
     this.height = height;
     CurrentStateId = Menu_ID;
     states.put(Menu_ID, new Menu(width, height, this));
-    states.put(Game_ID, null);
+    states.put(Game_ID, new Game(width, height, this));
   }
 
 

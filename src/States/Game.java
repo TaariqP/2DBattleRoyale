@@ -12,8 +12,8 @@ public class Game extends State {
 
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
-    map = new Map("Maps/max.txt");
-    camera = new Camera(width / 2, height / 2);
+    camera = new Camera(64*64, 64*64);
+    map = new Map("Maps/map.txt", camera);
   }
 
   @Override

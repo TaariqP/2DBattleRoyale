@@ -17,6 +17,7 @@ public class Map {
   public Map(String fileName, Camera camera) {
     this.fileName = fileName;
     this.camera = camera;
+    convertStringToMap();
   }
 
 
@@ -44,10 +45,6 @@ public class Map {
       map = new Tile[width][height];
 
       populateTilesFromFile(fileName);
-
-      while ((line = bufferedReader.readLine()) != null) {
-        System.out.println(line);
-      }
 
       // Always close files.
       bufferedReader.close();
@@ -108,8 +105,8 @@ public class Map {
     for (int i = camera.getX() / 64 - 11; i < camera.getX() / 64 + 11; i++) {
       for (int j = camera.getY() / 64 - 11; j < camera.getY() / 64 + 11; j++) {
         if (i >= 0 && j >= 0 && i < map.length && j < map[0].length) {
-          map[i][j].draw(g, i * 64 - topLeftX, j * 64 - topLeftY);
-        } else {
+            map[i][j].draw(g, i * 64 - topLeftX, j * 64 - topLeftY);
+          } else {
           File location = new File("PNG/Tiles/tile_86.png");
           BufferedImage image = null;
           try {
