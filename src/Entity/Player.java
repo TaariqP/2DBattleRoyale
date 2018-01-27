@@ -19,13 +19,14 @@ public class Player {
   private int speed;
   private Coordinate playerPosition;
   private PlayerState state;
-  ArrayList<Entity> entities = new ArrayList<>();
+  ArrayList<Entity> inventory = new ArrayList<>();
 
   public Player(String PLAYER_NAME, int ID, PlayerType PLAYER_TYPE, int health,
       int speed, Coordinate playerPosition) {
     this.PLAYER_NAME = PLAYER_NAME;
     this.ID = ID;
     this.PLAYER_TYPE = PLAYER_TYPE;
+
   }
 
 
