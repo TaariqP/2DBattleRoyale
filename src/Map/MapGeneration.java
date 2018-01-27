@@ -34,14 +34,14 @@ public class MapGeneration {
     }
     out.flush();
     out.close();
-    Map mapWithOtherElements = mapWithRandomElementsAdded(grassMapFile);
-    generateMapFile(mapWithOtherElements);
+    mapWithRandomElementsAdded(grassMapFile);
+    generateMapFile(map);
   }
 
   private void generateMapFile(Map mapWithOtherElements) {
 
     PrintWriter out = null;
-    String grassMapFile = "Maps/generatormap.txt";
+    String grassMapFile = "Maps/output.txt";
     try {
       out = new PrintWriter(grassMapFile);
     } catch (FileNotFoundException e) {
@@ -61,8 +61,9 @@ public class MapGeneration {
     out.close();
   }
 
-  private Map mapWithRandomElementsAdded(String grassMapFile) {
+  private void mapWithRandomElementsAdded(String grassMapFile) {
     map = new Map(grassMapFile);
+    map.convertStringToMap();
     Random generator = new Random();
     // lake ratio = 5 means a maximum of a fifth of the map can be taken up by
     // lakes
@@ -94,7 +95,6 @@ public class MapGeneration {
         createPath(x, y, TileType.WALL, maxLength);
       }
     }
-    return map;
   }
 
   private void createPath(int x, int y, TileType tileType, int maxLength) {

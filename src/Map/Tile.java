@@ -27,8 +27,8 @@ public class Tile {
   }
 
 
-  public Tile setTileType(TileType tileType) {
-    return new Tile(tileType);
+  public void setTileType(TileType tileType) {
+    this.tileType = tileType;
   }
 
   public void generateImage() {
