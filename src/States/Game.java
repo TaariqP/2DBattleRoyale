@@ -8,9 +8,11 @@ import Entity.Player;
 import Map.Coordinate;
 import Map.Map;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -20,9 +22,7 @@ public class Game extends State {
   private Map map;
   private Camera camera;
   private Player player;
-  List<Entity> bandages;
-  List<Entity> machinegun;
-  List<Entity> pistol;
+  List<Entity> items;
   private int width;
   private int height;
 
@@ -34,24 +34,22 @@ public class Game extends State {
         mousePos, camera, width, height);
     this.width = width;
     this.height = height;
-    makeBandages();
+    makeItems();
   }
 
-  private void makeBandages() {
-    bandages = new ArrayList<>();
-    machinegun = new ArrayList<>();
-    pistol = new ArrayList<>();
+  private void makeItems() {
+    items = new ArrayList<>();
     Random location = new Random();
     for (int i = 0; i < 1000; i++) {
-      bandages.add(new Bandage(new Coordinate(location.nextInt(map.getWidth()),
+      items.add(new Bandage(new Coordinate(location.nextInt(map.getWidth()),
           location
               .nextInt(map.getHeight())), camera));
     }
     for (int i = 0; i < 128; i++) {
-      machinegun.add(new MachineGun(
+      items.add(new MachineGun(
           new Coordinate(location.nextInt(map.getWidth()),
               location.nextInt(map.getHeight())), camera));
-      pistol.add(new Pistol(new Coordinate(location.nextInt(map.getWidth()),
+      items.add(new Pistol(new Coordinate(location.nextInt(map.getWidth()),
           location.nextInt(map.getHeight())), camera));
     }
   }
@@ -66,24 +64,39 @@ public class Game extends State {
     super.init();
   }
 
-  @Override
   public void keyPressed(KeyEvent e) {
-    if (e.getKeyCode() == KeyEvent.VK_UP) {
+    if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W){
       player.getPlayerPosition().setY(player.getPlayerPosition().getY() - 10);
       camera.setY(player.getPlayerPosition().getY());
     }
-    if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+    if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S){
       player.getPlayerPosition().setY(player.getPlayerPosition().getY() + 10);
       camera.setY(player.getPlayerPosition().getY());
     }
 
-    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+    if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A){
       player.getPlayerPosition().setX(player.getPlayerPosition().getX() - 10);
       camera.setX(player.getPlayerPosition().getX());
     }
-    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+    if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D){
       player.getPlayerPosition().setX(player.getPlayerPosition().getX() + 10);
       camera.setX(player.getPlayerPosition().getX());
+    }
+
+    if (e.getKeyCode() == KeyEvent.VK_F) {
+      attemptPickUp();
+    }
+  }
+
+  private void attemptPickUp() {
+    for (Iterator<Entity> it = items.iterator(); it.hasNext();) {
+      Entity e = it.next();
+      Rectangle b1 = player.getBounds();
+      Rectangle b2 = e.getBounds();
+      if (b1.intersects(b2)) {
+        if(player.pickUp(e));
+        it.remove();
+      }
     }
   }
 
@@ -102,14 +115,8 @@ public class Game extends State {
   public void draw(Graphics2D g) {
     map.draw(g);
     player.draw(g);
-    for (Entity b : bandages) {
+    for (Entity b : items) {
       b.draw(g);
-    }
-    for (Entity m : machinegun){
-      m.draw(g);
-    }
-    for (Entity p : pistol){
-      p.draw(g);
     }
   }
 }

@@ -9,7 +9,7 @@ public class Weapon extends Entity {
   private final int attackDamage;
 
   public Weapon(Coordinate position, String weaponName, int attackDamage, Camera camera){
-    super(position, camera);
+    super(position, camera, EntityType.WEAPON);
     this.weaponName = weaponName;
     this.attackDamage = attackDamage;
   }

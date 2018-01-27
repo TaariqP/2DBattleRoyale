@@ -1,15 +1,14 @@
 package Entity;
 
-import Entity.EntityType.Entity;
 import States.Camera;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import Map.Coordinate;
-import java.awt.Image.*;
 import javax.imageio.ImageIO;
 
 public class Player {
@@ -18,15 +17,16 @@ public class Player {
   private final PlayerType PLAYER_TYPE;
   private final int ID;
   private int health;
-  //private int speed;
   private Coordinate playerPosition;
   private Coordinate mousePosition;
   private PlayerState state;
-  ArrayList<Entity> inventory = new ArrayList<>();
+  ArrayList<Entity> inventory;
   BufferedImage currentState;
   private int screenWidth;
   private int screenHeight;
   private Camera camera;
+  private int MAX_BAG_SIZE = 10;
+  private Weapon weapon;
 
   public Player(String PLAYER_NAME, int ID, Coordinate playerPosition,
       Coordinate mousePosition, Camera camera, int screenWidth, int
@@ -48,8 +48,15 @@ public class Player {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.camera = camera;
+    inventory = new ArrayList<>();
+    weapon = null;
   }
 
+
+  public Rectangle getBounds() {
+    return new Rectangle(playerPosition.getX(), playerPosition.getY(), currentState
+        .getWidth(), currentState.getHeight());
+  }
 
   public void draw(Graphics2D graphics) {
     try {
@@ -69,6 +76,9 @@ public class Player {
     at.rotate(angle, onScreenX, onScreenY);
     at.translate(drawX, drawY);
     graphics.drawImage(currentState, at, null);
+    graphics.drawString(PLAYER_NAME , (int)drawX - currentState.getWidth() / 5,
+        (int)
+        drawY);
   }
 
   private String location() {
@@ -96,4 +106,25 @@ public class Player {
   public int getHealth() {
     return health;
   }
-}
+
+  public boolean equippedWeapon() {
+    return weapon != null;
+  }
+
+  public boolean pickUp(Entity e) {
+    if (e.type == EntityType.WEAPON && equippedWeapon()) {
+      return false;
+    } else if (inventory.size() >= 10) {
+      return false;
+    }
+    else {
+      if (e.type == EntityType.WEAPON) {
+        weapon = (Weapon) e;
+        return true;
+      } else {
+        inventory.add(e);
+        return true;
+      }
+    }
+  }
+  }
