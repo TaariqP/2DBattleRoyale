@@ -61,7 +61,7 @@ public class Menu extends State {
     }
 
     buttons.add(new Button("Start", image, super.getWidth() / 2 - image
-        .getWidth() / 2, super.getHeight() / 7, startClick));
+        .getWidth() / 2, super.getHeight() / 2 + 30, startClick));
   }
 
   private void initExit() {
@@ -79,7 +79,7 @@ public class Menu extends State {
       e.printStackTrace();
     }
     buttons.add(new Button("Exit", image, super.getWidth() / 2 - image
-        .getWidth() / 2, (super.getHeight() / 7) * 3, exitClick));
+        .getWidth() / 2, (super.getHeight() / 2) + 160, exitClick));
   }
 
   private void initHelp() {
@@ -97,7 +97,7 @@ public class Menu extends State {
       e.printStackTrace();
     }
     buttons.add(new Button("Help", image, super.getWidth() / 2 - image
-        .getWidth() / 2, (super.getHeight() / 7) * 5, helpClick));
+        .getWidth() / 2, (super.getHeight() / 2) + 290, helpClick));
   }
 
   @Override
