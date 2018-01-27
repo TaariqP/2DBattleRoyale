@@ -35,8 +35,9 @@ public class Menu extends State {
 
   @Override
   public void draw(Graphics2D g) {
-   int x = super.getWidth() / 2;
-   int y = super.getHeight() / 7;
+   for (Button b : buttons) {
+     b.draw(g);
+   }
   }
 
   @Override
