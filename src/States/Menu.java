@@ -10,20 +10,20 @@ public class Menu extends State {
 
   List<String> options;
 
- public Menu() {
-   super("Menu");
+ public Menu(int width, int height) {
+   super("Menu", width, height);
    options = Arrays.asList("Start", "Exit", "Help");
  }
 
   @Override
   public void init() {
-   
+
   }
 
   @Override
   public void draw(Graphics2D g) {
-   int x = 100;
-   int y = 50;
+   int x = super.getWidth() / 2;
+   int y = super.getHeight() / ;
   for (String s : options) {
     g.drawString(s, x, y);
     y+= 50;
