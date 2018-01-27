@@ -135,7 +135,8 @@ public class MapGeneration {
 
   public void randomlyDistributeEntity(Entity entity, int
       numberOfItems) {
-    // TODO IMPLEMENT
+
+    //TODO IMPLEMENT
   }
 
   public static void main(String[] args) {
