@@ -47,6 +47,7 @@ public class GameView extends Container implements Runnable, KeyListener,
     thread = new Thread(this);
     addMouseListener(this);
     addKeyListener(this);
+    addMouseMotionListener(this);
     manager = new StateManager(Width, Height);
     thread.start();
 

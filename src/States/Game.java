@@ -58,6 +58,7 @@ public class Game extends State {
   public void mouseMoved(MouseEvent mouseEvent) {
     mousePos.setX(mouseEvent.getX());
     mousePos.setY(mouseEvent.getY());
+    System.out.println("mousePos " + mousePos.getX() + " " + mousePos.getY());
   }
 
   @Override
