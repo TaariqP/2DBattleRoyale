@@ -10,33 +10,34 @@ import javax.swing.text.html.parser.Entity;
 
 public class Tile {
   private TileType tileType;
-  private int x;
-  private int y;
+  private BufferedImage image;
 
   Tile(TileType tileType) {
     this.tileType = tileType;
+    generateImage();
   }
 
-  public final TileType getTileType() {
+  public TileType getTileType() {
     return tileType;
   }
 
-  public final Tile setEntityOnTile(Entity newEntity) {
-    return new Tile(x, y, tileType, newEntity);
-  }
-
-  public void draw(Graphics2D g, int topLeftX, int topLeftY) {
+  private void generateImage() {
     if (tileType == TileType.GRASS) {
       Random number = new Random();
       int choice = number.nextInt(4) + 1;
-      File location = new File("PNG/Tiles/tile_0" + Integer.toString(choice));
-      BufferedImage image = null;
+      String input = "PNG/Tiles/tile_0" + Integer.toString(choice) + ".png";
+      File location = new File(input);
+
+      image = null;
       try {
         image = ImageIO.read(location);
       } catch (IOException e) {
         e.printStackTrace();
       }
-      g.drawImage(image, x - topLeftX, y - topLeftY, null);
     }
+  }
+
+  public void draw(Graphics2D g, int x, int y) {
+      g.drawImage(image, x, y, null);
   }
 }
