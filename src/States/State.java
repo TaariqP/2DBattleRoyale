@@ -10,11 +10,14 @@ public abstract class State {
   private String ID;
   private int width;
   private int height;
+  private StateManager manager;
 
-  public State(String ID, int width, int height) {
+  public State(String ID, int width, int height, StateManager manager) {
     this.ID = ID;
     this.width = width;
     this.height = height;
+
+    this.manager = manager;
   }
 
   public void draw(Graphics2D g) {

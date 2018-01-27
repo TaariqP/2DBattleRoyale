@@ -1,11 +1,13 @@
 package States;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class GameOver extends State {
 
-  public GameOver(int width, int height) {
-    super("GameOver", width, height);
+  public GameOver(int width, int height, StateManager manager) {
+    super("GameOver", width, height, manager);
   }
 
   @Override
@@ -16,6 +18,16 @@ public class GameOver extends State {
   @Override
   public void init() {
     super.init();
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+
+  }
+
+  @Override
+  public void clickAt(MouseEvent mouseEvent) {
+
   }
 
   @Override

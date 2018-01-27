@@ -16,9 +16,8 @@ import javax.swing.JOptionPane;
 public class GameView extends Container implements Runnable, KeyListener,
     MouseListener{
 
-  private int Width = 320;
-  private int Height = 240;
-  private int Scale = 4;
+  private int Width = 1280;
+  private int Height = 960;
 
   private boolean running;
   private Thread thread;
@@ -35,7 +34,7 @@ public class GameView extends Container implements Runnable, KeyListener,
 
   public GameView() {
     super();
-    setPreferredSize(new Dimension(Width * Scale, Height * Scale));
+    setPreferredSize(new Dimension(Width, Height));
     setFocusable(true);
     requestFocus();
     init();
@@ -51,11 +50,6 @@ public class GameView extends Container implements Runnable, KeyListener,
 
   }
 
-  public void draw() {
-  g.setColor(Color.WHITE);
-  g.fillRect(0,0,Width, Height);
-  manager.draw(g);
-  }
 
   public void run() {
     int fps = 0;
@@ -80,8 +74,7 @@ public class GameView extends Container implements Runnable, KeyListener,
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      draw();
-      drawToScreen();
+      repaint();
       fps++;
       if (System.currentTimeMillis() - fpsTimer >= 1000) {
         total += fps;
@@ -94,10 +87,12 @@ public class GameView extends Container implements Runnable, KeyListener,
     }
   }
 
-  private void drawToScreen() {
-    Graphics g2 = getGraphics();
-    g2.drawImage(image, 0, 0, Width * Scale, Height * Scale, null);
-    g2.dispose();
+
+  public void paint(Graphics g2){
+    g.setColor(Color.WHITE);
+    g.fillRect(0, 0, Width, Height);
+    manager.draw((Graphics2D) g);
+    g2.drawImage(image, 0, 0, Width, Height, null);
   }
 
   private void update() {

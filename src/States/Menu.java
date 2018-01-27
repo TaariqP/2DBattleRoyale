@@ -18,8 +18,8 @@ public class Menu extends State {
   List<String> options;
   List<Button> buttons;
 
- public Menu(int width, int height) {
-   super("Menu", width, height);
+ public Menu(int width, int height, StateManager stateManager) {
+   super("Menu", width, height, stateManager);
    options = Arrays.asList("Start", "Exit", "Help");
    buttons = new ArrayList<>();
    initStart();
@@ -38,6 +38,7 @@ public class Menu extends State {
    for (Button b : buttons) {
      b.draw(g);
    }
+
   }
 
   @Override
@@ -52,13 +53,14 @@ public class Menu extends State {
 
       }
     };
-    File file = new File("PNG/buttons/button_start");
+    File file = new File("PNG/buttons/button_start.png");
     BufferedImage image = null;
     try {
       image = ImageIO.read(file);
     } catch (IOException e) {
       e.printStackTrace();
     }
+
     buttons.add(new Button("Start", image, super.getWidth() / 2 - image
         .getWidth() / 2, super.getHeight() / 7, startClick));
   }
@@ -70,7 +72,7 @@ public class Menu extends State {
 
       }
     };
-    File file = new File("PNG/buttons/button_exit");
+    File file = new File("PNG/buttons/button_exit.png");
     BufferedImage image = null;
     try {
       image = ImageIO.read(file);
@@ -88,7 +90,7 @@ public class Menu extends State {
 
       }
     };
-    File file = new File("PNG/buttons/button_help");
+    File file = new File("PNG/buttons/button_help.png");
     BufferedImage image = null;
     try {
       image = ImageIO.read(file);

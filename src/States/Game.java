@@ -1,11 +1,13 @@
 package States;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class Game extends State {
 
-  public Game(int width, int height) {
-    super("Game", width, height);
+  public Game(int width, int height, StateManager manager) {
+    super("Game", width, height, manager);
   }
 
   @Override
@@ -16,6 +18,16 @@ public class Game extends State {
   @Override
   public void init() {
     super.init();
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+
+  }
+
+  @Override
+  public void clickAt(MouseEvent mouseEvent) {
+
   }
 
   @Override
