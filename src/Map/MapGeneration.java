@@ -1,6 +1,6 @@
 package Map;
 
-import Entity.EntityType.Entity;
+import Entity.Entity;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Random;

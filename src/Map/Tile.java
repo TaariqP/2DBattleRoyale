@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.text.html.parser.Entity;
 
 public class Tile {
+
   private TileType tileType;
   private BufferedImage image;
 
@@ -21,11 +22,16 @@ public class Tile {
     return tileType;
   }
 
-  public final Tile setEntityOnTile(Entity newEntity) {
+  public void draw(Graphics2D g, int topLeftX, int topLeftY) {
+    g.drawImage(image, topLeftX, topLeftY, null);
+  }
+
+
+  public Tile setTileType(TileType tileType) {
     return new Tile(tileType);
   }
 
-  public void draw(Graphics2D g, int topLeftX, int topLeftY) {
+  public void generateImage() {
     if (tileType == TileType.GRASS) {
       Random number = new Random();
       int choice = number.nextInt(4) + 1;
@@ -38,12 +44,7 @@ public class Tile {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      g.drawImage(image, topLeftX, topLeftY, null);
     }
+
   }
-
-
-  public final Tile setTileType(TileType tileType) {
-    return new Tile(tileType);
-
 }
