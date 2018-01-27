@@ -1,6 +1,7 @@
 package States;
 
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class Button implements Clickable{
@@ -28,5 +29,12 @@ public class Button implements Clickable{
 
   public void draw(Graphics2D g) {
     g.drawImage(image, x, y, null);
+  }
+
+  public void clickAt(MouseEvent e) {
+    if (e.getX() >= x && e.getX() <= x + image.getWidth() && e.getY() >= y &&
+        e.getY() <= y + image.getHeight()) {
+      click();
+    }
   }
 }

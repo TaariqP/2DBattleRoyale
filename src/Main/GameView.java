@@ -28,7 +28,6 @@ public class GameView extends Container implements Runnable, KeyListener,
   private int total = 0;
   private int counter = 0;
   private int mean = 0;
-  private String question;
   private static StateManager manager;
 
 

@@ -49,7 +49,7 @@ public class Menu extends State {
     Clickable startClick = new Clickable() {
       @Override
       public void click() {
-
+        System.out.println("Start!");
       }
     };
     File file = new File("PNG/buttons/button_start.png");
@@ -106,7 +106,9 @@ public class Menu extends State {
   }
 
   public void clickAt(MouseEvent e){
-   
+   for (Button b : buttons) {
+     b.clickAt(e);
+   }
   }
 
 }
