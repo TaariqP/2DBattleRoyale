@@ -44,6 +44,8 @@ public class GameView extends Container implements Runnable, KeyListener,
     running = true;
     g = (Graphics2D) image.getGraphics();
     thread = new Thread(this);
+    addMouseListener(this);
+    addKeyListener(this);
     manager = new StateManager(Width, Height);
     thread.start();
 
