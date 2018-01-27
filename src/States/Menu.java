@@ -111,4 +111,10 @@ public class Menu extends State {
    }
   }
 
+  @Override
+  public void mouseMoved(MouseEvent mouseEvent) {
+
+  }
+
+
 }

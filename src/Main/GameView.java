@@ -10,11 +10,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
 
 public class GameView extends Container implements Runnable, KeyListener,
-    MouseListener{
+    MouseListener, MouseMotionListener{
 
   private int Width = 1280;
   private int Height = 960;
@@ -134,5 +135,15 @@ public class GameView extends Container implements Runnable, KeyListener,
   @Override
   public void mouseExited(MouseEvent mouseEvent) {
 
+  }
+
+  @Override
+  public void mouseDragged(MouseEvent mouseEvent) {
+
+  }
+
+  @Override
+  public void mouseMoved(MouseEvent mouseEvent) {
+    manager.mouseMoved(mouseEvent);
   }
 }

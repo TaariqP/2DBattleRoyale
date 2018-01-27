@@ -49,4 +49,8 @@ public class StateManager {
   public void clickAt(MouseEvent mouseEvent) {
     getCurrentState().clickAt(mouseEvent);
   }
+
+  public void mouseMoved(MouseEvent mouseEvent) {
+    getCurrentState().mouseMoved(mouseEvent);
+  }
 }
