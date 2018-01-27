@@ -1,5 +1,5 @@
 package Map;
 
 public enum TileType {
-  GRASS, WATER, WALL;
+  GRASS, WATER, WALL, ERROR;
 }
