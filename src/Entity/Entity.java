@@ -21,4 +21,8 @@ public class Entity {
   public void draw(Graphics2D g) {
 
   }
+
+  public void update(){
+
+  }
 }

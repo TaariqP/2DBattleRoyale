@@ -8,4 +8,9 @@ public abstract class Packet {
     this.type = type;
   }
 
+  public byte[] getData(){
+    System.out.println("You need to implement this");
+    return null;
+  }
+
 }

@@ -98,4 +98,8 @@ public class Player {
   public int getHealth() {
     return health;
   }
+
+  public String getName() {
+    return PLAYER_NAME;
+  }
 }

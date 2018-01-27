@@ -1,7 +1,9 @@
 package Server;
 
 import Entity.Player;
+import Map.Coordinate;
 import Server.Packet.Connects;
+import Server.Packet.PacketMove;
 import States.Game;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -60,7 +62,25 @@ public class Server extends Thread{
       case  "01" :
         System.out.println("A player has joined");
         connects.add(new Connects(address, port));
-        players.put(address, new Player());
+        players.put(address, new Player(datas.substring(2), currentPlayerId++,
+            new Coordinate(3000,3000), null, null,0, 0));
+        break;
+      case "02":
+        System.out.print("Player moved " + players.get(address).getName());
+        String[] parts = datas.split(",");
+        PacketMove move = new PacketMove(Integer.valueOf(parts[2]), Integer.valueOf(parts[3]), parts[1]);
+        for(Connects cs: connects){
+          sendData(move.getData(), cs.getIp(), cs.getPort());
+        }
+    }
+  }
+
+  private void sendData(byte[] data ,InetAddress ip, int port){
+    DatagramPacket packet = new DatagramPacket(data,data.length,ip,port);
+    try {
+      socket.send(packet);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }
