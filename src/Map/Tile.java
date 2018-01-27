@@ -10,22 +10,16 @@ import javax.swing.text.html.parser.Entity;
 
 public class Tile {
   private TileType tileType;
-  private int x;
-  private int y;
 
   Tile(TileType tileType) {
     this.tileType = tileType;
   }
 
-  public final TileType getTileType() {
+  public TileType getTileType() {
     return tileType;
   }
 
-  public final Tile setEntityOnTile(Entity newEntity) {
-    return new Tile(x, y, tileType, newEntity);
-  }
-
-  public void draw(Graphics2D g, int topLeftX, int topLeftY) {
+  public void draw(Graphics2D g, int x, int y) {
     if (tileType == TileType.GRASS) {
       Random number = new Random();
       int choice = number.nextInt(4) + 1;
@@ -36,7 +30,7 @@ public class Tile {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      g.drawImage(image, x - topLeftX, y - topLeftY, null);
+      g.drawImage(image, x, y, null);
     }
   }
 }

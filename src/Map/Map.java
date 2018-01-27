@@ -14,8 +14,9 @@ public class Map {
   private Camera camera;
   private final String fileName;
 
-  Map(String fileName) {
+  public Map(String fileName, Camera camera) {
     this.fileName = fileName;
+    this.camera = camera;
   }
 
 
@@ -78,7 +79,7 @@ public class Map {
         String row = bufferedReader.readLine();
         String[] column = row.split(" ");
         for (int y = 0; y < column.length; y++) {
-          convertFromStringToTile(column[y]);
+          map[x][y] = convertFromStringToTile(column[y]);
         }
       }
     } catch (FileNotFoundException ex) {
@@ -107,7 +108,7 @@ public class Map {
     for (int i = camera.getX() / 64 - 11; i < camera.getX() / 64 + 11; i++) {
       for (int j = camera.getY() / 64 - 11; j < camera.getY() / 64 + 11; j++) {
         if (i >= 0 && j >= 0 && i < map.length && j < map[0].length) {
-          map[i][j].draw(g, topLeftX, topLeftY);
+          map[i][j].draw(g, i * 64 - topLeftX, j * 64 - topLeftY);
         } else {
           File location = new File("PNG/Tiles/tile_86.png");
           BufferedImage image = null;
