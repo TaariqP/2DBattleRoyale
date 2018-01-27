@@ -1,25 +1,29 @@
-package entities;
+package Entity;
 
+import Entity.EntityType.Entity;
 import java.util.ArrayList;
+import Map.Coordinate;
 
 public class Player {
 
-  private final String playerType;
-  private final String playerName;
+  private final String PLAYER_NAME;
+  private final String PLAYER_TYPE;
   private final int ID;
   private int health;
   private int speed;
   private Coordinate playerPosition;
-  ArrayList<Entity> entities = new ArrayList<Entity>();
+  private Entity.PlayerState;
+  ArrayList<Entity> entities = new ArrayList<>();
 
-  public Player(String playerName, int ID, String playerType) {
-    this.playerName = playerName;
+  public Player(String PLAYER_NAME, int ID, String PLAYER_TYPE, int health,
+      int speed, Coordinate playerPosition) {
+    this.PLAYER_NAME = PLAYER_NAME;
     this.ID = ID;
-    this.playerType = playerType;
+    this.PLAYER_TYPE = PLAYER_TYPE;
   }
 
   public String getPlayerType() {
-    return playerType;
+    return PLAYER_TYPE;
   }
 
   public void setPlayerPosition(Coordinate playerPosition) {
