@@ -67,13 +67,12 @@ public class Map {
   // pre: array is non-jagged and the height/width matches that in the file
   private void populateTilesFromFile(String fileName) {
 
-
     try {
       FileReader fileReader =
           new FileReader(fileName);
       BufferedReader bufferedReader = new BufferedReader(fileReader);
       //bufferedReader.readLine();
-      System.out.println(bufferedReader.readLine());
+      bufferedReader.readLine();
       for (int x = 0; x < map.length; x++) {
         String row = bufferedReader.readLine();
         String[] column = row.split(" ");
