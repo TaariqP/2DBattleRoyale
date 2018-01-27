@@ -8,4 +8,10 @@ public enum PlayerState {
   PlayerState(String IMAGE_ID) {
     this.IMAGE_ID = IMAGE_ID;
   }
+
+  public String get(){
+    return IMAGE_ID;
+  }
+
+
 }
