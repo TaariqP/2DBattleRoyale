@@ -2,6 +2,8 @@ package States;
 
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -94,6 +96,15 @@ public class Menu extends State {
     }
     buttons.add(new Button("Help", image, super.getWidth() / 2 - image
         .getWidth() / 2, (super.getHeight() / 7) * 5, helpClick));
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e){
+
+  }
+
+  public void clickAt(MouseEvent e){
+   
   }
 
 }

@@ -2,6 +2,8 @@ package States;
 
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public abstract class State {
 
@@ -34,4 +36,8 @@ public abstract class State {
   public int getWidth() {
     return width;
   }
+
+  public abstract void keyPressed(KeyEvent e);
+
+  public abstract void clickAt(MouseEvent mouseEvent);
 }

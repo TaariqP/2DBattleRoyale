@@ -1,16 +1,20 @@
 package Main;
 
 import States.StateManager;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
 
-public class GameView extends Container implements Runnable, KeyListener{
+public class GameView extends Container implements Runnable, KeyListener,
+    MouseListener{
 
   private int Width = 320;
   private int Height = 240;
@@ -42,14 +46,15 @@ public class GameView extends Container implements Runnable, KeyListener{
     running = true;
     g = (Graphics2D) image.getGraphics();
     thread = new Thread(this);
-    manager = new StateManager();
+    manager = new StateManager(Width, Height);
     thread.start();
 
   }
 
   public void draw() {
-    manager.draw(g);
-    g.drawString("Hello", 50, 50);
+  g.setColor(Color.WHITE);
+  g.fillRect(0,0,Width, Height);
+  manager.draw(g);
   }
 
   public void run() {
@@ -104,9 +109,34 @@ public class GameView extends Container implements Runnable, KeyListener{
   }
 
   public void keyPressed(KeyEvent e) {
+    manager.keyPressed(e);
   }
 
   public void keyReleased(KeyEvent e) {
   }
 
+  @Override
+  public void mouseClicked(MouseEvent mouseEvent) {
+    manager.clickAt(mouseEvent);
+  }
+
+  @Override
+  public void mousePressed(MouseEvent mouseEvent) {
+
+  }
+
+  @Override
+  public void mouseReleased(MouseEvent mouseEvent) {
+
+  }
+
+  @Override
+  public void mouseEntered(MouseEvent mouseEvent) {
+
+  }
+
+  @Override
+  public void mouseExited(MouseEvent mouseEvent) {
+
+  }
 }

@@ -1,6 +1,8 @@
 package States;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,4 +42,11 @@ public class StateManager {
   }
 
 
+  public void keyPressed(KeyEvent e) {
+    getCurrentState().keyPressed(e);
+  }
+
+  public void clickAt(MouseEvent mouseEvent) {
+    getCurrentState().clickAt(mouseEvent);
+  }
 }
