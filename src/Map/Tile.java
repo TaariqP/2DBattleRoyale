@@ -10,6 +10,8 @@ import javax.swing.text.html.parser.Entity;
 
 public class Tile {
   private TileType tileType;
+  private int x;
+  private int y;
 
   Tile(TileType tileType) {
     this.tileType = tileType;
@@ -19,7 +21,6 @@ public class Tile {
     return tileType;
   }
 
-<<<<<<< HEAD
   public final Tile setEntityOnTile(Entity newEntity) {
     return new Tile(x, y, tileType, newEntity);
   }
@@ -38,6 +39,4 @@ public class Tile {
       g.drawImage(image, x - topLeftX, y - topLeftY, null);
     }
   }
-=======
->>>>>>> 2109f7e84990bb822b40bc13230bdd952e67290a
 }
