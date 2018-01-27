@@ -1,37 +1,23 @@
 package Map;
 
-import Entity.EntityType;
-<<<<<<< HEAD
 import States.Camera;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.io.*;
 
 public class Map {
 
-  private final int mapSize;
   private Tile[][] map;
   private Camera camera;
-=======
-import java.io.*;
-import org.lwjgl.system.macosx.ObjCPropertyAttribute.Buffer;
-
-public class Map {
-
   private final String fileName;
-  Tile[][] map;
->>>>>>> 2109f7e84990bb822b40bc13230bdd952e67290a
 
   Map(String fileName) {
     this.fileName = fileName;
   }
 
-
-  public static void main(String[] args) {
-    new Map("Maps/3x3test").convertStringToMap();
-  }
 
   public void convertStringToMap() {
 
