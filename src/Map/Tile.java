@@ -21,7 +21,11 @@ public class Tile {
     return tileType;
   }
 
-  private void generateImage() {
+  public final Tile setEntityOnTile(Entity newEntity) {
+    return new Tile(tileType);
+  }
+
+  public void draw(Graphics2D g, int topLeftX, int topLeftY) {
     if (tileType == TileType.GRASS) {
       Random number = new Random();
       int choice = number.nextInt(4) + 1;
@@ -34,10 +38,12 @@ public class Tile {
       } catch (IOException e) {
         e.printStackTrace();
       }
+      g.drawImage(image, topLeftX, topLeftY, null);
     }
   }
 
-  public void draw(Graphics2D g, int x, int y) {
-      g.drawImage(image, x, y, null);
-  }
+
+  public final Tile setTileType(TileType tileType) {
+    return new Tile(tileType);
+
 }
