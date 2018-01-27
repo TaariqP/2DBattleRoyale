@@ -1,15 +1,19 @@
 package States;
 
+import Map.Map;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class Game extends State {
 
-  //private Map map;
+  private Map map;
+  private Camera camera;
 
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
+    map = new Map("Maps/max.txt");
+    camera = new Camera(width / 2, height / 2);
   }
 
   @Override
@@ -34,6 +38,6 @@ public class Game extends State {
 
   @Override
   public void draw(Graphics2D g) {
-    super.draw(g);
+    map.draw(g);
   }
 }
