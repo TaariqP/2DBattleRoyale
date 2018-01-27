@@ -1,6 +1,7 @@
 package States;
 
 import Entity.Bandage;
+import Entity.Entity;
 import Entity.Player;
 import Map.Coordinate;
 import Map.Map;
@@ -17,7 +18,7 @@ public class Game extends State {
   private Map map;
   private Camera camera;
   private Player player;
-  List<Bandage> bandages;
+  List<Entity> bandages;
   private int width;
   private int height;
 
@@ -25,8 +26,8 @@ public class Game extends State {
     super("Game", width, height, manager);
     camera = new Camera(64*64, 64*64);
     map = new Map("Maps/map.txt", camera);
-    player = new Player("Player 1", 1, new Coordinate(width / 2, height /
-        2), mousePos);
+    player = new Player("Player 1", 1, new Coordinate(64*64, 64*64),
+        mousePos, camera, width, height);
     this.width = width;
     this.height = height;
     makeBandages();
@@ -35,10 +36,10 @@ public class Game extends State {
   private void makeBandages() {
     bandages = new ArrayList<>();
     Random location = new Random();
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 1000; i++) {
       bandages.add(new Bandage(new Coordinate(location.nextInt(map.getWidth()),
           location
-          .nextInt(map.getHeight()))));
+          .nextInt(map.getHeight())), camera));
     }
   }
 
@@ -55,17 +56,21 @@ public class Game extends State {
   @Override
   public void keyPressed(KeyEvent e) {
     if(e.getKeyCode() == KeyEvent.VK_UP){
-      camera.setY(camera.getY() - 10);
+      player.getPlayerPosition().setY(player.getPlayerPosition().getY() - 10);
+      camera.setY(player.getPlayerPosition().getY());
     }
     if(e.getKeyCode() == KeyEvent.VK_DOWN){
-      camera.setY(camera.getY() + 10);
+      player.getPlayerPosition().setY(player.getPlayerPosition().getY() + 10);
+      camera.setY(player.getPlayerPosition().getY());
     }
 
     if(e.getKeyCode() == KeyEvent.VK_LEFT){
-      camera.setX(camera.getX() - 10);
+      player.getPlayerPosition().setX(player.getPlayerPosition().getX() - 10);
+      camera.setX(player.getPlayerPosition().getX());
     }
     if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-      camera.setX(camera.getX() + 10);
+      player.getPlayerPosition().setX(player.getPlayerPosition().getX() + 10);
+      camera.setX(player.getPlayerPosition().getX());
     }
   }
 
@@ -84,7 +89,7 @@ public class Game extends State {
   public void draw(Graphics2D g) {
     map.draw(g);
     player.draw(g);
-    for (Bandage b : bandages) {
+    for (Entity b : bandages) {
       b.draw(g);
     }
   }

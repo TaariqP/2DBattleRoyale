@@ -1,6 +1,7 @@
 package Entity;
 
 import Entity.EntityType.Entity;
+import States.Camera;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -23,9 +24,13 @@ public class Player {
   private PlayerState state;
   ArrayList<Entity> inventory = new ArrayList<>();
   BufferedImage currentState;
+  private int screenWidth;
+  private int screenHeight;
+  private Camera camera;
 
   public Player(String PLAYER_NAME, int ID, Coordinate playerPosition,
-      Coordinate mousePosition) {
+      Coordinate mousePosition, Camera camera, int screenWidth, int
+      screenHeight) {
     this.PLAYER_NAME = PLAYER_NAME;
     this.ID = ID;
     this.playerPosition = playerPosition;
@@ -40,6 +45,9 @@ public class Player {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    this.screenWidth = screenWidth;
+    this.screenHeight = screenHeight;
+    this.camera = camera;
   }
 
 
@@ -49,14 +57,18 @@ public class Player {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    double drawX = playerPosition.getX() - currentState.getWidth() / 2;
-    double drawY = playerPosition.getY() - currentState.getHeight() / 2;
+    double onScreenX = playerPosition.getX() - camera.getX() + 640;
+    double onScreenY = playerPosition.getY() - camera.getY() + 480;
+    System.out.println(onScreenX);
+    System.out.println(onScreenY);
+    
+    double drawX = onScreenX - currentState.getWidth() / 2;
+    double drawY = onScreenY - currentState.getHeight() / 2;
     double angle = Math.atan2(mousePosition.getY() -
-        getPlayerPosition().getY(), mousePosition.getX() -
-        getPlayerPosition
-        ().getX());
+        onScreenY, mousePosition.getX() -
+        onScreenX);
     AffineTransform at = new AffineTransform();
-    at.rotate(angle, playerPosition.getX(), playerPosition.getY());
+    at.rotate(angle, onScreenX, onScreenY);
     at.translate(drawX, drawY);
     graphics.drawImage(currentState, at, null);
   }

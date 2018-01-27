@@ -1,6 +1,7 @@
 package Entity;
 
 import Map.Coordinate;
+import States.Camera;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,8 +12,8 @@ public class Bandage extends Entity{
 
   private BufferedImage image;
 
-  public Bandage(Coordinate position){
-    super(position);
+  public Bandage(Coordinate position, Camera camera){
+    super(position, camera);
     File location = new File("PNG/bandage.png");
     image = null;
     try {
@@ -24,6 +25,11 @@ public class Bandage extends Entity{
 
   @Override
   public void draw(Graphics2D g) {
-    g.drawImage(image, super.position.getX(), super.position.getY(), null);
+    if (position.getX() >= camera.getX() - 800 && position.getX() <= camera
+        .getX() + 800 && position.getY() >= camera.getY() - 600 && position
+        .getY() <= camera.getY() + 600)
+    g.drawImage(image, position.getX() - camera.getX(), position.getY() -
+            camera.getY(),
+        null);
   }
 }
