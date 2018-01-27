@@ -35,4 +35,9 @@ public class StateManager {
     getCurrentState().draw(g);
   }
 
+  public void update(){
+    getCurrentState().update();
+  }
+
+
 }

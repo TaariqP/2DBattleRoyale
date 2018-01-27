@@ -12,9 +12,11 @@ public class Button implements Clickable{
   private BufferedImage image;
   private int x;
   private int y;
+  private Clickable c;
 
-  public Button(String ID, String imageLocation, int x, int y) {
+  public Button(String ID, String imageLocation, int x, int y, Clickable c) {
     this.ID = ID;
+    this.c = c;
     File location = new File(imageLocation);
     try {
       image = ImageIO.read(location);
@@ -26,7 +28,7 @@ public class Button implements Clickable{
 
   @Override
   public void click() {
-
+    c.click();
   }
 
   public void draw(Graphics2D g) {
