@@ -13,9 +13,12 @@ public class Map {
   private Tile[][] map;
   private Camera camera;
   private final String fileName;
+  private int width;
+  private int height;
 
-  Map(String fileName) {
+  public Map(String fileName) {
     this.fileName = fileName;
+    convertStringToMap();
   }
 
 
@@ -39,14 +42,12 @@ public class Map {
       String[] dimensions = dimensionsLine.split(" ");
       int width = Integer.parseInt(dimensions[0]);
       int height = Integer.parseInt(dimensions[1]);
+      this.width = width;
+      this.height = height;
 
       map = new Tile[width][height];
 
       populateTilesFromFile(fileName);
-
-      while ((line = bufferedReader.readLine()) != null) {
-        System.out.println(line);
-      }
 
       // Always close files.
       bufferedReader.close();
@@ -78,7 +79,7 @@ public class Map {
         String row = bufferedReader.readLine();
         String[] column = row.split(" ");
         for (int y = 0; y < column.length; y++) {
-          convertFromStringToTile(column[y]);
+          map[x][y] = convertFromStringToTile(column[y]);
         }
       }
     } catch (FileNotFoundException ex) {
@@ -96,6 +97,10 @@ public class Map {
     switch (tileString) {
       case "grass":
         return new Tile(TileType.GRASS);
+      case "water":
+        return new Tile(TileType.WATER);
+      case "wall":
+        return new Tile(TileType.WALL);
       default:
         return new Tile(TileType.ERROR);
     }
@@ -120,5 +125,21 @@ public class Map {
         }
       }
     }
+  }
+
+  public int getWidth() {
+    return width;
+  }
+
+  public int getHeight() {
+    return height;
+  }
+
+  public Tile getTileAtPosition(int x, int y) {
+    return map[x][y];
+  }
+
+  public void setTileAtPosition(int x, int y, TileType tileType) {
+    map[x][y].setTileType(tileType);
   }
 }

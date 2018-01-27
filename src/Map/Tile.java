@@ -22,7 +22,7 @@ public class Tile {
   }
 
   public final Tile setEntityOnTile(Entity newEntity) {
-    return new Tile(x, y, tileType, newEntity);
+    return new Tile(tileType);
   }
 
   public void draw(Graphics2D g, int topLeftX, int topLeftY) {
@@ -38,5 +38,9 @@ public class Tile {
       }
       g.drawImage(image, x - topLeftX, y - topLeftY, null);
     }
+  }
+
+  public final Tile setTileType(TileType tileType) {
+    return new Tile(tileType);
   }
 }
