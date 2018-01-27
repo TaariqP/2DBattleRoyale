@@ -107,6 +107,12 @@ public class Player {
     return health;
   }
 
+
+  public String getName() {
+    return PLAYER_NAME;
+  }
+}
+
   public boolean equippedWeapon() {
     return weapon != null;
   }
@@ -128,3 +134,4 @@ public class Player {
     }
   }
   }
+

@@ -25,6 +25,7 @@ public class Game extends State {
   List<Entity> items;
   private int width;
   private int height;
+  private List<Player> players;
 
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
@@ -119,4 +120,9 @@ public class Game extends State {
       b.draw(g);
     }
   }
+
+  public void addPlayer(String name,String id){
+    //players.add(new Player(name, id, ));
+  }
+
 }

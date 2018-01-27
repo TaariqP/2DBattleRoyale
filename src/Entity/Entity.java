@@ -25,11 +25,16 @@ public class Entity {
 
   }
 
+
+  public void update(){
+
+
   public Rectangle getBounds() {
     return null;
   }
 
   public EntityType getType() {
     return type;
+
   }
 }
