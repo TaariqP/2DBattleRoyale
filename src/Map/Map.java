@@ -1,6 +1,9 @@
 package Map;
 
+import Entity.EntityType;
+
 public class Map {
+
   final int mapSize;
   Tile[][] map;
 
