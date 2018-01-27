@@ -33,7 +33,6 @@ public class Player {
     this.mousePosition = mousePosition;
     this.PLAYER_TYPE = PlayerType.randomType();
     this.state = PlayerState.STAND;
-    System.out.println(location());
     File location = new File(location());
     currentState = null;
     try {
@@ -56,7 +55,6 @@ public class Player {
         getPlayerPosition().getY(), mousePosition.getX() -
         getPlayerPosition
         ().getX());
-    System.out.println(angle);
     AffineTransform at = new AffineTransform();
     at.rotate(angle, playerPosition.getX(), playerPosition.getY());
     at.translate(drawX, drawY);

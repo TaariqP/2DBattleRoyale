@@ -1,12 +1,21 @@
 package Entity;
 
+import Map.Coordinate;
+import java.awt.Graphics2D;
+
 public class Entity {
 
-  String imageLocation;
+  Coordinate position;
 
-  Entity(String imageLocation) {
-
+  public Entity(Coordinate position) {
+    this.position = position;
   }
 
+  public Coordinate getPosition() {
+    return position;
+  }
 
+  public void draw(Graphics2D g) {
+
+  }
 }

@@ -1,11 +1,15 @@
 package States;
 
+import Entity.Bandage;
 import Entity.Player;
 import Map.Coordinate;
 import Map.Map;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Game extends State {
 
@@ -13,6 +17,9 @@ public class Game extends State {
   private Map map;
   private Camera camera;
   private Player player;
+  List<Bandage> bandages;
+  private int width;
+  private int height;
 
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
@@ -20,6 +27,19 @@ public class Game extends State {
     map = new Map("Maps/map.txt", camera);
     player = new Player("Player 1", 1, new Coordinate(width / 2, height /
         2), mousePos);
+    this.width = width;
+    this.height = height;
+    makeBandages();
+  }
+
+  private void makeBandages() {
+    bandages = new ArrayList<>();
+    Random location = new Random();
+    for (int i = 0; i < 10; i++) {
+      bandages.add(new Bandage(new Coordinate(location.nextInt(map.getWidth()),
+          location
+          .nextInt(map.getHeight()))));
+    }
   }
 
   @Override
@@ -58,12 +78,14 @@ public class Game extends State {
   public void mouseMoved(MouseEvent mouseEvent) {
     mousePos.setX(mouseEvent.getX());
     mousePos.setY(mouseEvent.getY());
-    System.out.println("mousePos " + mousePos.getX() + " " + mousePos.getY());
   }
 
   @Override
   public void draw(Graphics2D g) {
     map.draw(g);
     player.draw(g);
+    for (Bandage b : bandages) {
+      b.draw(g);
+    }
   }
 }
