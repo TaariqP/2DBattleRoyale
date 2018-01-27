@@ -22,10 +22,28 @@ public class Tile {
   }
 
   private void generateImage() {
-    if (tileType == TileType.GRASS) {
-      Random number = new Random();
-      int choice = number.nextInt(4) + 1;
-      String input = "PNG/Tiles/tile_0" + Integer.toString(choice) + ".png";
+
+    Random number = new Random();
+    int choice;
+    String initialString, input;
+
+    switch (tileType){
+      case GRASS: choice = number.nextInt(4) + 1;
+                           initialString =  "PNG/Tiles/tile_0";
+                           break;
+      case BUSH:  choice = 8;
+                  initialString = "PNG/Tiles/tile_16";
+                  break;
+      case WATER: choice = number.nextInt(1) + 1;
+                  initialString = "PNG/Tiles/tile_water_1";
+                  break;
+      default:    choice = number.nextInt(4) + 1;
+                  initialString = "PNG/Tiles/tile_0";
+                  break;
+    }
+
+
+      input = initialString + Integer.toString(choice) + ".png";
       File location = new File(input);
 
       image = null;
@@ -34,7 +52,7 @@ public class Tile {
       } catch (IOException e) {
         e.printStackTrace();
       }
-    }
+
   }
 
   public void draw(Graphics2D g, int x, int y) {
