@@ -2,6 +2,7 @@ package Entity;
 
 import Entity.EntityType.Entity;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -44,13 +45,19 @@ public class Player {
 
 
   public void draw(Graphics2D graphics) {
+    double angle = Math.atan(Math.abs(mousePosition.getY() -
+        playerPosition.getY())
+        / Math.abs(mousePosition.getX() - playerPosition.getX()));
+    System.out.println(angle);
     try {
       currentState = ImageIO.read(new File(location()));
     } catch (IOException e) {
       e.printStackTrace();
     }
-    graphics.drawImage(currentState, playerPosition.getX(),
-        playerPosition.getY(), null);
+    AffineTransform at = new AffineTransform();
+    at.rotate(angle);
+    at.translate(playerPosition.getX(), playerPosition.getY());
+    graphics.drawImage(currentState, at, null);
   }
 
   private String location() {
