@@ -1,5 +1,6 @@
 package Main;
 
+import States.StateManager;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -25,6 +26,7 @@ public class GameView extends Container implements Runnable, KeyListener{
   private int counter = 0;
   private int mean = 0;
   private String question;
+  private static StateManager manager;
 
 
   public GameView() {
@@ -40,11 +42,13 @@ public class GameView extends Container implements Runnable, KeyListener{
     running = true;
     g = (Graphics2D) image.getGraphics();
     thread = new Thread(this);
+    manager = new StateManager();
     thread.start();
 
   }
 
   public void draw() {
+    manager.draw(g);
     g.drawString("Hello", 50, 50);
   }
 
