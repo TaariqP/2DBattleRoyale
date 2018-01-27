@@ -47,4 +47,6 @@ public abstract class State {
   public StateManager getManager(){
     return manager;
   }
+
+  public abstract void mouseMoved(MouseEvent mouseEvent);
 }

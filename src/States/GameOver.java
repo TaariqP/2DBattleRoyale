@@ -31,6 +31,11 @@ public class GameOver extends State {
   }
 
   @Override
+  public void mouseMoved(MouseEvent mouseEvent) {
+
+  }
+
+  @Override
   public void update() {
     super.update();
   }

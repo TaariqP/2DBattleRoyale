@@ -16,9 +16,18 @@ public class Map {
   private int width;
   private int height;
 
-  public Map(String fileName) {
+  public Map(String fileName, Camera camera) {
     this.fileName = fileName;
+    this.camera = camera;
     convertStringToMap();
+  }
+
+  public int getWidth() {
+    return map.length * 64;
+  }
+
+  public int getHeight() {
+    return map[0].length * 64;
   }
 
 
@@ -112,8 +121,8 @@ public class Map {
     for (int i = camera.getX() / 64 - 11; i < camera.getX() / 64 + 11; i++) {
       for (int j = camera.getY() / 64 - 11; j < camera.getY() / 64 + 11; j++) {
         if (i >= 0 && j >= 0 && i < map.length && j < map[0].length) {
-          map[i][j].draw(g, topLeftX, topLeftY);
-        } else {
+            map[i][j].draw(g, i * 64 - topLeftX, j * 64 - topLeftY);
+          } else {
           File location = new File("PNG/Tiles/tile_86.png");
           BufferedImage image = null;
           try {
