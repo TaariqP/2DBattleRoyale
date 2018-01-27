@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-public class Test {
+public class Client {
   private static InetAddress ipAddress;
   private static DatagramSocket socket;
   public static void main(String[] args) {

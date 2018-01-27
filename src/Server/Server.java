@@ -9,6 +9,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class Server extends Thread{
 
   public Server(Game game){
     connects = new ArrayList<>();
-    players = new ArrayList<>();
+    players = new HashMap<>();
     this.game = game;
     try {
       this.socket = new DatagramSocket(1337);
