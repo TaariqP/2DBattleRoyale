@@ -26,15 +26,16 @@ public class Entity {
   }
 
 
-  public void update(){
+  public void update() {
+
+  }
 
 
-  public Rectangle getBounds() {
+  public Rectangle getBounds(){
     return null;
   }
 
-  public EntityType getType() {
+  public EntityType getType(){
     return type;
-
   }
 }

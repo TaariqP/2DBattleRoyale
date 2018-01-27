@@ -16,6 +16,11 @@ public class Map {
   private int width;
   private int height;
 
+  public Map(String fileName) {
+    this.fileName = fileName;
+    this.camera = new Camera(64*64, 64*64);
+  }
+
   public Map(String fileName, Camera camera) {
     this.fileName = fileName;
     this.camera = camera;
@@ -134,14 +139,6 @@ public class Map {
         }
       }
     }
-  }
-
-  public int getWidth() {
-    return width;
-  }
-
-  public int getHeight() {
-    return height;
   }
 
   public Tile getTileAtPosition(int x, int y) {
