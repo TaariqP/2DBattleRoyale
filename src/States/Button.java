@@ -15,6 +15,8 @@ public class Button implements Clickable{
     this.ID = ID;
     this.c = c;
     image = img;
+    this.x = x;
+    this.y = y;
   }
 
 
@@ -25,7 +27,6 @@ public class Button implements Clickable{
   }
 
   public void draw(Graphics2D g) {
-    System.out.println("x " + x + " y " + y);
     g.drawImage(image, x, y, null);
   }
 }
