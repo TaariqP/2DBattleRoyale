@@ -3,6 +3,8 @@ package Entity;
 import Map.Coordinate;
 import States.Camera;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +13,11 @@ import javax.imageio.ImageIO;
 public class Bandage extends Entity{
 
   private BufferedImage image;
+  private static final int health = 25;
 
   public Bandage(Coordinate position, Camera camera){
-    super(position, camera);
-    File location = new File("PNG/bandage.png");
+    super(position, camera, EntityType.ITEM);
+    File location = new File("PNG/Bandage_RS.png");
     image = null;
     try {
       image = ImageIO.read(location);
@@ -24,12 +27,25 @@ public class Bandage extends Entity{
   }
 
   @Override
+  public Rectangle getBounds() {
+    return new Rectangle(position.getX(), position.getY(), image
+        .getWidth(),
+        image.getHeight());
+  }
+
+  @Override
   public void draw(Graphics2D g) {
-    if (position.getX() >= camera.getX() - 800 && position.getX() <= camera
-        .getX() + 800 && position.getY() >= camera.getY() - 600 && position
-        .getY() <= camera.getY() + 600)
-    g.drawImage(image, position.getX() - camera.getX(), position.getY() -
-            camera.getY(),
+    if (position.getX() >= camera.getX() - 2000 && position.getX() <= camera
+        .getX() + 2000 && position.getY() >= camera.getY() - 2000 && position
+        .getY() <= camera.getY() + 2000)
+    g.drawImage(image, position.getX() - camera.getX() + 640, position.getY() -
+            camera.getY() + 480,
         null);
+    g.drawString("Bandage", position.getX() -
+            camera.getX
+            () + 640 - image.getWidth() / 2,
+        position.getY
+        () -
+        camera.getY() + 480);
   }
 }
