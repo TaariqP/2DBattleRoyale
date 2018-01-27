@@ -30,7 +30,7 @@ public class Game extends State {
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
     camera = new Camera(64 * 64, 64 * 64);
-    map = new Map("Maps/map.txt", camera);
+    map = new Map("Maps/output.txt", camera);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height);
     this.width = width;
