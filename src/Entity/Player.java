@@ -45,18 +45,21 @@ public class Player {
 
 
   public void draw(Graphics2D graphics) {
-    double angle = Math.atan(Math.abs(mousePosition.getY() -
-        playerPosition.getY())
-        / Math.abs(mousePosition.getX() - playerPosition.getX()));
-    System.out.println(angle);
     try {
       currentState = ImageIO.read(new File(location()));
     } catch (IOException e) {
       e.printStackTrace();
     }
+    double drawX = playerPosition.getX() - currentState.getWidth() / 2;
+    double drawY = playerPosition.getY() - currentState.getHeight() / 2;
+    double angle = Math.atan2(mousePosition.getY() -
+        getPlayerPosition().getY(), mousePosition.getX() -
+        getPlayerPosition
+        ().getX());
+    System.out.println(angle);
     AffineTransform at = new AffineTransform();
-    at.rotate(angle);
-    at.translate(playerPosition.getX(), playerPosition.getY());
+    at.rotate(angle, playerPosition.getX(), playerPosition.getY());
+    at.translate(drawX, drawY);
     graphics.drawImage(currentState, at, null);
   }
 
