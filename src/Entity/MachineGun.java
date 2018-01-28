@@ -18,13 +18,25 @@ public class MachineGun extends Weapon {
 
   public MachineGun(
       Coordinate position, Camera camera) {
-    super(position, weaponName, attackDamage, camera);
+    super(position, weaponName, attackDamage, camera, 30, 0);
     File location = new File("PNG/weapon_machine.png");
     image = null;
     try {
       image = ImageIO.read(location);
     } catch (IOException e) {
       e.printStackTrace();
+    }
+  }
+
+  @Override
+  public int reload(int ammo) {
+    if (ammo + super.CURRENT_CLIP <= 30) {
+      super.CURRENT_CLIP += ammo;
+      return 0;
+    } else {
+      ammo -= (30 - super.CURRENT_CLIP);
+      super.CURRENT_CLIP = 30;
+      return ammo;
     }
   }
 
@@ -39,9 +51,16 @@ public class MachineGun extends Weapon {
     if (position.getX() >= camera.getX() - 2000 && position.getX() <= camera
         .getX() + 2000 && position.getY() >= camera.getY() - 2000 && position
         .getY() <= camera.getY() + 2000) {
-      g.drawImage(image, position.getX() - camera.getX(), position.getY() -
-              camera.getY(),
+      g.drawImage(image, position.getX() - camera.getX() + 640, position
+              .getY() -
+              camera.getY() + 480,
           null);
+      g.drawString("Machine Gun", position.getX() -
+              camera.getX
+                  () + 640 - image.getWidth() / 2,
+          position.getY
+              () -
+              camera.getY() + 480);
     }
   }
 }
