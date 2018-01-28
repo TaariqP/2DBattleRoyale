@@ -137,7 +137,7 @@ public class Map {
         if (i >= 0 && j >= 0 && i < map.length && j < map[0].length) {
             map[i][j].draw(g, i * 64 - topLeftX, j * 64 - topLeftY);
           } else {
-          File location = new File("PNG/Tiles/tile_86.png");
+          File location = new File("PNG/Tiles/tile_1.png");
           BufferedImage image = null;
           try {
             image = ImageIO.read(location);
