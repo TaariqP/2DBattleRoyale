@@ -25,14 +25,10 @@ public class Entity {
     return position;
   }
 
-  public void draw(Graphics2D g) {
-
-  }
+  public void draw(Graphics2D g) {}
 
 
-  public void update() {
-
-  }
+  public void update() {}
 
 
   public Rectangle getBounds(){
