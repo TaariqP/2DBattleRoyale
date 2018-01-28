@@ -8,6 +8,7 @@ import Server.Packet.PacketMove;
 import Server.Packet.PacketOtherPlayer;
 import Server.Packet.PacketSeed;
 import Server.Packet.PacketYourPlayer;
+import Server.TCPServer.Connection;
 import States.Game;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -114,6 +115,14 @@ public class Server extends Thread{
         break;
       case "05":
         System.out.println("Shot");
+        String[] partss = datas.split(",");
+        bullets.add(new Bullet(Integer.valueOf(partss[4]), Double.valueOf(partss[3]), new Coordinate(Integer.valueOf(partss[1]), Integer.valueOf(partss[2])),
+            null, Integer.valueOf(partss[5])));
+        for(Connects c : connects){
+          if(c.getIp() != address){
+            sendData(data, c.getIp(), c.getPort());
+          }
+        }
         break;
     }
 

@@ -47,7 +47,7 @@ public class StateManager {
   public void keyPressed(KeyEvent e) {
     getCurrentState().keyPressed(e);
   }
-
+  
   public void keyReleased(KeyEvent e) {
     getCurrentState().keyReleased(e);
   }

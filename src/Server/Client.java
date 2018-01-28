@@ -1,9 +1,12 @@
 package Server;
 
+import Entity.Bullet;
 import Entity.Player;
 import Entity.PlayerState;
+import Map.Coordinate;
 import Server.Packet.PacketJoin;
 import Server.Packet.PacketMove;
+import Server.Packet.PacketShot;
 import States.Camera;
 import States.Clickable;
 import States.Game;
@@ -67,8 +70,9 @@ public class Client extends Thread{
     switch (dataString.substring(0,2)){
       case "02":
         Player p = playerMap.get(parts[1]);
-        p.move(Integer.valueOf(parts[2]),Integer.valueOf(parts[3]), Double
-            .valueOf(parts[4]), parts[5]);
+        
+        p.move(Integer.valueOf(parts[2]),Integer.valueOf(parts[3]), Double.valueOf(parts[4]), parts[5]);
+
         break;
       case "03":
         System.out.println("Server sent a player back");
@@ -80,6 +84,16 @@ public class Client extends Thread{
         System.out.println("Server sent back another player");
         Player p3 = game.addPlayer(parts[1], parts[2], Integer.valueOf(parts[3]), Integer.valueOf(parts[4]));
         playerMap.put(parts[2],p3);
+        break;
+      case "05":
+        if (ipAddress != address) {
+          System.out.println("Receiving bullet");
+          game.addBullet(
+              new Bullet(Integer.valueOf(parts[4]), Double.valueOf(parts[3]),
+                  new Coordinate(Integer.valueOf(parts[1]),
+                      Integer.valueOf(parts[2])), null,
+                  Integer.valueOf(parts[5])));
+        }
         break;
       case "06":
         game.setSeed(Integer.valueOf(parts[1]));
@@ -105,5 +119,11 @@ public class Client extends Thread{
   public void move(String id, int x, int y, double rot, PlayerState state){
     PacketMove move = new PacketMove(id, x, y, rot, state);
     sendData(move.getData());
+  }
+
+  public void shoot(Bullet b) {
+    PacketShot shot = new PacketShot(b.getX(), b.getY(), b.getRotation(),
+        b.getDamage(), Integer.toString(b.getShooterID()));
+    sendData(shot.getData());
   }
 }

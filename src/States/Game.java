@@ -44,13 +44,13 @@ public class Game extends State {
   List<Key> keys;
   List<Bullet> bullets;
   private int seed;
+  List<Bullet> foreignbullets;
 
   public Game(int width, int height, StateManager manager){
     super("Game", width, height, manager);
     camera = new Camera(64 * 64, 64 * 64);
     map = new Map("Maps/" + seed + ".txt",
         camera);
-    System.out.println(this.seed);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height, true);
     players = new ArrayList<>();
@@ -61,6 +61,7 @@ public class Game extends State {
     makeItems();
     initKeys();
     bullets = new ArrayList<>();
+    foreignbullets = new ArrayList<>();
   }
 
   private void initKeys() {
@@ -78,6 +79,18 @@ public class Game extends State {
     keys.add(new Key(KeyEvent.VK_B));
   }
 
+  public void addBullet(Bullet b) {
+    b.setCamera(camera);
+    foreignbullets.add(b);
+  }
+
+  public void refreshBullets() {
+    for (Bullet b : foreignbullets) {
+      bullets.add(b);
+    }
+    foreignbullets = new ArrayList<>();
+  }
+
   private void initHUD() {
     HUD = new ArrayList<>();
     HUD.add(new AmmoBar(player));
@@ -89,6 +102,10 @@ public class Game extends State {
         HUD.add(new HealthBar(p, camera, p.getPlayerPosition()));
       }
     }
+  }
+
+  public void restart() {
+    player.setHealth(100);
   }
 
   private void makeItems() {
@@ -111,8 +128,10 @@ public class Game extends State {
 
   }
 
+
   @Override
   public void update() {
+    dealDamage();
     //player.takeDamage(1); //tests game over screen
     if (!player.isAlive()) {
       getManager().SwitchState(StateManager.GAME_OVER);
@@ -168,6 +187,20 @@ public class Game extends State {
       client.move(Integer.toString(player.getID()),
           player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
           player.getRotation(), player.getState());
+    }
+
+    dealDamage();
+  }
+
+  private void dealDamage() {
+    for (Iterator<Bullet> bt = bullets.iterator(); bt.hasNext(); ) {
+      Bullet b = bt.next();
+      for(Player p : players){
+        if(b.getBounds().intersects(p.getBounds().intersection(p.getBounds())) && b.getShooterID() != p.getID()){
+          p.takeDamage(b.getDamage());
+          bt.remove();
+        }
+      }
     }
   }
 
@@ -239,6 +272,7 @@ public class Game extends State {
       Bullet bullet = new Bullet(player.getWeapon().getAttackDamage(),
           player.getRotation(), player.getPlayerPosition(),
           camera, player.getID()); // generates
+      client.shoot(bullet);
       bullets.add(bullet);
     }
   }
@@ -261,13 +295,14 @@ public class Game extends State {
       b.draw(g);
     }
 
+    refreshBullets();
     for (Bullet b : bullets) {
       b.draw(g);
     }
 
     player.draw(g);
     for (Player p : players) {
-      if (p.getID() != player.getID()) {
+      if (p.getID() != player.getID() && p.isAlive()) {
         p.draw(g);
       }
     }
@@ -298,9 +333,9 @@ public class Game extends State {
   }
 
   public void setSeed(Integer seed) {
-    System.out.println("seed " + seed);
-    map = new Map("Maps/" + seed+".txt",
-        camera);
     this.seed = seed;
+    System.out.println("seed " + this.seed);
+    map = new Map("Maps/" + this.seed+".txt",
+        camera);
   }
 }
