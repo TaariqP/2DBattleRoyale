@@ -1,5 +1,6 @@
 package Main;
 
+import Hud.Hud;
 import States.StateManager;
 import java.awt.Color;
 import java.awt.Container;
@@ -99,7 +100,7 @@ public class GameView extends Container implements Runnable, KeyListener,
   }
 
   private void update() {
-
+    manager.update();
   }
 
   public void keyTyped(KeyEvent e) {

@@ -63,7 +63,7 @@ public class Server extends Thread{
         System.out.println("A player has joined");
         connects.add(new Connects(address, port));
         players.put(address, new Player(datas.substring(2), currentPlayerId++,
-            new Coordinate(3000,3000), null, null,0, 0));
+            new Coordinate(3000,3000), null, null,0, 0, false));
         break;
       case "02":
         System.out.print("Player moved " + players.get(address).getName());

@@ -10,6 +10,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import Map.Coordinate;
+import java.util.Optional;
 import javax.imageio.ImageIO;
 
 public class Player {
@@ -28,10 +30,13 @@ public class Player {
   private Camera camera;
   private int MAX_BAG_SIZE = 10;
   private Weapon weapon;
+  private double rotation;
+  private boolean isPlayable;
+  private int ammo;
 
   public Player(String PLAYER_NAME, int ID, Coordinate playerPosition,
       Coordinate mousePosition, Camera camera, int screenWidth, int
-      screenHeight) {
+      screenHeight, boolean isPlayable) {
     this.PLAYER_NAME = PLAYER_NAME;
     this.ID = ID;
     this.playerPosition = playerPosition;
@@ -51,6 +56,9 @@ public class Player {
     this.camera = camera;
     inventory = new ArrayList<>();
     weapon = null;
+    this.rotation = 0;
+    this.isPlayable = isPlayable;
+    this.ammo = 0;
   }
 
 
@@ -68,14 +76,10 @@ public class Player {
     }
     double onScreenX = playerPosition.getX() - camera.getX() + 640;
     double onScreenY = playerPosition.getY() - camera.getY() + 480;
-
     double drawX = onScreenX - currentState.getWidth() / 2;
     double drawY = onScreenY - currentState.getHeight() / 2;
-    double angle = Math.atan2(mousePosition.getY() -
-        onScreenY, mousePosition.getX() -
-        onScreenX);
     AffineTransform at = new AffineTransform();
-    at.rotate(angle, onScreenX, onScreenY);
+    at.rotate(rotation, onScreenX, onScreenY);
     at.translate(drawX, drawY);
     graphics.drawImage(currentState, at, null);
     graphics.drawString(PLAYER_NAME, (int) drawX - currentState.getWidth() / 5,
@@ -105,31 +109,75 @@ public class Player {
     return playerPosition;
   }
 
+  public void update() {
+    if (isPlayable) {
+      double onScreenX = playerPosition.getX() - camera.getX() + 640;
+      double onScreenY = playerPosition.getY() - camera.getY() + 480;
+
+      double drawX = onScreenX - currentState.getWidth() / 2;
+      double drawY = onScreenY - currentState.getHeight() / 2;
+      rotation = Math.atan2(mousePosition.getY() -
+          onScreenY, mousePosition.getX() -
+          onScreenX);
+    }
+  }
+
+  private void changeState() {
+    if (weapon.getWeaponName().equals("Machine Gun")) {
+      state = PlayerState.MACHINE;
+    } else if (weapon.getWeaponName().equals("pistol")) {
+      state = PlayerState.GUN;
+    }
+  }
+
   public int getHealth() {
     return health;
   }
 
+  public int getAmmo() {
+    return ammo;
+  }
 
   public String getName() {
     return PLAYER_NAME;
+  }
+
+  public void reload() {
+    if (equippedWeapon()) {
+      ammo = weapon.reload(ammo);
+    }
+  }
+
+  public void shoot() {
+    if (equippedWeapon() && weapon.CURRENT_CLIP > 0) {
+      weapon.shoot();
+    }
   }
 
   public boolean equippedWeapon() {
     return weapon != null;
   }
 
-  public boolean pickUp(Entity e) {
+  public dropCheck pickUp(Entity e) {
     if (e.type == EntityType.WEAPON && equippedWeapon()) {
-      return false;
-    } else if (inventory.size() >= 10) {
-      return false;
-    } else {
+      dropCheck dc = new dropCheck(true, Optional.of(weapon));
+      weapon = (Weapon) e;
+      changeState();
+      return dc;
+    } else if (inventory.size() >= MAX_BAG_SIZE) {
+      return new dropCheck(false, Optional.empty());
+    }
+    else {
       if (e.type == EntityType.WEAPON) {
         weapon = (Weapon) e;
-        return true;
-      } else {
+        changeState();
+        return new dropCheck(true, Optional.empty());
+      } else if (e.type == EntityType.AMMO) {
+        ammo += ((AmmoBox) e).getAddAmmo();
+        return new dropCheck(true, Optional.empty());
+      }else {
         inventory.add(e);
-        return true;
+        return new dropCheck(true, Optional.empty());
       }
     }
   }
