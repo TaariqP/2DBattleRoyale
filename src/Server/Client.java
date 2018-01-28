@@ -4,6 +4,7 @@ import Entity.Bullet;
 import Entity.Player;
 import Entity.PlayerState;
 import Map.Coordinate;
+import Server.Packet.PacketHeal;
 import Server.Packet.PacketJoin;
 import Server.Packet.PacketMove;
 import Server.Packet.PacketShot;
@@ -128,5 +129,10 @@ public class Client extends Thread{
     PacketShot shot = new PacketShot(b.getX(), b.getY(), b.getRotation(),
         b.getDamage(), Integer.toString(b.getShooterID()));
     sendData(shot.getData());
+  }
+
+  public void heal(String id){
+    PacketHeal heal = new PacketHeal(id);
+    sendData(heal.getData());
   }
 }
