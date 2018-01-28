@@ -2,6 +2,7 @@ package Entity;
 
 import Map.Coordinate;
 import States.Camera;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -35,6 +36,8 @@ public class Bandage extends Entity{
 
   @Override
   public void draw(Graphics2D g) {
+    g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+
     if (position.getX() >= camera.getX() - 2000 && position.getX() <= camera
         .getX() + 2000 && position.getY() >= camera.getY() - 2000 && position
         .getY() <= camera.getY() + 2000)
