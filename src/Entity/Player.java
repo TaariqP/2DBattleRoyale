@@ -34,7 +34,7 @@ public class Player {
   private int screenWidth;
   private int screenHeight;
   private Camera camera;
-  private int MAX_BAG_SIZE = 10;
+  private static final int MAX_BAG_SIZE = 10;
   private Weapon weapon;
   private double rotation;
   private boolean isPlayable;
