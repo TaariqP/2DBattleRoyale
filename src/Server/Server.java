@@ -82,7 +82,7 @@ public class Server extends Thread{
             , null, null,0, 0, false);
         players.put(play, address);
         System.out.println("Sending a player back");
-        PacketYourPlayer p = new PacketYourPlayer("Dave", id);
+        PacketYourPlayer p = new PacketYourPlayer("player " + id, id);
         playersIdMap.put(Integer.toString(id), play);
         sendData(p.getData(), address, port);
         System.out.println("Current id " + currentPlayerId);
