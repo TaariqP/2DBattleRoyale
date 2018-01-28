@@ -190,19 +190,21 @@ public class Game extends State {
           player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
           player.getRotation(), player.getState());
     }
-
-    dealDamage();
   }
 
   private void dealDamage() {
-    for (Iterator<Bullet> bt = bullets.iterator(); bt.hasNext(); ) {
-        Bullet b = bt.next();
+    List<Bullet> hit = new ArrayList<>();
+    for (Bullet b : bullets){
       for(Player p : players){
-        if(b.getBounds().intersects(p.getBounds().intersection(p.getBounds())) && b.getShooterID() != p.getID()){
+        if(b.getBounds().intersects(p.getBounds().intersection(p.getBounds())
+        ) && b.getShooterID() != p.getID() && !hit.contains(b)){
           p.takeDamage(b.getDamage());
-          bt.remove();
+          hit.add(b);
         }
       }
+    }
+    for (Bullet b : hit) {
+      bullets.remove(b);
     }
   }
 
