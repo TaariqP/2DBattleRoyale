@@ -17,14 +17,14 @@ public class Menu extends State {
   List<String> options;
   List<Button> buttons;
 
- public Menu(int width, int height, StateManager stateManager) {
-   super("Menu", width, height, stateManager);
-   options = Arrays.asList("Start", "Exit", "Help");
-   buttons = new ArrayList<>();
-   initStart();
-   initExit();
-   initHelp();
- }
+  public Menu(int width, int height, StateManager stateManager) {
+    super("Menu", width, height, stateManager);
+    options = Arrays.asList("Start", "Exit", "Help");
+    buttons = new ArrayList<>();
+    initStart();
+    initExit();
+    initHelp();
+  }
 
 
   @Override
@@ -34,9 +34,9 @@ public class Menu extends State {
 
   @Override
   public void draw(Graphics2D g) {
-   for (Button b : buttons) {
-     b.draw(g);
-   }
+    for (Button b : buttons) {
+      b.draw(g);
+    }
 
   }
 
@@ -101,14 +101,14 @@ public class Menu extends State {
   }
 
   @Override
-  public void keyPressed(KeyEvent e){
+  public void keyPressed(KeyEvent e) {
 
   }
 
-  public void clickAt(MouseEvent e){
-   for (Button b : buttons) {
-     b.clickAt(e);
-   }
+  public void clickAt(MouseEvent e) {
+    for (Button b : buttons) {
+      b.clickAt(e);
+    }
   }
 
   @Override

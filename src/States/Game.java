@@ -5,6 +5,8 @@ import Entity.MachineGun;
 import Entity.Pistol;
 import Entity.Entity;
 import Entity.Player;
+import Hud.HealthBar;
+import Hud.Hud;
 import Map.Coordinate;
 import Map.Map;
 import java.awt.Graphics2D;
@@ -25,6 +27,8 @@ public class Game extends State {
   List<Entity> items;
   private int width;
   private int height;
+  private Hud hud;
+  private HealthBar healthBar;
   private List<Player> players;
 
   public Game(int width, int height, StateManager manager) {
@@ -65,21 +69,23 @@ public class Game extends State {
     super.init();
   }
 
+
   public void keyPressed(KeyEvent e) {
-    if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W){
+    if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
       player.getPlayerPosition().setY(player.getPlayerPosition().getY() - 10);
       camera.setY(player.getPlayerPosition().getY());
     }
-    if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S){
+    if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
       player.getPlayerPosition().setY(player.getPlayerPosition().getY() + 10);
       camera.setY(player.getPlayerPosition().getY());
     }
 
-    if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A){
+    if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
       player.getPlayerPosition().setX(player.getPlayerPosition().getX() - 10);
       camera.setX(player.getPlayerPosition().getX());
     }
-    if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D){
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT
+        || e.getKeyCode() == KeyEvent.VK_D) {
       player.getPlayerPosition().setX(player.getPlayerPosition().getX() + 10);
       camera.setX(player.getPlayerPosition().getX());
     }
@@ -90,12 +96,14 @@ public class Game extends State {
   }
 
   private void attemptPickUp() {
-    for (Iterator<Entity> it = items.iterator(); it.hasNext();) {
+    for (Iterator<Entity> it = items.iterator(); it.hasNext(); ) {
       Entity e = it.next();
       Rectangle b1 = player.getBounds();
       Rectangle b2 = e.getBounds();
       if (b1.intersects(b2)) {
-        if(player.pickUp(e));
+        if (player.pickUp(e)) {
+          ;
+        }
         it.remove();
       }
     }
@@ -112,16 +120,22 @@ public class Game extends State {
     mousePos.setY(mouseEvent.getY());
   }
 
+
+
   @Override
   public void draw(Graphics2D g) {
     map.draw(g);
+    healthBar = new HealthBar(player, camera, player.getPlayerPosition());
+    healthBar.draw(g);
     for (Entity b : items) {
       b.draw(g);
     }
     player.draw(g);
+
+
   }
 
-  public void addPlayer(String name,String id){
+  public void addPlayer(String name, String id) {
     //players.add(new Player(name, id, ));
   }
 

@@ -1,5 +1,6 @@
 package Main;
 
+import Hud.Hud;
 import States.StateManager;
 import java.awt.Color;
 import java.awt.Container;
