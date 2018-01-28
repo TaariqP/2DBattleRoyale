@@ -44,6 +44,7 @@ public class Game extends State {
   List<Key> keys;
   List<Bullet> bullets;
   private int seed;
+  List<Bullet> foreignbullets;
 
   public Game(int width, int height, StateManager manager){
     super("Game", width, height, manager);
@@ -61,6 +62,7 @@ public class Game extends State {
     makeItems();
     initKeys();
     bullets = new ArrayList<>();
+    foreignbullets = new ArrayList<>();
   }
 
   private void initKeys() {
@@ -76,6 +78,18 @@ public class Game extends State {
     keys.add(new Key(KeyEvent.VK_R));
     keys.add(new Key(KeyEvent.VK_F));
     keys.add(new Key(KeyEvent.VK_B));
+  }
+
+  public void addBullet(Bullet b) {
+    b.setCamera(camera);
+    foreignbullets.add(b);
+  }
+
+  public void refreshBullets() {
+    for (Bullet b : foreignbullets) {
+      bullets.add(b);
+    }
+    foreignbullets = new ArrayList<>();
   }
 
   private void initHUD() {
@@ -239,6 +253,7 @@ public class Game extends State {
       Bullet bullet = new Bullet(player.getWeapon().getAttackDamage(),
           player.getRotation(), player.getPlayerPosition(),
           camera, player.getID()); // generates
+      client.shoot(bullet);
       bullets.add(bullet);
     }
   }
@@ -261,6 +276,7 @@ public class Game extends State {
       b.draw(g);
     }
 
+    refreshBullets();
     for (Bullet b : bullets) {
       b.draw(g);
     }

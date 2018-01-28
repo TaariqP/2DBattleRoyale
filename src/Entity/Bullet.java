@@ -76,4 +76,7 @@ public class Bullet {
     }
   }
 
+  public void setCamera(Camera c) {
+    this.camera = camera;
+  }
 }

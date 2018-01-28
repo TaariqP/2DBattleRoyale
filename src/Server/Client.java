@@ -1,9 +1,11 @@
 package Server;
 
+import Entity.Bullet;
 import Entity.Player;
 import Entity.PlayerState;
 import Server.Packet.PacketJoin;
 import Server.Packet.PacketMove;
+import Server.Packet.PacketShot;
 import States.Camera;
 import States.Clickable;
 import States.Game;
@@ -81,7 +83,8 @@ public class Client extends Thread{
         playerMap.put(parts[2],p3);
         break;
       case "05":
-        
+        System.out.println("Receiving bullet");
+        game.addBullet(new Bullet(parts[1], ));
         break;
       case "06":
         game.setSeed(Integer.valueOf(parts[1]));
@@ -107,5 +110,8 @@ public class Client extends Thread{
   public void move(String id, int x, int y, double rot, PlayerState state){
     PacketMove move = new PacketMove(id, x, y, rot, state);
     sendData(move.getData());
+  }
+
+  public void shoot(Bullet b) {
   }
 }
