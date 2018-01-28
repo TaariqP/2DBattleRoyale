@@ -70,7 +70,7 @@ public class GameOver extends State {
         getManager().SwitchState(StateManager.Game_ID);
       }
     };
-    File file = new File("PNG/buttons/button_start.png");
+    File file = new File("PNG/buttons/button_pa.png");
     BufferedImage image = null;
     try {
       image = ImageIO.read(file);
@@ -78,7 +78,7 @@ public class GameOver extends State {
       e.printStackTrace();
     }
 
-    buttons.add(new Button("Start", image, super.getWidth() / 2 - image
+    buttons.add(new Button("Play again", image, super.getWidth() / 2 - image
         .getWidth() / 2, super.getHeight() / 2 + 120, startClick));
   }
 
