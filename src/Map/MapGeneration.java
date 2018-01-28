@@ -1,9 +1,10 @@
 package Map;
 
+import static Map.TileType.WALL;
+
 import Entity.Entity;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.security.PrivateKey;
 import java.util.Random;
 
 public class MapGeneration {
@@ -37,13 +38,19 @@ public class MapGeneration {
     out.flush();
     out.close();
     mapWithRandomElementsAdded(grassMapFile);
+    for (int i = 0; i < map.getTileWidth(); i++) {
+      map.setTileAtPosition(i, 0, WALL);
+      map.setTileAtPosition(i, map.getTileHeight() - 1, WALL);
+      map.setTileAtPosition(0,i,WALL);
+      map.setTileAtPosition(map.getTileWidth() - 1, i, WALL);
+    }
     generateMapFile(map);
   }
 
   private void generateMapFile(Map mapWithOtherElements) {
 
     PrintWriter out = null;
-    String grassMapFile =filename;
+    String grassMapFile = filename;
     try {
       out = new PrintWriter(grassMapFile);
     } catch (FileNotFoundException e) {
@@ -54,8 +61,10 @@ public class MapGeneration {
     out.println();
     for (int y = 0; y < mapWithOtherElements.getTileHeight(); y++) {
       for (int x = 0; x < mapWithOtherElements.getTileWidth(); x++) {
+
         out.print(mapWithOtherElements.getTileAtPosition(y, x).getTileType()
             .getRepresentation());
+
       }
       out.println();
     }
@@ -72,7 +81,8 @@ public class MapGeneration {
     final int LAKE_RATIO = 1;
     final int MAX_LAKE_SIZE = 128;
     final int MIN_LAKE_SIZE = 5;
-    int bound = map.getTileHeight() * map.getTileWidth() / (MAX_LAKE_SIZE * LAKE_RATIO);
+    int bound =
+        map.getTileHeight() * map.getTileWidth() / (MAX_LAKE_SIZE * LAKE_RATIO);
     int numberOfLakesOnMap = generator.nextInt(bound);
     for (int i = 0; i < numberOfLakesOnMap; i++) {
       int x = generator.nextInt(map.getTileWidth() - 1);
@@ -88,13 +98,13 @@ public class MapGeneration {
     final int MIN_BUSH_SIZE = 5;
     int numberOfBushesOnMap = generator.nextInt((map.getTileHeight() *
         map.getTileWidth() / (MAX_BUSH_SIZE * BUSH_RATIO)));
-    for (int i = 0; i <numberOfBushesOnMap; i++) {
+    for (int i = 0; i < numberOfBushesOnMap; i++) {
       int x = generator.nextInt(map.getTileWidth() - 1);
       int y = generator.nextInt(map.getTileHeight() - 1);
-      if (map.getTileAtPosition(x, y).getTileType() == TileType.GRASS){
+      if (map.getTileAtPosition(x, y).getTileType() == TileType.GRASS) {
         int maxLength = generator.nextInt(MAX_BUSH_SIZE - MIN_BUSH_SIZE) +
             MIN_BUSH_SIZE;
-        createPath(x, y, TileType.WALL, maxLength);
+        createPath(x, y, WALL, maxLength);
       }
     }
   }
