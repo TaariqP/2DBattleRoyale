@@ -27,7 +27,7 @@ public class Button implements Clickable {
 
   @Override
   public void click() {
-    
+
     c.click();
   }
 
