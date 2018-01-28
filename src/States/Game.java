@@ -6,6 +6,7 @@ import Entity.Pistol;
 import Entity.Entity;
 import Entity.Player;
 import Entity.dropCheck;
+import Entity.Player;
 import Hud.HealthBar;
 import Hud.Hud;
 import Hud.AmmoBar;
@@ -85,14 +86,15 @@ public class Game extends State {
   public void keyPressed(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
       int nextPlayerY = player.getPlayerPosition().getY() - 10;
-      if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY)) {
+      if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY) &&
+          !playersCrossed()) {
         player.getPlayerPosition().setY(nextPlayerY);
         camera.setY(player.getPlayerPosition().getY());
       }
     }
     if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
       int nextPlayerY = player.getPlayerPosition().getY() + 10;
-      if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY)) {
+      if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY) && !playersCrossed()) {
         player.getPlayerPosition().setY(nextPlayerY);
         camera.setY(player.getPlayerPosition().getY());
       }
@@ -100,7 +102,7 @@ public class Game extends State {
 
     if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
       int nextPlayerX = player.getPlayerPosition().getX() - 10;
-      if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY())) {
+      if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY()) && !playersCrossed()) {
         player.getPlayerPosition().setX(nextPlayerX);
         camera.setX(player.getPlayerPosition().getX());
       }
@@ -108,7 +110,8 @@ public class Game extends State {
     if (e.getKeyCode() == KeyEvent.VK_RIGHT
         || e.getKeyCode() == KeyEvent.VK_D) {
       int nextPlayerX = player.getPlayerPosition().getX() + 10;
-      if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY())) {
+      if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY()) &&
+          !playersCrossed()) {
         player.getPlayerPosition().setX(nextPlayerX);
         camera.setX(player.getPlayerPosition().getX());
       }
@@ -123,6 +126,17 @@ public class Game extends State {
   private boolean isGrassTile(int x, int y) {
     return map.getTileAtPosition(x / 64, y / 64).getTileType() ==
         TileType.GRASS;
+  }
+
+  private boolean playersCrossed() {
+    for (Player aPlayer : players) {
+      if (player.getID() != aPlayer.getID()) {
+        if (player.getBounds().intersects(aPlayer.getBounds())) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   private void attemptPickUp() {
