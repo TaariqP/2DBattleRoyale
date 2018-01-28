@@ -24,9 +24,10 @@ public class Bullet {
   private final int iY;
   private int x;
   private int y;
+  private int shooterID;
 
   public Bullet(int damage, double rotation,
-      Coordinate position, Camera camera) {
+      Coordinate position, Camera camera, int shooterID) {
     this.damage = damage;
     this.position = position;
     iX = position.getX();
@@ -42,6 +43,11 @@ public class Bullet {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    this.shooterID = shooterID;
+  }
+
+  public int getShooterID() {
+    return shooterID;
   }
 
   public int getDamage() {

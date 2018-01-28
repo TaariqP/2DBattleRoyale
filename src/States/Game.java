@@ -238,7 +238,7 @@ public class Game extends State {
       player.shoot(); // -1 off the ammo
       Bullet bullet = new Bullet(player.getWeapon().getAttackDamage(),
           player.getRotation(), player.getPlayerPosition(),
-          camera); // generates
+          camera, player.getID()); // generates
       bullets.add(bullet);
     }
   }
