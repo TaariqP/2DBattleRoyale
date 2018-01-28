@@ -184,6 +184,9 @@ public class Player {
     if (inventory.size() > 0 && health < MAX_HEALTH) {
       inventory.remove(0);
       health += 25;
+      if (health > 100) {
+        health = 100;
+      }
       return true;
     }
     return false;
