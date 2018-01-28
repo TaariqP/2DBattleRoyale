@@ -3,6 +3,7 @@ package Map;
 import Entity.Entity;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.security.PrivateKey;
 import java.util.Random;
 
 public class MapGeneration {
@@ -10,6 +11,7 @@ public class MapGeneration {
   private Map map;
   private static final int MAP_WIDTH = 128;
   private static final int MAP_HEIGHT = 128;
+  private String filename = "Maps/output.txt";
 
   public MapGeneration() {
     generateMap();
@@ -18,7 +20,7 @@ public class MapGeneration {
 
   public void generateMap() {
     PrintWriter out = null;
-    String grassMapFile = "Maps/generatormap.txt";
+    String grassMapFile = filename;
     try {
       out = new PrintWriter(grassMapFile);
     } catch (FileNotFoundException e) {
@@ -41,7 +43,7 @@ public class MapGeneration {
   private void generateMapFile(Map mapWithOtherElements) {
 
     PrintWriter out = null;
-    String grassMapFile = "Maps/output.txt";
+    String grassMapFile =filename;
     try {
       out = new PrintWriter(grassMapFile);
     } catch (FileNotFoundException e) {
@@ -137,10 +139,6 @@ public class MapGeneration {
       numberOfItems) {
 
     //TODO IMPLEMENT
-  }
-
-  public static void main(String[] args) {
-    MapGeneration test = new MapGeneration();
   }
 
 
