@@ -3,8 +3,12 @@ package States;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
-public class Button implements Clickable{
+public class Button implements Clickable {
 
   private String ID;
   private BufferedImage image;
@@ -23,7 +27,7 @@ public class Button implements Clickable{
 
   @Override
   public void click() {
-
+    
     c.click();
   }
 
