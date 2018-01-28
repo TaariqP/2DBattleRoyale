@@ -50,9 +50,9 @@ public class MapGeneration {
   private void generateMapFile(Map mapWithOtherElements) {
 
     PrintWriter out = null;
-    String grassMapFile = filename;
+    String mapFile = filename;
     try {
-      out = new PrintWriter(grassMapFile);
+      out = new PrintWriter(mapFile);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -61,8 +61,7 @@ public class MapGeneration {
     out.println();
     for (int y = 0; y < mapWithOtherElements.getTileHeight(); y++) {
       for (int x = 0; x < mapWithOtherElements.getTileWidth(); x++) {
-
-        out.print(mapWithOtherElements.getTileAtPosition(y, x).getTileType()
+        out.print(mapWithOtherElements.getTileAtPosition(x, y).getTileType()
             .getRepresentation());
 
       }
@@ -78,8 +77,8 @@ public class MapGeneration {
     Random generator = new Random();
     // lake ratio = 5 means a maximum of a fifth of the map can be taken up by
     // lakes
-    final int LAKE_RATIO = 1;
-    final int MAX_LAKE_SIZE = 128;
+    final int LAKE_RATIO = 2;
+    final int MAX_LAKE_SIZE = 64;
     final int MIN_LAKE_SIZE = 5;
     int bound =
         map.getTileHeight() * map.getTileWidth() / (MAX_LAKE_SIZE * LAKE_RATIO);
@@ -93,8 +92,8 @@ public class MapGeneration {
         createPath(x, y, TileType.WATER, maxLength);
       }
     }
-    final int BUSH_RATIO = 1;
-    final int MAX_BUSH_SIZE = 128;
+    final int BUSH_RATIO = 2;
+    final int MAX_BUSH_SIZE = 64;
     final int MIN_BUSH_SIZE = 5;
     int numberOfBushesOnMap = generator.nextInt((map.getTileHeight() *
         map.getTileWidth() / (MAX_BUSH_SIZE * BUSH_RATIO)));
@@ -144,13 +143,6 @@ public class MapGeneration {
       }
     }
   }
-
-  public void randomlyDistributeEntity(Entity entity, int
-      numberOfItems) {
-
-    //TODO IMPLEMENT
-  }
-
 
 }
 
