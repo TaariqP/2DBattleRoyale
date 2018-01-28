@@ -70,7 +70,9 @@ public class Client extends Thread{
     switch (dataString.substring(0,2)){
       case "02":
         Player p = playerMap.get(parts[1]);
+        
         p.move(Integer.valueOf(parts[2]),Integer.valueOf(parts[3]), Double.valueOf(parts[4]), parts[5]);
+
         break;
       case "03":
         System.out.println("Server sent a player back");

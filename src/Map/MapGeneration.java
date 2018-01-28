@@ -2,26 +2,30 @@ package Map;
 
 import static Map.TileType.WALL;
 
-import Entity.Entity;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Random;
 
 public class MapGeneration {
-/*
+
   private Map map;
   private static final int MAP_WIDTH = 128;
   private static final int MAP_HEIGHT = 128;
   private String filename = "Maps/output.txt";
+
   /*
   private static final int PLAYER_SPAWN;
   private static final int MIN_BOUND = PLAYER_SPAWN - 20;
   private static final int MAX_BOUND = PLAYER_SPAWN + 20;
+  */
   public MapGeneration() {
-    //this.filename = filename;
     generateMap();
   }
 
+  MapGeneration(String fileName) {
+      this.filename = fileName;
+      generateMap();
+  }
 
   public void generateMap() {
     PrintWriter out = null;
@@ -45,7 +49,7 @@ public class MapGeneration {
     for (int i = 0; i < map.getTileWidth(); i++) {
       map.setTileAtPosition(i, 0, WALL);
       map.setTileAtPosition(i, map.getTileHeight() - 1, WALL);
-      map.setTileAtPosition(0,i,WALL);
+      map.setTileAtPosition(0, i, WALL);
       map.setTileAtPosition(map.getTileWidth() - 1, i, WALL);
     }
     generateMapFile(map);
@@ -147,6 +151,5 @@ public class MapGeneration {
       }
     }
   }
-  */
 }
 

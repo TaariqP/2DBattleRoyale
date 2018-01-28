@@ -1,6 +1,7 @@
 package Server.TCPServer;
 
 import Entity.Player;
+import Entity.PlayerState;
 import Server.Client;
 import Server.Packet.PacketJoin;
 import Server.Packet.PacketMove;
@@ -32,7 +33,8 @@ public class TCPClient extends NetworkController{
     switch (clientSentence.substring(0,2)){
       case "02":
         Player p = playerMap.get(parts[1]);
-        //p.move(Integer.valueOf(parts[2]),Integer.valueOf(parts[3]), Double.valueOf(parts[4]));
+        p.move(Integer.valueOf(parts[2]),Integer.valueOf(parts[3]), Double
+            .valueOf(parts[4]), parts[5]);
         break;
       case "03":
         System.out.println("Server sent a player back");
@@ -55,8 +57,8 @@ public class TCPClient extends NetworkController{
     connection.sendData(join.toString());
   }
 
-  public void move(String id, int x, int y, double rot) {
-    //PacketMove move = new PacketMove(id, x, y, rot);
-    //connection.sendData(move.toString());
+  public void move(String id, int x, int y, double rot, PlayerState state) {
+    PacketMove move = new PacketMove(id, x, y, rot, state);
+    connection.sendData(move.toString());
   }
 }

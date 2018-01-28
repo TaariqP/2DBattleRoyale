@@ -39,7 +39,7 @@ public class Server {
 			 * local Port 5555, with the maximum length of the queue of incoming
 			 * connections
 			 */
-      server = new ServerSocket(5555, 100);
+      server = new ServerSocket(1337, 100);
       while (true) {
         try {
           waitForConnection();

@@ -51,7 +51,6 @@ public class Game extends State {
     camera = new Camera(64 * 64, 64 * 64);
     map = new Map("Maps/" + seed + ".txt",
         camera);
-    System.out.println(this.seed);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height, true);
     players = new ArrayList<>();
@@ -105,6 +104,10 @@ public class Game extends State {
     }
   }
 
+  public void restart() {
+    player.setHealth(100);
+  }
+
   private void makeItems() {
     items = new ArrayList<>();
     Random location = new Random();
@@ -125,8 +128,19 @@ public class Game extends State {
 
   }
 
+  public void checkBulletHits() {
+    for (Bullet b : bullets) {
+      for (Player p : players) {
+        if (p.getBounds().intersects(b.getBounds())) {
+          p.takeDamage(b.getDamage());
+        }
+      }
+    }
+  }
+
   @Override
   public void update() {
+    checkBulletHits();
     //player.takeDamage(1); //tests game over screen
     if (!player.isAlive()) {
       getManager().SwitchState(StateManager.GAME_OVER);
@@ -295,7 +309,7 @@ public class Game extends State {
 
     player.draw(g);
     for (Player p : players) {
-      if (p.getID() != player.getID()) {
+      if (p.getID() != player.getID() && p.isAlive()) {
         p.draw(g);
       }
     }
@@ -326,9 +340,9 @@ public class Game extends State {
   }
 
   public void setSeed(Integer seed) {
-    System.out.println("seed " + seed);
-    map = new Map("Maps/" + seed+".txt",
-        camera);
     this.seed = seed;
+    System.out.println("seed " + this.seed);
+    map = new Map("Maps/" + this.seed+".txt",
+        camera);
   }
 }
