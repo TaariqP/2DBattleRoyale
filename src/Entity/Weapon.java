@@ -19,6 +19,7 @@ public class Weapon extends Entity {
     this.CURRENT_CLIP = current_clip;
   }
 
+
   public String getWeaponName() {
     return weaponName;
   }
