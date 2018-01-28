@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -124,6 +125,14 @@ public class Server extends Thread{
           }
         }
         break;
+      case "07":
+        String[] partsss = datas.trim().split(",");
+        System.out.println("Heal");
+        for(Connects c : connects){
+          if(c.getIp() != address){
+            sendData(data, c.getIp(), c.getPort());
+          }
+        }
     }
 
   }

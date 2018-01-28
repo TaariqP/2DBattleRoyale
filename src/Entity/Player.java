@@ -230,5 +230,9 @@ public class Player {
   public PlayerState getState() {
     return state;
   }
+
+  public void heal() {
+    health += 25;
+  }
 }
 

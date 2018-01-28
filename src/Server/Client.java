@@ -87,7 +87,6 @@ public class Client extends Thread{
         break;
       case "05":
         if (ipAddress != address) {
-          System.out.println("Receiving bullet");
           game.addBullet(
               new Bullet(Integer.valueOf(parts[4]), Double.valueOf(parts[3]),
                   new Coordinate(Integer.valueOf(parts[1]),
@@ -97,6 +96,10 @@ public class Client extends Thread{
         break;
       case "06":
         game.setSeed(Integer.valueOf(parts[1]));
+        break;
+      case "07":
+        playerMap.get(parts[1]).heal();
+        break;
     }
 
   }
