@@ -36,7 +36,7 @@ public class Game extends State {
     camera = new Camera(64 * 64, 64 * 64);
     map = new Map("Maps/map.txt", camera);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
-        mousePos, camera, width, height);
+        mousePos, camera, width, height,true);
     this.width = width;
     this.height = height;
     makeItems();
@@ -61,7 +61,7 @@ public class Game extends State {
 
   @Override
   public void update() {
-    super.update();
+    player.update();
   }
 
   @Override

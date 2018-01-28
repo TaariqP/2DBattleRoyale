@@ -100,7 +100,7 @@ public class GameView extends Container implements Runnable, KeyListener,
   }
 
   private void update() {
-
+    manager.update();
   }
 
   public void keyTyped(KeyEvent e) {
