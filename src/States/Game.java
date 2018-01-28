@@ -80,8 +80,10 @@ public class Game extends State {
   }
 
   public void addBullet(Bullet b) {
-    b.setCamera(camera);
-    foreignbullets.add(b);
+    if (b.getShooterID() != player.getID()) {
+      b.setCamera(camera);
+      foreignbullets.add(b);
+    }
   }
 
   public void refreshBullets() {
