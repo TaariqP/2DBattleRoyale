@@ -18,6 +18,11 @@ public class Player {
 
   private final String PLAYER_NAME;
   private final PlayerType PLAYER_TYPE;
+
+  public int getID() {
+    return ID;
+  }
+
   private final int ID;
   private int health;
   private Coordinate playerPosition;

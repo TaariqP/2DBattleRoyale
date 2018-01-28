@@ -11,6 +11,7 @@ import Hud.Hud;
 import Map.Coordinate;
 import Map.Map;
 import Map.MapGeneration;
+import Server.Client;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -26,12 +27,14 @@ public class Game extends State {
   private Map map;
   private Camera camera;
   private Player player;
+  private Player player2;
   List<Entity> items;
   private int width;
   private int height;
   private Hud hud;
   private HealthBar healthBar;
   private List<Player> players;
+  private Client client;
 
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
@@ -40,6 +43,11 @@ public class Game extends State {
     map = new Map("Maps/output.txt", camera);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height,true);
+    players = new ArrayList<>();
+    camera = new Camera(64 * 64, 64 * 64);
+    map = new Map("Maps/map.txt", camera);
+    client = new Client(this);
+    client.requestPlayer();
     this.width = width;
     this.height = height;
     makeItems();
@@ -133,19 +141,36 @@ public class Game extends State {
 
   @Override
   public void draw(Graphics2D g) {
+    System.out.println("Drawing");
     map.draw(g);
     healthBar = new HealthBar(player, camera, player.getPlayerPosition());
     healthBar.draw(g);
     for (Entity b : items) {
       b.draw(g);
     }
-    player.draw(g);
 
-
+    for(Player p : players){
+      System.out.println(p.getPlayerPosition().getX() + " " +
+          p.getPlayerPosition().getY());
+      p.draw(g);
+    }
   }
 
-  public void addPlayer(String name, String id) {
-    //players.add(new Player(name, id, ));
+  public Player addPlayer(String name,String id, int x, int y){
+    Player p = new Player(name, Integer.valueOf(id), new Coordinate(x,y),null,camera,
+        width, height, false);
+    players.add(p);
+    System.out.println("Added player with id " + id);
+    System.out.println("Num of players " + players.size());
+    return p;
   }
 
+  public Player addPlayableplayer(String name,String id, int x, int y) {
+    Player p = new Player(name, Integer.valueOf(id), new Coordinate(x,y),
+        mousePos, camera, width, height, true);
+    player = p;
+    players.add(p);
+    System.out.println("Added player " + name);
+    return p;
+  }
 }
