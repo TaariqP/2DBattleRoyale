@@ -1,5 +1,7 @@
 package Entity;
 
+import Map.Coordinate;
+import Map.Tile;
 import States.Camera;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -9,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import Map.Coordinate;
+import java.util.Optional;
 import javax.imageio.ImageIO;
 
 public class Player {
@@ -34,6 +37,7 @@ public class Player {
   private Weapon weapon;
   private double rotation;
   private boolean isPlayable;
+  private int ammo;
 
   public Player(String PLAYER_NAME, int ID, Coordinate playerPosition,
       Coordinate mousePosition, Camera camera, int screenWidth, int
@@ -59,6 +63,7 @@ public class Player {
     weapon = null;
     this.rotation = 0;
     this.isPlayable = isPlayable;
+    this.ammo = 0;
   }
 
 
@@ -122,31 +127,62 @@ public class Player {
     }
   }
 
+  private void changeState() {
+    if (weapon.getWeaponName().equals("Machine Gun")) {
+      state = PlayerState.MACHINE;
+    } else if (weapon.getWeaponName().equals("pistol")) {
+      state = PlayerState.GUN;
+    }
+  }
+
   public int getHealth() {
     return health;
   }
 
+  public int getAmmo() {
+    return ammo;
+  }
 
   public String getName() {
     return PLAYER_NAME;
+  }
+
+  public void reload() {
+    if (equippedWeapon()) {
+      ammo = weapon.reload(ammo);
+    }
+  }
+
+  public void shoot() {
+    if (equippedWeapon() && weapon.CURRENT_CLIP > 0) {
+      weapon.shoot();
+    }
   }
 
   public boolean equippedWeapon() {
     return weapon != null;
   }
 
-  public boolean pickUp(Entity e) {
+  public dropCheck pickUp(Entity e) {
     if (e.type == EntityType.WEAPON && equippedWeapon()) {
-      return false;
+      dropCheck dc = new dropCheck(true, Optional.of(weapon));
+      weapon = (Weapon) e;
+      changeState();
+      return dc;
     } else if (inventory.size() >= MAX_BAG_SIZE) {
-      return false;
-    } else {
+      return new dropCheck(false, Optional.empty());
+    }
+    else {
       if (e.type == EntityType.WEAPON) {
         weapon = (Weapon) e;
-        return true;
-      } else {
+        changeState();
+        return new dropCheck(true, Optional.empty());
+      } else if (e.type == EntityType.AMMO) {
+        ammo += ((AmmoBox) e).getAddAmmo();
+        return new dropCheck(true, Optional.empty());
+      }else {
         inventory.add(e);
-        return true;
+        return new dropCheck(true, Optional.empty());
       }
     }
   }

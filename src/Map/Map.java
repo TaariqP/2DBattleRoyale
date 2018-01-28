@@ -12,13 +12,13 @@ public class Map {
 
   private Tile[][] map;
   private Camera camera;
+  private static final int PIXEL_SIZE = 64;
   private final String fileName;
   private int width;
   private int height;
 
   public Map(String fileName) {
-    this.fileName = fileName;
-    this.camera = new Camera(64*64, 64*64);
+    this(fileName, new Camera(PIXEL_SIZE*PIXEL_SIZE, PIXEL_SIZE*PIXEL_SIZE));
   }
 
   public Map(String fileName, Camera camera) {
@@ -28,12 +28,21 @@ public class Map {
   }
 
   public int getWidth() {
-    return map.length * 64;
+    return map.length * PIXEL_SIZE;
   }
 
   public int getHeight() {
-    return map[0].length * 64;
+    return map[0].length * PIXEL_SIZE;
   }
+
+  public int getTileHeight(){
+    return height;
+  }
+
+  public int getTileWidth(){
+    return width;
+  }
+
 
 
   public void convertStringToMap() {

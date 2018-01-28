@@ -5,8 +5,12 @@ import Entity.MachineGun;
 import Entity.Pistol;
 import Entity.Entity;
 import Entity.Player;
+import Entity.dropCheck;
+import Hud.HealthBar;
+import Hud.Hud;
 import Map.Coordinate;
 import Map.Map;
+import Map.MapGeneration;
 import Server.Client;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -27,19 +31,23 @@ public class Game extends State {
   List<Entity> items;
   private int width;
   private int height;
+  private Hud hud;
+  private HealthBar healthBar;
   private List<Player> players;
   private Client client;
 
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
+    MapGeneration randMap = new MapGeneration();
+    camera = new Camera(64 * 64, 64 * 64);
+    map = new Map("Maps/output.txt", camera);
+    player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
+        mousePos, camera, width, height,true);
     players = new ArrayList<>();
     camera = new Camera(64 * 64, 64 * 64);
     map = new Map("Maps/map.txt", camera);
-    //player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
-    //    mousePos, camera, width, height,true);
     client = new Client(this);
     client.requestPlayer();
-
     this.width = width;
     this.height = height;
     makeItems();
@@ -72,21 +80,23 @@ public class Game extends State {
     super.init();
   }
 
+
   public void keyPressed(KeyEvent e) {
-    if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W){
+    if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
       player.getPlayerPosition().setY(player.getPlayerPosition().getY() - 10);
       camera.setY(player.getPlayerPosition().getY());
     }
-    if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S){
+    if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
       player.getPlayerPosition().setY(player.getPlayerPosition().getY() + 10);
       camera.setY(player.getPlayerPosition().getY());
     }
 
-    if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A){
+    if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
       player.getPlayerPosition().setX(player.getPlayerPosition().getX() - 10);
       camera.setX(player.getPlayerPosition().getX());
     }
-    if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D){
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT
+        || e.getKeyCode() == KeyEvent.VK_D) {
       player.getPlayerPosition().setX(player.getPlayerPosition().getX() + 10);
       camera.setX(player.getPlayerPosition().getX());
     }
@@ -97,13 +107,21 @@ public class Game extends State {
   }
 
   private void attemptPickUp() {
-    for (Iterator<Entity> it = items.iterator(); it.hasNext();) {
+    List<Entity> returned = new ArrayList<>();
+    for (Iterator<Entity> it = items.iterator(); it.hasNext(); ) {
       Entity e = it.next();
       Rectangle b1 = player.getBounds();
       Rectangle b2 = e.getBounds();
       if (b1.intersects(b2)) {
-        if(player.pickUp(e));
-        it.remove();
+        dropCheck dc = player.pickUp(e);
+        if (dc.isHasPickedUp()) {
+          it.remove();
+          if (dc.existsReturnedItem()) {
+            Entity e2 = dc.getReturnedItem();
+            e2.setPosition(e.getPosition());
+            returned.add(e2);
+          }
+        }
       }
     }
   }
@@ -119,9 +137,13 @@ public class Game extends State {
     mousePos.setY(mouseEvent.getY());
   }
 
+
+
   @Override
   public void draw(Graphics2D g) {
     map.draw(g);
+    healthBar = new HealthBar(player, camera, player.getPlayerPosition());
+    healthBar.draw(g);
     for (Entity b : items) {
       b.draw(g);
     }
