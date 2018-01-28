@@ -184,7 +184,9 @@ public class Game extends State {
         player.reload();
       }
       if (k.getKey() == KeyEvent.VK_B && k.isPressed()) {
-        player.useBandage();
+        if (player.useBandage()) {
+          client.heal();
+        };
       }
       client.move(Integer.toString(player.getID()),
           player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
