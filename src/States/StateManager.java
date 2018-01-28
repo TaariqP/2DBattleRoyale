@@ -16,12 +16,14 @@ public class StateManager {
   Map<String, State> states = new HashMap<>();
   public static final String Menu_ID = "Menu";
   public static final String Game_ID = "Game";
+  public static final String GAME_OVER = "Game Over!";
   public StateManager(int width, int height){
     this.width = width;
     this.height = height;
     CurrentStateId = Menu_ID;
     states.put(Menu_ID, new Menu(width, height, this));
     states.put(Game_ID, new Game(width, height, this));
+    states.put(GAME_OVER, new GameOver(width, height, this));
   }
 
 

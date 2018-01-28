@@ -85,10 +85,12 @@ public class Player {
     double drawX = onScreenX - currentState.getWidth() / 2;
     double drawY = onScreenY - currentState.getHeight() / 2;
 
+    AffineTransform old = new AffineTransform();
     AffineTransform at = new AffineTransform();
     at.rotate(rotation, onScreenX, onScreenY);
     at.translate(drawX, drawY);
     graphics.drawImage(currentState, at, null);
+    graphics.setTransform(old);
     graphics.drawString(PLAYER_NAME, (int) drawX - currentState.getWidth() / 5,
         (int)
             drawY);
@@ -106,6 +108,14 @@ public class Player {
 
   public void setPlayerPosition(Coordinate playerPosition) {
     this.playerPosition = playerPosition;
+  }
+
+  public void takeDamage(int d) {
+    this.health -= d;
+  }
+
+  public boolean isAlive() {
+    return health > 0;
   }
 
   public void setHealth(int health) {

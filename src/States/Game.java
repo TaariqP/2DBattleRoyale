@@ -105,6 +105,10 @@ public class Game extends State {
 
   @Override
   public void update() {
+    player.takeDamage(1); //tests game over screen
+    if (!player.isAlive()) {
+      getManager().SwitchState(StateManager.GAME_OVER);
+    }
     player.update();
     for (Key k : keys) {
       if ((k.getKey() == KeyEvent.VK_UP && k.isPressed()) || (k.getKey() ==
@@ -238,6 +242,7 @@ public class Game extends State {
   @Override
   public void draw(Graphics2D g) {
     map.draw(g);
+
     for (Entity b : items) {
       b.draw(g);
     }

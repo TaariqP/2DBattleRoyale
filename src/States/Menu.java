@@ -84,7 +84,7 @@ public class Menu extends State {
     Clickable exitClick = new Clickable() {
       @Override
       public void click() {
-
+        System.exit(0);
       }
     };
     File file = new File("PNG/buttons/button_exit.png");
