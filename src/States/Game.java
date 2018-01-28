@@ -190,7 +190,7 @@ public class Game extends State {
   private void dealDamage() {
     for(Bullet b : bullets){
       for(Player p : players){
-        if(b.getBounds().intersects(p.getBounds().intersection(p.getBounds())) && b.getShooterID() != p.getID()){
+        if(b.getBounds().intersects(p.getBounds().intersection(p.getBounds())) && b.getShooterID() !=p.getID()){
           p.takeDamage(b.getDamage());
         }
       }

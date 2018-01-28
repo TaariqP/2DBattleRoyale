@@ -77,7 +77,7 @@ public class Server extends Thread{
         System.out.println("A player has joined");
         connects.add(new Connects(address, port));
 
-        Player play = new Player(datas.substring(2), id,
+        Player play = new Player("Player " + id, id,
             new Coordinate(64*64, 64*64)
             , null, null,0, 0, false);
         players.put(play, address);
@@ -98,7 +98,7 @@ public class Server extends Thread{
         }
         for(Connects c : connects){
           if(c.getIp() != address){
-            PacketOtherPlayer other = new PacketOtherPlayer("Dave", id, 64*64, 64*64);
+            PacketOtherPlayer other = new PacketOtherPlayer("Player " + id, id, 64*64, 64*64);
             sendData(other.getData(), c.getIp(), c.getPort());
           }
         }
@@ -115,7 +115,7 @@ public class Server extends Thread{
         break;
       case "05":
         System.out.println("Shot");
-        String[] partss = datas.split(",");
+        String[] partss = datas.trim().split(",");
         bullets.add(new Bullet(Integer.valueOf(partss[4]), Double.valueOf(partss[3]), new Coordinate(Integer.valueOf(partss[1]), Integer.valueOf(partss[2])),
             null, Integer.valueOf(partss[5])));
         for(Connects c : connects){
