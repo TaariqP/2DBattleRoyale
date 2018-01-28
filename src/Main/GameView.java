@@ -112,6 +112,7 @@ public class GameView extends Container implements Runnable, KeyListener,
   }
 
   public void keyReleased(KeyEvent e) {
+    manager.keyReleased(e);
   }
 
   @Override

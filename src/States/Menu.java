@@ -121,6 +121,11 @@ public class Menu extends State {
 
   }
 
+  @Override
+  public void keyReleased(KeyEvent e) {
+
+  }
+
   public void clickAt(MouseEvent e) {
     for (Button b : buttons) {
       b.clickAt(e);
