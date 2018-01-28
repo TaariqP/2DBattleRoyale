@@ -192,5 +192,9 @@ public class Player {
     playerPosition.setY(y);
     rotation = rot;
   }
+
+  public double getRotation() {
+    return rotation;
+  }
 }
 

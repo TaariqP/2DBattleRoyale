@@ -13,6 +13,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Client extends Thread{
@@ -29,6 +30,7 @@ public class Client extends Thread{
 
   public Client(Game game){
     this.game = game;
+    playerMap = new HashMap<>();
     try {
       socket = new DatagramSocket();
       ipAddress = InetAddress.getByName("129.31.184.75");
@@ -81,8 +83,8 @@ public class Client extends Thread{
         break;
       case "04":
         System.out.println("Server sent back another player");
-        Player p = game.addPlayer(parts[1], parts[2], Integer.valueOf(parts[3]), Integer.valueOf(parts[4]));
-        playerMap.put(parts[2],p);
+        Player p3 = game.addPlayer(parts[1], parts[2], Integer.valueOf(parts[3]), Integer.valueOf(parts[4]));
+        playerMap.put(parts[2],p3);
     }
 
   }
@@ -100,5 +102,10 @@ public class Client extends Thread{
     PacketJoin join = new PacketJoin();
     sendData(join.getData());
     System.out.println("Requested player");
+  }
+
+  public void move(String id, int x, int y, double rot){
+    PacketMove move = new PacketMove(id, x, y, rot);
+    sendData(move.getData());
   }
 }

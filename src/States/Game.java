@@ -44,8 +44,6 @@ public class Game extends State {
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height,true);
     players = new ArrayList<>();
-    camera = new Camera(64 * 64, 64 * 64);
-    map = new Map("Maps/map.txt", camera);
     client = new Client(this);
     client.requestPlayer();
     this.width = width;
@@ -104,6 +102,8 @@ public class Game extends State {
     if (e.getKeyCode() == KeyEvent.VK_F) {
       attemptPickUp();
     }
+    client.move(Integer.toString(player.getID()) ,player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
+        player.getRotation());
   }
 
   private void attemptPickUp() {
