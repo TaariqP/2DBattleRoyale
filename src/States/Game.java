@@ -51,7 +51,6 @@ public class Game extends State {
     camera = new Camera(64 * 64, 64 * 64);
     map = new Map("Maps/" + seed + ".txt",
         camera);
-    System.out.println(this.seed);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height, true);
     players = new ArrayList<>();
@@ -341,9 +340,9 @@ public class Game extends State {
   }
 
   public void setSeed(Integer seed) {
-    System.out.println("seed " + seed);
-    map = new Map("Maps/" + seed+".txt",
-        camera);
     this.seed = seed;
+    System.out.println("seed " + this.seed);
+    map = new Map("Maps/" + this.seed+".txt",
+        camera);
   }
 }
