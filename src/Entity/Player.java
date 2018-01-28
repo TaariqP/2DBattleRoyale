@@ -108,6 +108,14 @@ public class Player {
     this.playerPosition = playerPosition;
   }
 
+  public void takeDamage(int d) {
+    this.health -= d;
+  }
+
+  public boolean isAlive() {
+    return health > 0;
+  }
+
   public void setHealth(int health) {
     this.health = health;
   }
