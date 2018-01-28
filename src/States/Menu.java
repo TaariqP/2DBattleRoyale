@@ -49,7 +49,7 @@ public class Menu extends State {
   }
 
   private void moveMap() {
-    if (location.getX() < 128*64 - getWidth()) {
+    if (location.getX() < 128 * 64 - getWidth()) {
       location.setX(location.getX() + 4);
     } else {
       location.setX(0);
@@ -132,7 +132,7 @@ public class Menu extends State {
     Clickable helpClick = new Clickable() {
       @Override
       public void click() {
-
+        getManager().SwitchState(StateManager.Help_ID);
       }
     };
     File file = new File("PNG/buttons/button_help.png");
