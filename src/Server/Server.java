@@ -84,7 +84,7 @@ public class Server extends Thread{
           Connects connect = getConnectFromIp(players.get(pl));
           PacketOtherPlayer other = new PacketOtherPlayer(pl.getName(),
               pl.getID(), pl.getPlayerPosition().getX(), pl.getPlayerPosition().getY());
-          sendData(other.getData(), connect.getIp(), connect.getPort());
+          sendData(other.getData(), address, port);
         }
         for(Connects c : connects){
           if(c.getIp() != address){
@@ -96,9 +96,9 @@ public class Server extends Thread{
       case "02":
         String[] parts = datas.split(",");
         System.out.print("Player moved " + playersIdMap.get(parts[1]).getName());
-        PacketMove move = new PacketMove(Integer.valueOf(parts[2]), Integer.valueOf(parts[3]), parts[1]);
+
         for(Connects cs: connects){
-          sendData(move.getData(), cs.getIp(), cs.getPort());
+          sendData(data, cs.getIp(), cs.getPort());
         }
     }
 

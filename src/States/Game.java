@@ -12,6 +12,7 @@ import Hud.AmmoBar;
 import Map.Coordinate;
 import Map.Map;
 import Map.MapGeneration;
+import Map.TileType;
 import Server.Client;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -46,7 +47,6 @@ public class Game extends State {
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height, true);
     players = new ArrayList<>();
-    camera = new Camera(64 * 64, 64 * 64);
     client = new Client(this);
     client.requestPlayer();
     this.width = width;
@@ -84,27 +84,45 @@ public class Game extends State {
 
   public void keyPressed(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-      player.getPlayerPosition().setY(player.getPlayerPosition().getY() - 10);
-      camera.setY(player.getPlayerPosition().getY());
+      int nextPlayerY = player.getPlayerPosition().getY() - 10;
+      if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY)) {
+        player.getPlayerPosition().setY(nextPlayerY);
+        camera.setY(player.getPlayerPosition().getY());
+      }
     }
     if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-      player.getPlayerPosition().setY(player.getPlayerPosition().getY() + 10);
-      camera.setY(player.getPlayerPosition().getY());
+      int nextPlayerY = player.getPlayerPosition().getY() + 10;
+      if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY)) {
+        player.getPlayerPosition().setY(nextPlayerY);
+        camera.setY(player.getPlayerPosition().getY());
+      }
     }
 
     if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-      player.getPlayerPosition().setX(player.getPlayerPosition().getX() - 10);
-      camera.setX(player.getPlayerPosition().getX());
+      int nextPlayerX = player.getPlayerPosition().getX() - 10;
+      if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY())) {
+        player.getPlayerPosition().setX(nextPlayerX);
+        camera.setX(player.getPlayerPosition().getX());
+      }
     }
     if (e.getKeyCode() == KeyEvent.VK_RIGHT
         || e.getKeyCode() == KeyEvent.VK_D) {
-      player.getPlayerPosition().setX(player.getPlayerPosition().getX() + 10);
-      camera.setX(player.getPlayerPosition().getX());
+      int nextPlayerX = player.getPlayerPosition().getX() + 10;
+      if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY())) {
+        player.getPlayerPosition().setX(nextPlayerX);
+        camera.setX(player.getPlayerPosition().getX());
+      }
     }
-
     if (e.getKeyCode() == KeyEvent.VK_F) {
       attemptPickUp();
     }
+    client.move(Integer.toString(player.getID()) ,player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
+        player.getRotation());
+  }
+
+  private boolean isGrassTile(int x, int y) {
+    return map.getTileAtPosition(x / 64, y / 64).getTileType() ==
+        TileType.GRASS;
   }
 
   private void attemptPickUp() {
@@ -139,12 +157,13 @@ public class Game extends State {
   public void mouseMoved(MouseEvent mouseEvent) {
     mousePos.setX(mouseEvent.getX());
     mousePos.setY(mouseEvent.getY());
+    client.move(Integer.toString(player.getID()) ,player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
+        player.getRotation());
   }
 
 
   @Override
   public void draw(Graphics2D g) {
-    System.out.println("Drawing");
     map.draw(g);
     healthBar = new HealthBar(player, camera, player.getPlayerPosition());
     ammoBar = new AmmoBar(player);
@@ -154,9 +173,7 @@ public class Game extends State {
       b.draw(g);
     }
 
-    for (Player p : players) {
-      System.out.println(p.getPlayerPosition().getX() + " " +
-          p.getPlayerPosition().getY());
+    for(Player p : players){
       p.draw(g);
     }
   }

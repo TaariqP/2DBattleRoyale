@@ -83,6 +83,7 @@ public class Player {
     double onScreenY = playerPosition.getY() - camera.getY() + 480;
     double drawX = onScreenX - currentState.getWidth() / 2;
     double drawY = onScreenY - currentState.getHeight() / 2;
+
     AffineTransform at = new AffineTransform();
     at.rotate(rotation, onScreenX, onScreenY);
     at.translate(drawX, drawY);
@@ -185,6 +186,16 @@ public class Player {
         return new dropCheck(true, Optional.empty());
       }
     }
+  }
+
+  public void move(int x, int y, double rot) {
+    playerPosition.setX(x);
+    playerPosition.setY(y);
+    rotation = rot;
+  }
+
+  public double getRotation() {
+    return rotation;
   }
 }
 
