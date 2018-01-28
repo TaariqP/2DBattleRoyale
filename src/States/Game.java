@@ -190,9 +190,6 @@ public class Game extends State {
           client.heal(String.valueOf(player.getID()));
         }
       }
-      client.move(Integer.toString(player.getID()),
-          player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
-          player.getRotation(), player.getState());
     }
   }
 
@@ -219,6 +216,10 @@ public class Game extends State {
 
 
   public void keyPressed(KeyEvent e) {
+    client.move(Integer.toString(player.getID()),
+        player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
+        player.getRotation(), player.getState());
+
     for (Key k : keys) {
       if (e.getKeyCode() == k.getKey()) {
         k.Press();
@@ -297,6 +298,7 @@ public class Game extends State {
 
   @Override
   public void draw(Graphics2D g) {
+
     map.draw(g);
 
     for (Iterator<Entity> et = items.iterator(); et.hasNext(); ) {
