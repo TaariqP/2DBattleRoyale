@@ -177,6 +177,17 @@ public class Player {
     }
   }
 
+  public int inventorySize() {
+    return inventory.size();
+  }
+
+  public void useBandage() {
+    if (inventory.size() > 0) {
+      inventory.remove(0);
+      health += 25;
+    }
+  }
+
   public boolean equippedWeapon() {
     return weapon != null;
   }
