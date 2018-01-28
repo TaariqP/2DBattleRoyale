@@ -1,5 +1,5 @@
 package Entity;
 
 public enum EntityType {
-  ITEM, NONE, PLAYER, WEAPON;
+  ITEM, NONE, WEAPON, AMMO;
 }

@@ -5,6 +5,7 @@ import Entity.MachineGun;
 import Entity.Pistol;
 import Entity.Entity;
 import Entity.Player;
+import Entity.dropCheck;
 import Map.Coordinate;
 import Map.Map;
 import java.awt.Graphics2D;
@@ -90,14 +91,26 @@ public class Game extends State {
   }
 
   private void attemptPickUp() {
+    List<Entity> returned = new ArrayList<>();
     for (Iterator<Entity> it = items.iterator(); it.hasNext();) {
       Entity e = it.next();
+      Coordinate c = e.getPosition();
       Rectangle b1 = player.getBounds();
       Rectangle b2 = e.getBounds();
       if (b1.intersects(b2)) {
-        if(player.pickUp(e));
-        it.remove();
+        dropCheck dc = player.pickUp(e);
+        if(dc.isHasPickedUp()) {
+          it.remove();
+        }
+        if (dc.existsReturnedItem()) {
+          Entity returnedItem = dc.getReturnedItem();
+          returnedItem.setPosition(c);
+          returned.add(returnedItem);
+        }
       }
+    }
+    for (Entity e : returned) {
+      items.add(e);
     }
   }
 

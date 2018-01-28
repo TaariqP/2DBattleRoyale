@@ -17,6 +17,10 @@ public class Entity {
     this.type = type;
   }
 
+  public void setPosition(Coordinate c) {
+    this.position = c;
+  }
+
   public Coordinate getPosition() {
     return position;
   }
