@@ -155,6 +155,8 @@ public class Game extends State {
   public void mouseMoved(MouseEvent mouseEvent) {
     mousePos.setX(mouseEvent.getX());
     mousePos.setY(mouseEvent.getY());
+    client.move(Integer.toString(player.getID()) ,player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
+        player.getRotation());
   }
 
 
