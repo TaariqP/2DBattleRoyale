@@ -36,8 +36,8 @@ public class Menu extends State {
   private void pickaMap() {
     location = new Camera(64 * 64, 64 * 64);
     Random picker = new Random();
-    int m = picker.nextInt(270);
-    map = new Map("Maps/map" + String.valueOf(m) + ".txt", location);
+    int m = picker.nextInt(10);
+    map = new Map("Maps/" + String.valueOf(m) + ".txt", location);
   }
 
   private void moveMap() {

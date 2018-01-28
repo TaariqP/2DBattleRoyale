@@ -39,8 +39,8 @@ public class GameOver extends State {
   private void pickaMap() {
     deathcamera = new Camera(64 * 64, 64 * 64);
     Random picker = new Random();
-    int m = picker.nextInt(270);
-    endmap = new Map("Maps/map" + String.valueOf(m) + ".txt", deathcamera);
+    int m = picker.nextInt(10);
+    endmap = new Map("Maps/" + String.valueOf(m) + ".txt", deathcamera);
   }
 
   private void moveMap() {
