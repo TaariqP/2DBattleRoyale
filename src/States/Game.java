@@ -105,7 +105,7 @@ public class Game extends State {
 
   @Override
   public void update() {
-    //player.takeDamage(1); //tests game over screen
+    player.takeDamage(1); //tests game over screen
     if (!player.isAlive()) {
       getManager().SwitchState(StateManager.GAME_OVER);
     }
