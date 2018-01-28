@@ -1,6 +1,7 @@
 package Server;
 
 import Entity.Player;
+import Entity.PlayerState;
 import Server.Packet.PacketJoin;
 import Server.Packet.PacketMove;
 import States.Camera;
@@ -62,9 +63,7 @@ public class Client extends Thread{
 
   private void HandlePacket(byte[] data, InetAddress address, int port) {
     String dataString = new String(data).trim();
-    System.out.println("got stuff " + dataString);
     String[] parts = dataString.split(",");
-    System.out.println("switch: " + dataString.substring(0,2));
     switch (dataString.substring(0,2)){
       case "02":
         Player p = playerMap.get(parts[1]);
@@ -102,8 +101,8 @@ public class Client extends Thread{
     System.out.println("Requested player");
   }
 
-  public void move(String id, int x, int y, double rot){
-    PacketMove move = new PacketMove(id, x, y, rot);
+  public void move(String id, int x, int y, double rot, PlayerState state){
+    PacketMove move = new PacketMove(id, x, y, rot, state);
     sendData(move.getData());
   }
 }

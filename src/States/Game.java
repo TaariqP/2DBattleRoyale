@@ -29,7 +29,6 @@ import java.util.Random;
 
 public class Game extends State {
 
-  private final static int NO_RANDOM_MAPS = 10;
   private final static int DEFAULT_SPEED = 5;
   private Coordinate mousePos = new Coordinate(0, 0);
   private Map map;
@@ -46,9 +45,6 @@ public class Game extends State {
   List<Bullet> bullets;
   private int seed;
 
-  //Random mapChooser = new Random(); needs to be done in server so all maps
-  // are same.
-
   public Game(int width, int height, StateManager manager){
     super("Game", width, height, manager);
     camera = new Camera(64 * 64, 64 * 64);
@@ -63,7 +59,6 @@ public class Game extends State {
     this.width = width;
     this.height = height;
     makeItems();
-    initHUD();
     initKeys();
     bullets = new ArrayList<>();
   }
@@ -89,6 +84,11 @@ public class Game extends State {
     HUD.add(new HealthBar(player, camera, player.getPlayerPosition()));
     HUD.add(new weaponBar(player));
     HUD.add(new BandageCount(player));
+    for (Player p : players) {
+      if (p.getID() != player.getID()) {
+        HUD.add(new HealthBar(p, camera, p.getPlayerPosition()));
+      }
+    }
   }
 
   private void makeItems() {
@@ -167,7 +167,7 @@ public class Game extends State {
       }
       client.move(Integer.toString(player.getID()),
           player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
-          player.getRotation());
+          player.getRotation(), player.getState());
     }
   }
 
@@ -249,7 +249,7 @@ public class Game extends State {
     mousePos.setY(mouseEvent.getY());
     client.move(Integer.toString(player.getID()),
         player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
-        player.getRotation());
+        player.getRotation(), player.getState());
   }
 
 
@@ -272,6 +272,7 @@ public class Game extends State {
       }
     }
 
+    initHUD();
     for (Hud h : HUD) {
       h.draw(g);
     }
@@ -297,6 +298,9 @@ public class Game extends State {
   }
 
   public void setSeed(Integer seed) {
+    System.out.println("seed " + seed);
+    map = new Map("Maps/" + seed+".txt",
+        camera);
     this.seed = seed;
   }
 }

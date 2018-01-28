@@ -17,13 +17,9 @@ import javax.imageio.ImageIO;
 
 public class Player {
 
+  private static final int MAX_HEALTH = 100;
   private final String PLAYER_NAME;
   private final PlayerType PLAYER_TYPE;
-
-  public int getID() {
-    return ID;
-  }
-
   private final int ID;
   private int health;
   private Coordinate playerPosition;
@@ -46,7 +42,7 @@ public class Player {
     this.PLAYER_NAME = PLAYER_NAME;
     this.ID = ID;
     this.playerPosition = playerPosition;
-    this.health = 100;
+    this.health = MAX_HEALTH;
     this.mousePosition = mousePosition;
     this.PLAYER_TYPE = PlayerType.randomType();
     this.state = PlayerState.STAND;
@@ -67,6 +63,9 @@ public class Player {
     this.ammo = 0;
   }
 
+  public int getID() {
+    return ID;
+  }
 
   public Rectangle getBounds() {
     return new Rectangle(playerPosition.getX(), playerPosition.getY(),
@@ -182,7 +181,7 @@ public class Player {
   }
 
   public void useBandage() {
-    if (inventory.size() > 0) {
+    if (inventory.size() > 0 && health < MAX_HEALTH) {
       inventory.remove(0);
       health += 25;
     }
@@ -216,14 +215,20 @@ public class Player {
     }
   }
 
-  public void move(int x, int y, double rot) {
+  public void move(int x, int y, double rot, String state) {
     playerPosition.setX(x);
     playerPosition.setY(y);
     rotation = rot;
+    this.state = PlayerState.valueOf(state);
+
   }
 
   public double getRotation() {
     return rotation;
+  }
+
+  public Entity.PlayerState getState() {
+    return state;
   }
 }
 
