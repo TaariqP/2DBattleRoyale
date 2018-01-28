@@ -46,6 +46,8 @@ public class GameOver extends State {
   private void moveMap() {
     if (deathcamera.getX() < 128 * 64 - getWidth()) {
       deathcamera.setX(deathcamera.getX() + 4);
+    } else {
+      deathcamera.setX(getWidth());
     }
   }
 
@@ -53,9 +55,7 @@ public class GameOver extends State {
   @Override
   public void draw(Graphics2D g) {
     moveMap();
-    if (deathcamera.getX() < 128 * 64 - getWidth()) {
       endmap.draw(g);
-    }
     g.setColor(Color.black);
     g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
     g.drawImage(image, super.getWidth() / 2 - image
