@@ -15,4 +15,8 @@ public class PacketYourPlayer extends Packet{
   public byte[] getData() {
     return ("03," + name + "," + Integer.toString(id)).getBytes();
   }
+
+  public String toString(){
+    return ("03," + name + "," + Integer.toString(id));
+  }
 }

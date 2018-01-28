@@ -85,6 +85,8 @@ public class Server extends Thread{
           PacketOtherPlayer other = new PacketOtherPlayer(pl.getName(),
               pl.getID(), pl.getPlayerPosition().getX(), pl.getPlayerPosition().getY());
           sendData(other.getData(), address, port);
+
+
         }
         for(Connects c : connects){
           if(c.getIp() != address){
@@ -95,7 +97,6 @@ public class Server extends Thread{
         break;
       case "02":
         String[] parts = datas.split(",");
-        System.out.print("Player moved " + playersIdMap.get(parts[1]).getName());
 
         for(Connects cs: connects){
           sendData(data, cs.getIp(), cs.getPort());

@@ -10,4 +10,8 @@ public class PacketJoin extends Packet{
     return "01".getBytes();
   }
 
+  public String toString(){
+    return "01";
+  }
+
 }

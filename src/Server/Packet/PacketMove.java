@@ -16,6 +16,8 @@ public class PacketMove {
     return ("02," + id + "," + Integer.toString(x) + "," + Integer.toString(y) + "," + Double.toString(rot)).getBytes();
   }
 
-
+  public String toString(){
+    return ("02," + id + "," + Integer.toString(x) + "," + Integer.toString(y) + "," + Double.toString(rot));
+  }
 
 }

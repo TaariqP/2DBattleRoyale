@@ -24,4 +24,9 @@ public class PacketOtherPlayer extends Packet {
     "," + Integer.toString(y)).getBytes();
   }
 
+  public String toString(){
+    return ("04,"+name + "," + Integer.toString(id) + "," + Integer.toString(x) +
+        "," + Integer.toString(y));
+  }
+
 }

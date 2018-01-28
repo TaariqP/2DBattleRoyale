@@ -23,11 +23,6 @@ public class Client extends Thread{
   private Game game;
 
 
-  public static void main(String[] args) {
-    Client c = new Client(null);
-  }
-
-
   public Client(Game game){
     this.game = game;
     playerMap = new HashMap<>();
