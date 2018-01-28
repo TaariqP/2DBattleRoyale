@@ -1,5 +1,7 @@
 package Entity;
 
+import Map.Coordinate;
+import Map.Tile;
 import States.Camera;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

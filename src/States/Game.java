@@ -10,6 +10,7 @@ import Hud.HealthBar;
 import Hud.Hud;
 import Map.Coordinate;
 import Map.Map;
+import Map.MapGeneration;
 import Server.Client;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -37,14 +38,16 @@ public class Game extends State {
 
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
+    MapGeneration randMap = new MapGeneration();
+    camera = new Camera(64 * 64, 64 * 64);
+    map = new Map("Maps/output.txt", camera);
+    player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
+        mousePos, camera, width, height,true);
     players = new ArrayList<>();
     camera = new Camera(64 * 64, 64 * 64);
     map = new Map("Maps/map.txt", camera);
-    //player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
-    //    mousePos, camera, width, height,true);
     client = new Client(this);
     client.requestPlayer();
-
     this.width = width;
     this.height = height;
     makeItems();
