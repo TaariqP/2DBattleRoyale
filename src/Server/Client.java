@@ -86,8 +86,14 @@ public class Client extends Thread{
         playerMap.put(parts[2],p3);
         break;
       case "05":
-        System.out.println("Receiving bullet");
-        game.addBullet(new Bullet(Integer.valueOf(parts[4]),Double.valueOf(parts[3]),new Coordinate(Integer.valueOf(parts[1]), Integer.valueOf(parts[2])), null, Integer.valueOf(parts[5])));
+        if (ipAddress != address) {
+          System.out.println("Receiving bullet");
+          game.addBullet(
+              new Bullet(Integer.valueOf(parts[4]), Double.valueOf(parts[3]),
+                  new Coordinate(Integer.valueOf(parts[1]),
+                      Integer.valueOf(parts[2])), null,
+                  Integer.valueOf(parts[5])));
+        }
         break;
       case "06":
         game.setSeed(Integer.valueOf(parts[1]));

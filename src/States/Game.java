@@ -128,19 +128,10 @@ public class Game extends State {
 
   }
 
-  public void checkBulletHits() {
-    for (Bullet b : bullets) {
-      for (Player p : players) {
-        if (p.getBounds().intersects(b.getBounds())) {
-          p.takeDamage(b.getDamage());
-        }
-      }
-    }
-  }
 
   @Override
   public void update() {
-    checkBulletHits();
+    dealDamage();
     //player.takeDamage(1); //tests game over screen
     if (!player.isAlive()) {
       getManager().SwitchState(StateManager.GAME_OVER);
@@ -202,10 +193,12 @@ public class Game extends State {
   }
 
   private void dealDamage() {
-    for(Bullet b : bullets){
+    for (Iterator<Bullet> bt = bullets.iterator(); bt.hasNext(); ) {
+      Bullet b = bt.next();
       for(Player p : players){
         if(b.getBounds().intersects(p.getBounds().intersection(p.getBounds())) && b.getShooterID() != p.getID()){
           p.takeDamage(b.getDamage());
+          bt.remove();
         }
       }
     }
