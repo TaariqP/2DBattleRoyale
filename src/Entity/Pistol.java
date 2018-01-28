@@ -17,13 +17,25 @@ public class Pistol extends Weapon {
 
   public Pistol(
       Coordinate position, Camera camera) {
-    super(position, weaponName, attackDamage, camera);
+    super(position, weaponName, attackDamage, camera, 9, 0);
     File location = new File("PNG/weapon_gun.png");
     image = null;
     try {
       image = ImageIO.read(location);
     } catch (IOException e) {
       e.printStackTrace();
+    }
+  }
+
+  @Override
+  public int reload(int ammo) {
+    if (ammo + super.CURRENT_CLIP <= 9) {
+      super.CURRENT_CLIP += ammo;
+      return 0;
+    } else {
+      ammo -= (9 - super.CURRENT_CLIP);
+      super.CURRENT_CLIP = 9;
+      return ammo;
     }
   }
 
@@ -38,9 +50,16 @@ public class Pistol extends Weapon {
     if (position.getX() >= camera.getX() - 2000 && position.getX() <= camera
         .getX() + 2000 && position.getY() >= camera.getY() - 2000 && position
         .getY() <= camera.getY() + 2000) {
-      g.drawImage(image, position.getX() - camera.getX(), position.getY() -
-              camera.getY(),
+      g.drawImage(image, position.getX() - camera.getX() + 640, position
+              .getY() -
+              camera.getY() + 480,
           null);
+      g.drawString("Pistol", position.getX() -
+              camera.getX
+                  () + 640 - image.getWidth() / 2,
+          position.getY
+              () -
+              camera.getY() + 480);
     }
   }
 }
