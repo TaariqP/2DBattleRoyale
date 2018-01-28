@@ -91,7 +91,7 @@ public class Game extends State {
           location
               .nextInt(map.getHeight())), camera));
     }
-    for (int i = 0; i < 128; i++) {
+    for (int i = 0; i < 60; i++) {
       items.add(new MachineGun(
           new Coordinate(location.nextInt(map.getWidth()),
               location.nextInt(map.getHeight())), camera));
@@ -105,7 +105,7 @@ public class Game extends State {
 
   @Override
   public void update() {
-    player.takeDamage(1); //tests game over screen
+    //player.takeDamage(1); //tests game over screen
     if (!player.isAlive()) {
       getManager().SwitchState(StateManager.GAME_OVER);
     }
