@@ -45,6 +45,11 @@ public class StateManager {
     getCurrentState().keyPressed(e);
   }
 
+  public void restart() {
+    CurrentStateId = Game_ID;
+    states.get(Game_ID).restart();
+  }
+
   public void keyReleased(KeyEvent e) {
     getCurrentState().keyReleased(e);
   }

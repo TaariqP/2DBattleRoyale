@@ -87,9 +87,7 @@ public class GameOver extends State {
     Clickable startClick = new Clickable() {
       @Override
       public void click() {
-        getManager().states.replace(StateManager.Game_ID, new Game(getWidth()
-            , getHeight(), getManager()));
-        getManager().SwitchState(StateManager.Game_ID);
+        getManager().restart();
       }
     };
     File file = new File("PNG/buttons/button_pa.png");

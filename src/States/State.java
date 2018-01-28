@@ -53,4 +53,7 @@ public abstract class State {
   }
 
   public abstract void mouseMoved(MouseEvent mouseEvent);
+
+  public void restart() {
+  }
 }
