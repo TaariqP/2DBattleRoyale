@@ -12,6 +12,7 @@ public class PacketOtherPlayer extends Packet {
     this.id = id;
     this.x = x;
     this.y = y;
+    this.name = name;
     System.out.println("constructor: id " + id + " x " + x + " y " + y);
 
   }
@@ -20,7 +21,7 @@ public class PacketOtherPlayer extends Packet {
     System.out.println("id " + id + " x " + x + " y " + y);
     System.out.println("04,"+name + "," + Integer.toString(id) + "," + Integer.toString(x) +
         "," + Integer.toString(y));
-    return ("04,"+name + "," + Integer.toString(id) + "," + Integer.toString(x) +
+    return ("04,"+ name + "," + Integer.toString(id) + "," + Integer.toString(x) +
     "," + Integer.toString(y)).getBytes();
   }
 
