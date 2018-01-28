@@ -18,8 +18,8 @@ public class MapGeneration {
   private static final int MIN_BOUND = PLAYER_SPAWN - 20;
   private static final int MAX_BOUND = PLAYER_SPAWN + 20;
 */
-  public MapGeneration(String filename) {
-    this.filename = filename;
+  public MapGeneration() {
+    //this.filename = filename;
     generateMap();
   }
 
