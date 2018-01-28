@@ -26,6 +26,11 @@ public class GameOver extends State {
   }
 
   @Override
+  public void keyReleased(KeyEvent e) {
+
+  }
+
+  @Override
   public void clickAt(MouseEvent mouseEvent) {
 
   }
