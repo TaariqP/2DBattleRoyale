@@ -1,6 +1,7 @@
 package Hud;
 
 import Entity.Player;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -30,8 +31,9 @@ public class AmmoBar extends Hud{
   public void draw(Graphics2D g) {
     value = player.getAmmo();
     g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+    g.setColor(Color.white);
     g.drawImage(image, 40, 50, null);
-    g.drawString(Integer.toString(value), 60, 40);
+    g.drawString(Integer.toString(value), 67, 40);
   }
 
 }

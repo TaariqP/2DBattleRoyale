@@ -1,16 +1,15 @@
 package States;
 
-import Entity.AmmoBox;
 import Entity.Bandage;
 import Entity.MachineGun;
 import Entity.Pistol;
 import Entity.Entity;
 import Entity.Player;
 import Entity.dropCheck;
+import Entity.Bullet;
 import Hud.HealthBar;
 import Hud.Hud;
 import Hud.AmmoBar;
-import Hud.weaponBar;
 import Map.Coordinate;
 import Map.Map;
 import Map.MapGeneration;
@@ -40,7 +39,6 @@ public class Game extends State {
   private AmmoBar ammoBar;
   private List<Player> players;
   private Client client;
-  List<Hud> HUD;
 
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
@@ -55,20 +53,12 @@ public class Game extends State {
     this.width = width;
     this.height = height;
     makeItems();
-    initHUD();
-  }
-
-  private void initHUD() {
-    HUD = new ArrayList<>();
-    HUD.add(new AmmoBar(player));
-    HUD.add(new HealthBar(player, camera, player.getPlayerPosition()));
-    HUD.add(new weaponBar(player));
   }
 
   private void makeItems() {
     items = new ArrayList<>();
     Random location = new Random();
-    for (int i = 0; i < 300; i++) {
+    for (int i = 0; i < 1000; i++) {
       items.add(new Bandage(new Coordinate(location.nextInt(map.getWidth()),
           location
               .nextInt(map.getHeight())), camera));
@@ -79,10 +69,7 @@ public class Game extends State {
               location.nextInt(map.getHeight())), camera));
       items.add(new Pistol(new Coordinate(location.nextInt(map.getWidth()),
           location.nextInt(map.getHeight())), camera));
-      items.add(new AmmoBox(new Coordinate(location.nextInt(map.getWidth()),
-          location.nextInt(map.getHeight())), camera));
     }
-
   }
 
   @Override
@@ -130,10 +117,8 @@ public class Game extends State {
     if (e.getKeyCode() == KeyEvent.VK_F) {
       attemptPickUp();
     }
-    if (e.getKeyCode() == KeyEvent.VK_R) {
-      player.reload();
-    }
-    client.move(Integer.toString(player.getID()) ,player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
+    client.move(Integer.toString(player.getID()),
+        player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
         player.getRotation());
   }
 
@@ -167,14 +152,22 @@ public class Game extends State {
 
   @Override
   public void clickAt(MouseEvent mouseEvent) {
-    player.shoot(mouseEvent);
+    if (player.canShoot()) {
+      player.shoot(mouseEvent); // -1 off the ammo
+      Bullet bullet = new Bullet(player.getWeapon(), mouseEvent,
+          player.getRotation(), player.getPlayerPosition()); // generates
+
+    } else {
+      return;
+    }
   }
 
   @Override
   public void mouseMoved(MouseEvent mouseEvent) {
     mousePos.setX(mouseEvent.getX());
     mousePos.setY(mouseEvent.getY());
-    client.move(Integer.toString(player.getID()) ,player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
+    client.move(Integer.toString(player.getID()),
+        player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
         player.getRotation());
   }
 
@@ -182,19 +175,15 @@ public class Game extends State {
   @Override
   public void draw(Graphics2D g) {
     map.draw(g);
+    healthBar = new HealthBar(player, camera, player.getPlayerPosition());
+    ammoBar = new AmmoBar(player);
+    healthBar.draw(g);
+    ammoBar.draw(g);
     for (Entity b : items) {
       b.draw(g);
     }
-
-    for(Player p : players){
-      player.draw(g);
-      if (p.getID() != player.getID()) {
-        p.draw(g);
-      }
-    }
-
-    for (Hud h : HUD) {
-      h.draw(g);
+    for (Player p : players) {
+      p.draw(g);
     }
   }
 

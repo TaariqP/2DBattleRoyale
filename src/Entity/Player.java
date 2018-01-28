@@ -156,6 +156,10 @@ public class Player {
     }
   }
 
+  public boolean canShoot() {
+    return (equippedWeapon() && weapon.CURRENT_CLIP > 0);
+  }
+
   public void shoot(MouseEvent mouseEvent) {
     if (equippedWeapon() && weapon.CURRENT_CLIP > 0) {
       weapon.shoot();
