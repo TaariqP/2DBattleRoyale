@@ -46,6 +46,10 @@ public class StateManager {
     getCurrentState().keyPressed(e);
   }
 
+  public void keyReleased(KeyEvent e) {
+    getCurrentState().keyReleased(e);
+  }
+
   public void clickAt(MouseEvent mouseEvent) {
     getCurrentState().clickAt(mouseEvent);
   }

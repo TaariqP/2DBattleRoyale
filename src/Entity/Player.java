@@ -5,6 +5,7 @@ import Map.Tile;
 import States.Camera;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -119,9 +120,6 @@ public class Player {
     if (isPlayable) {
       double onScreenX = playerPosition.getX() - camera.getX() + 640;
       double onScreenY = playerPosition.getY() - camera.getY() + 480;
-
-      double drawX = onScreenX - currentState.getWidth() / 2;
-      double drawY = onScreenY - currentState.getHeight() / 2;
       rotation = Math.atan2(mousePosition.getY() -
           onScreenY, mousePosition.getX() -
           onScreenX);
@@ -148,15 +146,24 @@ public class Player {
     return PLAYER_NAME;
   }
 
+  public Weapon getWeapon() {
+    return weapon;
+  }
+
   public void reload() {
     if (equippedWeapon()) {
       ammo = weapon.reload(ammo);
     }
   }
 
+  public boolean canShoot() {
+    return (equippedWeapon() && weapon.CURRENT_CLIP > 0);
+  }
+
   public void shoot() {
     if (equippedWeapon() && weapon.CURRENT_CLIP > 0) {
       weapon.shoot();
+      //Create projectile using mouseEvent
     }
   }
 
