@@ -13,6 +13,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Client extends Thread{
@@ -26,8 +27,10 @@ public class Client extends Thread{
     Client c = new Client(null);
   }
 
+
   public Client(Game game){
     this.game = game;
+    playerMap = new HashMap<>();
     try {
       socket = new DatagramSocket();
       ipAddress = InetAddress.getByName("129.31.184.75");
@@ -69,16 +72,19 @@ public class Client extends Thread{
     System.out.println("switch: " + dataString.substring(0,2));
     switch (dataString.substring(0,2)){
       case "02":
-        //playerMap.get()
+        Player p = playerMap.get(parts[1]);
+        p.move(Integer.valueOf(parts[2]),Integer.valueOf(parts[3]), Double.valueOf(parts[4]));
         break;
       case "03":
         System.out.println("Server sent a player back");
         System.out.println(Arrays.toString(parts));
-        game.addPlayableplayer(parts[1], parts[2], 64*64, 64*64);
-       break;
+        Player p2 = game.addPlayableplayer(parts[1], parts[2], 64*64, 64*64);
+        playerMap.put(parts[2],p2);
+        break;
       case "04":
         System.out.println("Server sent back another player");
-        game.addPlayer(parts[1], parts[2], Integer.valueOf(parts[3]), Integer.valueOf(parts[4]));
+        Player p3 = game.addPlayer(parts[1], parts[2], Integer.valueOf(parts[3]), Integer.valueOf(parts[4]));
+        playerMap.put(parts[2],p3);
     }
 
   }
@@ -96,5 +102,10 @@ public class Client extends Thread{
     PacketJoin join = new PacketJoin();
     sendData(join.getData());
     System.out.println("Requested player");
+  }
+
+  public void move(String id, int x, int y, double rot){
+    PacketMove move = new PacketMove(id, x, y, rot);
+    sendData(move.getData());
   }
 }
