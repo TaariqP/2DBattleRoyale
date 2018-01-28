@@ -14,18 +14,18 @@ import Entity.Player;
 public class HealthBar extends Hud {
 
   private int value = 100;
-  private Player player;
   private Camera camera;
   private Coordinate position;
 
   public HealthBar(Player player, Camera camera, Coordinate position) {
     super(player);
-    this.player = player;
     this.camera = camera;
     this.position = position;
   }
 
+  @Override
   public void draw(Graphics2D g) {
+    position = player.getPlayerPosition();
 
     if (position.getX() >= camera.getX() - 2000 && position.getX() <= camera
         .getX() + 2000 && position.getY() >= camera.getY() - 2000 && position

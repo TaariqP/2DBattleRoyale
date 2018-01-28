@@ -5,9 +5,14 @@ import javax.swing.JProgressBar;
 
 public class Hud {
 
-  public Hud(Player player) {
+  protected Player player;
 
+  public Hud(Player player) {
+    this.player = player;
   }
 
+  public void draw(Graphics2D g) {
+
+  }
 
 }

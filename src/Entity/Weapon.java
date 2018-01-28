@@ -30,4 +30,8 @@ public class Weapon extends Entity {
   public void shoot() {
     CURRENT_CLIP -= 1;
   }
+
+  public int getCURRENT_CLIP() {
+    return CURRENT_CLIP;
+  }
 }

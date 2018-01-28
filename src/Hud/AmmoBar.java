@@ -9,14 +9,13 @@ import java.io.IOException;
 import java.nio.Buffer;
 import javax.imageio.ImageIO;
 
-public class AmmoBar {
+public class AmmoBar extends Hud{
 
-  private int value = 100;
-  private Player player;
+  private int value;
   private BufferedImage image;
 
   public AmmoBar(Player player) {
-    this.player = player;
+    super(player);
     File location = new File("PNG/bullet.png");
     image = null;
     try {
@@ -24,9 +23,12 @@ public class AmmoBar {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    value = player.getAmmo();
   }
 
+  @Override
   public void draw(Graphics2D g) {
+    value = player.getAmmo();
     g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
     g.drawImage(image, 40, 50, null);
     g.drawString(Integer.toString(value), 60, 40);
