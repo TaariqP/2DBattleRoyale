@@ -32,7 +32,7 @@ public class TCPClient extends NetworkController{
     switch (clientSentence.substring(0,2)){
       case "02":
         Player p = playerMap.get(parts[1]);
-        p.move(Integer.valueOf(parts[2]),Integer.valueOf(parts[3]), Double.valueOf(parts[4]));
+        //p.move(Integer.valueOf(parts[2]),Integer.valueOf(parts[3]), Double.valueOf(parts[4]));
         break;
       case "03":
         System.out.println("Server sent a player back");
@@ -56,7 +56,7 @@ public class TCPClient extends NetworkController{
   }
 
   public void move(String id, int x, int y, double rot) {
-    PacketMove move = new PacketMove(id, x, y, rot);
-    connection.sendData(move.toString());
+    //PacketMove move = new PacketMove(id, x, y, rot);
+    //connection.sendData(move.toString());
   }
 }

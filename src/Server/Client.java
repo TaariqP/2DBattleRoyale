@@ -67,7 +67,7 @@ public class Client extends Thread{
     switch (dataString.substring(0,2)){
       case "02":
         Player p = playerMap.get(parts[1]);
-        p.move(Integer.valueOf(parts[2]),Integer.valueOf(parts[3]), Double.valueOf(parts[4]));
+        p.move(Integer.valueOf(parts[2]),Integer.valueOf(parts[3]), Double.valueOf(parts[4]), parts[5]);
         break;
       case "03":
         System.out.println("Server sent a player back");
@@ -79,6 +79,9 @@ public class Client extends Thread{
         System.out.println("Server sent back another player");
         Player p3 = game.addPlayer(parts[1], parts[2], Integer.valueOf(parts[3]), Integer.valueOf(parts[4]));
         playerMap.put(parts[2],p3);
+        break;
+      case "05":
+        
         break;
       case "06":
         game.setSeed(Integer.valueOf(parts[1]));
