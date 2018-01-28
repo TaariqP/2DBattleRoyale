@@ -183,6 +183,18 @@ public class Game extends State {
           player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
           player.getRotation(), player.getState());
     }
+
+    dealDamage();
+  }
+
+  private void dealDamage() {
+    for(Bullet b : bullets){
+      for(Player p : players){
+        if(b.getBounds().intersects(p.getBounds().intersection(p.getBounds())) && b.getShooterID() != p.getID()){
+          p.takeDamage(b.getDamage());
+        }
+      }
+    }
   }
 
   @Override

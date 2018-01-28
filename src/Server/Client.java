@@ -3,6 +3,7 @@ package Server;
 import Entity.Bullet;
 import Entity.Player;
 import Entity.PlayerState;
+import Map.Coordinate;
 import Server.Packet.PacketJoin;
 import Server.Packet.PacketMove;
 import Server.Packet.PacketShot;
@@ -84,7 +85,7 @@ public class Client extends Thread{
         break;
       case "05":
         System.out.println("Receiving bullet");
-        game.addBullet(new Bullet(parts[1], ));
+        game.addBullet(new Bullet(Integer.valueOf(parts[4]),Double.valueOf(parts[3]),new Coordinate(Integer.valueOf(parts[1]), Integer.valueOf(parts[2])), null, Integer.valueOf(parts[5])));
         break;
       case "06":
         game.setSeed(Integer.valueOf(parts[1]));
@@ -113,5 +114,8 @@ public class Client extends Thread{
   }
 
   public void shoot(Bullet b) {
+    PacketShot shot = new PacketShot(b.getX(), b.getY(), b.getRotation(),
+        b.getDamage(), Integer.toString(b.getShooterID()));
+    sendData(shot.getData());
   }
 }

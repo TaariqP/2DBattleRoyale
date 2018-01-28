@@ -79,4 +79,16 @@ public class Bullet {
   public void setCamera(Camera c) {
     this.camera = camera;
   }
+
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+    return y;
+  }
+
+  public double getRotation() {
+    return rotation;
+  }
 }
