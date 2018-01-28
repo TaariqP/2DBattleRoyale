@@ -180,11 +180,13 @@ public class Player {
     return inventory.size();
   }
 
-  public void useBandage() {
+  public boolean useBandage() {
     if (inventory.size() > 0 && health < MAX_HEALTH) {
       inventory.remove(0);
       health += 25;
+      return true;
     }
+    return false;
   }
 
   public boolean equippedWeapon() {
