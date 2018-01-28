@@ -28,6 +28,7 @@ public class Tile {
 
   public void setTileType(TileType tileType) {
     this.tileType = tileType;
+    generateImage();
   }
 
   public void generateImage() {
