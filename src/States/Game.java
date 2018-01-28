@@ -121,16 +121,12 @@ public class Game extends State {
 
   @Override
   public void draw(Graphics2D g) {
-    System.out.println("Drawing");
     map.draw(g);
     for (Entity b : items) {
       b.draw(g);
     }
 
     for(Player p : players){
-      System.out.println(p.getPlayerPosition().getX() + " " +
-          p.getPlayerPosition().getY());
-      p.draw(g);
     }
   }
 
