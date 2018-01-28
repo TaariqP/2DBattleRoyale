@@ -67,7 +67,7 @@ public class MapGeneration {
     Random generator = new Random();
     // lake ratio = 5 means a maximum of a fifth of the map can be taken up by
     // lakes
-    final int LAKE_RATIO = 10;
+    final int LAKE_RATIO = 5;
     final int MAX_LAKE_SIZE = 20;
     final int MIN_LAKE_SIZE = 5;
     int bound = map.getTileHeight() * map.getTileWidth() / (MAX_LAKE_SIZE * LAKE_RATIO);
@@ -81,7 +81,7 @@ public class MapGeneration {
         createPath(x, y, TileType.WATER, maxLength);
       }
     }
-    final int BUSH_RATIO = 10;
+    final int BUSH_RATIO = 5;
     final int MAX_BUSH_SIZE = 20;
     final int MIN_BUSH_SIZE = 5;
     int numberOfBushesOnMap = generator.nextInt((map.getTileHeight() *

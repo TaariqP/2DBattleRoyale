@@ -7,6 +7,7 @@ import Entity.Entity;
 import Entity.Player;
 import Map.Coordinate;
 import Map.Map;
+import Map.MapGeneration;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -29,6 +30,7 @@ public class Game extends State {
 
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
+    MapGeneration randMap = new MapGeneration();
     camera = new Camera(64 * 64, 64 * 64);
     map = new Map("Maps/output.txt", camera);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
