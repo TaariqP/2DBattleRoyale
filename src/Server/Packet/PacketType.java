@@ -1,5 +1,5 @@
 package Server.Packet;
 
 public enum PacketType {
-  Join, Move, YourPlayer, OtherPlayer;
+  Join, Move, YourPlayer, OtherPlayer, Shot, Seed;
 }

@@ -44,6 +44,7 @@ public class Game extends State {
   List<Hud> HUD;
   List<Key> keys;
   List<Bullet> bullets;
+  private int seed;
 
   //Random mapChooser = new Random(); needs to be done in server so all maps
   // are same.
@@ -293,5 +294,9 @@ public class Game extends State {
     players.add(p);
     System.out.println("Added player " + name);
     return p;
+  }
+
+  public void setSeed(Integer seed) {
+    this.seed = seed;
   }
 }
