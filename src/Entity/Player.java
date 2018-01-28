@@ -186,5 +186,11 @@ public class Player {
       }
     }
   }
+
+  public void move(int x, int y, double rot) {
+    playerPosition.setX(x);
+    playerPosition.setY(y);
+    rotation = rot;
+  }
 }
 

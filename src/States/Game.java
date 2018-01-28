@@ -149,6 +149,7 @@ public class Game extends State {
     }
 
     for(Player p : players){
+      p.draw(g);
     }
   }
 
