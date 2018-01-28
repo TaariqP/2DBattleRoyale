@@ -13,8 +13,13 @@ public class MapGeneration {
   private static final int MAP_WIDTH = 128;
   private static final int MAP_HEIGHT = 128;
   private String filename = "Maps/output.txt";
-
+  /*
+  private static final int PLAYER_SPAWN;
+  private static final int MIN_BOUND = PLAYER_SPAWN - 20;
+  private static final int MAX_BOUND = PLAYER_SPAWN + 20;
+*/
   public MapGeneration() {
+    //this.filename = filename;
     generateMap();
   }
 
