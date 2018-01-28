@@ -196,7 +196,7 @@ public class Game extends State {
 
   private void dealDamage() {
     for (Iterator<Bullet> bt = bullets.iterator(); bt.hasNext(); ) {
-      Bullet b = bt.next();
+        Bullet b = bt.next();
       for(Player p : players){
         if(b.getBounds().intersects(p.getBounds().intersection(p.getBounds())) && b.getShooterID() != p.getID()){
           p.takeDamage(b.getDamage());
@@ -293,7 +293,8 @@ public class Game extends State {
   public void draw(Graphics2D g) {
     map.draw(g);
 
-    for (Entity b : items) {
+    for (Iterator<Entity> et = items.iterator(); et.hasNext(); ) {
+      Entity b = et.next();
       b.draw(g);
     }
 
