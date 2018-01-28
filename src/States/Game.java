@@ -124,6 +124,9 @@ public class Game extends State {
         }
       }
     }
+    for (Entity e : returned) {
+      items.add(e);
+    }
   }
 
   @Override
