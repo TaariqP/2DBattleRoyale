@@ -8,7 +8,7 @@ import Entity.Entity;
 import Entity.Player;
 import Entity.Bullet;
 import Entity.dropCheck;
-import Entity.Player;
+import Hud.BandageCount;
 import Hud.HealthBar;
 import Hud.Hud;
 import Hud.AmmoBar;
@@ -29,6 +29,7 @@ import java.util.Random;
 
 public class Game extends State {
 
+  private final static int NO_RANDOM_MAPS = 10;
   private final static int DEFAULT_SPEED = 5;
   private Coordinate mousePos = new Coordinate(0, 0);
   private Map map;
@@ -47,8 +48,9 @@ public class Game extends State {
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
     MapGeneration randMap = new MapGeneration();
+    Random mapChooser = new Random();
     camera = new Camera(64 * 64, 64 * 64);
-    map = new Map("Maps/output.txt", camera);
+    map = new Map("Maps/" + mapChooser.nextInt(NO_RANDOM_MAPS) + ".txt", camera);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height, true);
     players = new ArrayList<>();
@@ -74,6 +76,7 @@ public class Game extends State {
     keys.add(new Key(KeyEvent.VK_RIGHT));
     keys.add(new Key(KeyEvent.VK_R));
     keys.add(new Key(KeyEvent.VK_F));
+    keys.add(new Key(KeyEvent.VK_B));
   }
 
   private void initHUD() {
@@ -81,17 +84,18 @@ public class Game extends State {
     HUD.add(new AmmoBar(player));
     HUD.add(new HealthBar(player, camera, player.getPlayerPosition()));
     HUD.add(new weaponBar(player));
+    HUD.add(new BandageCount(player));
   }
 
   private void makeItems() {
     items = new ArrayList<>();
     Random location = new Random();
-    for (int i = 0; i < 300; i++) {
+    for (int i = 0; i < 100; i++) {
       items.add(new Bandage(new Coordinate(location.nextInt(map.getWidth()),
           location
               .nextInt(map.getHeight())), camera));
     }
-    for (int i = 0; i < 128; i++) {
+    for (int i = 0; i < 60; i++) {
       items.add(new MachineGun(
           new Coordinate(location.nextInt(map.getWidth()),
               location.nextInt(map.getHeight())), camera));
@@ -109,60 +113,54 @@ public class Game extends State {
     if (!player.isAlive()) {
       getManager().SwitchState(StateManager.GAME_OVER);
     }
-    try {
-      player.update();
-      for (Key k : keys) {
-        if ((k.getKey() == KeyEvent.VK_UP && k.isPressed()) || (k.getKey() ==
-            KeyEvent.VK_W && k.isPressed())) {
-          int nextPlayerY = player.getPlayerPosition().getY() - DEFAULT_SPEED;
-          if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY) &&
-              !playersCrossed()) {
-            player.getPlayerPosition().setY(nextPlayerY);
-            camera.setY(player.getPlayerPosition().getY());
-          }
+    player.update();
+    for (Key k : keys) {
+      if ((k.getKey() == KeyEvent.VK_UP && k.isPressed()) || (k.getKey() ==
+          KeyEvent.VK_W && k.isPressed())) {
+        int nextPlayerY = player.getPlayerPosition().getY() - DEFAULT_SPEED;
+      if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY) &&
+          !playersCrossed()) {
+        player.getPlayerPosition().setY(nextPlayerY);
+        camera.setY(player.getPlayerPosition().getY());
         }
-        if ((k.getKey() == KeyEvent.VK_DOWN && k.isPressed()) || (k.getKey() ==
-            KeyEvent.VK_S && k.isPressed())) {
-          int nextPlayerY = player.getPlayerPosition().getY() + DEFAULT_SPEED;
-          if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY)
-              && !playersCrossed()) {
-            player.getPlayerPosition().setY(nextPlayerY);
-            camera.setY(player.getPlayerPosition().getY());
-          }
-        }
-
-        if ((k.getKey() == KeyEvent.VK_LEFT && k.isPressed()) || (k.getKey() ==
-            KeyEvent.VK_A && k.isPressed())) {
-          int nextPlayerX = player.getPlayerPosition().getX() - DEFAULT_SPEED;
-          if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY())
-              && !playersCrossed()) {
-            player.getPlayerPosition().setX(nextPlayerX);
-            camera.setX(player.getPlayerPosition().getX());
-          }
-        }
-        if ((k.getKey() == KeyEvent.VK_RIGHT && k.isPressed()) || (k.getKey() ==
-            KeyEvent.VK_D && k.isPressed())) {
-          int nextPlayerX = player.getPlayerPosition().getX() + DEFAULT_SPEED;
-          if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY()) &&
-              !playersCrossed()) {
-            player.getPlayerPosition().setX(nextPlayerX);
-            camera.setX(player.getPlayerPosition().getX());
-          }
-        }
-        if (k.getKey() == KeyEvent.VK_F && k.isPressed()) {
-          attemptPickUp();
-        }
-        if (k.getKey() == KeyEvent.VK_R && k.isPressed()) {
-          player.reload();
-        }
-        client.move(Integer.toString(player.getID()),
-            player.getPlayerPosition().getX(),
-            player.getPlayerPosition().getY(),
-            player.getRotation());
       }
-    }
-    catch (Exception e){
-      return;
+      if ((k.getKey() == KeyEvent.VK_DOWN && k.isPressed()) || (k.getKey() ==
+          KeyEvent.VK_S && k.isPressed())) {
+        int nextPlayerY = player.getPlayerPosition().getY() + DEFAULT_SPEED;
+      if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY) && !playersCrossed()) {
+        player.getPlayerPosition().setY(nextPlayerY);
+        camera.setY(player.getPlayerPosition().getY());
+        }
+      }
+
+      if ((k.getKey() == KeyEvent.VK_LEFT && k.isPressed()) || (k.getKey() ==
+          KeyEvent.VK_A && k.isPressed())) {
+       int nextPlayerX = player.getPlayerPosition().getX() - DEFAULT_SPEED;
+      if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY()) && !playersCrossed()) {
+        player.getPlayerPosition().setX(nextPlayerX);
+        camera.setX(player.getPlayerPosition().getX());
+        }
+      }
+      if ((k.getKey() == KeyEvent.VK_RIGHT && k.isPressed()) || (k.getKey() ==
+          KeyEvent.VK_D && k.isPressed())) {
+        int nextPlayerX = player.getPlayerPosition().getX() + DEFAULT_SPEED;
+      if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY()) &&
+          !playersCrossed()) {
+        player.getPlayerPosition().setX(nextPlayerX);
+        camera.setX(player.getPlayerPosition().getX());
+        }
+      }
+      if (k.getKey() == KeyEvent.VK_F && k.isPressed()) {
+        attemptPickUp();
+      }
+      if (k.getKey() == KeyEvent.VK_R && k.isPressed()) {
+        player.reload();
+      }
+      if (k.getKey() == KeyEvent.VK_B && k.isPressed()) {
+        player.useBandage();
+      }
+      client.move(Integer.toString(player.getID()) ,player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
+          player.getRotation());
     }
   }
 
@@ -261,7 +259,7 @@ public class Game extends State {
     }
 
     player.draw(g);
-    for (Player p : players) {
+    for(Player p : players){
       if (p.getID() != player.getID()) {
         p.draw(g);
       }

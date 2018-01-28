@@ -1,6 +1,7 @@
 package States;
 
 
+import Map.Map;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -31,6 +32,7 @@ public abstract class State {
   public void init() {
 
   }
+
 
   public int getHeight() {
     return height;

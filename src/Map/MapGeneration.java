@@ -3,6 +3,7 @@ package Map;
 import Entity.Entity;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.security.PrivateKey;
 import java.util.Random;
 
 public class MapGeneration {
@@ -10,6 +11,7 @@ public class MapGeneration {
   private Map map;
   private static final int MAP_WIDTH = 128;
   private static final int MAP_HEIGHT = 128;
+  private String filename = "Maps/output.txt";
 
   public MapGeneration() {
     generateMap();
@@ -18,7 +20,7 @@ public class MapGeneration {
 
   public void generateMap() {
     PrintWriter out = null;
-    String grassMapFile = "Maps/generatormap.txt";
+    String grassMapFile = filename;
     try {
       out = new PrintWriter(grassMapFile);
     } catch (FileNotFoundException e) {
@@ -41,7 +43,7 @@ public class MapGeneration {
   private void generateMapFile(Map mapWithOtherElements) {
 
     PrintWriter out = null;
-    String grassMapFile = "Maps/output.txt";
+    String grassMapFile =filename;
     try {
       out = new PrintWriter(grassMapFile);
     } catch (FileNotFoundException e) {
@@ -67,8 +69,8 @@ public class MapGeneration {
     Random generator = new Random();
     // lake ratio = 5 means a maximum of a fifth of the map can be taken up by
     // lakes
-    final int LAKE_RATIO = 5;
-    final int MAX_LAKE_SIZE = 20;
+    final int LAKE_RATIO = 1;
+    final int MAX_LAKE_SIZE = 128;
     final int MIN_LAKE_SIZE = 5;
     int bound = map.getTileHeight() * map.getTileWidth() / (MAX_LAKE_SIZE * LAKE_RATIO);
     int numberOfLakesOnMap = generator.nextInt(bound);
@@ -81,8 +83,8 @@ public class MapGeneration {
         createPath(x, y, TileType.WATER, maxLength);
       }
     }
-    final int BUSH_RATIO = 5;
-    final int MAX_BUSH_SIZE = 20;
+    final int BUSH_RATIO = 1;
+    final int MAX_BUSH_SIZE = 128;
     final int MIN_BUSH_SIZE = 5;
     int numberOfBushesOnMap = generator.nextInt((map.getTileHeight() *
         map.getTileWidth() / (MAX_BUSH_SIZE * BUSH_RATIO)));
@@ -137,10 +139,6 @@ public class MapGeneration {
       numberOfItems) {
 
     //TODO IMPLEMENT
-  }
-
-  public static void main(String[] args) {
-    MapGeneration test = new MapGeneration();
   }
 
 

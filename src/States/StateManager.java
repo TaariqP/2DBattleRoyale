@@ -3,17 +3,14 @@ package States;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class StateManager {
 
   private static int width;
   private static int height;
   private String CurrentStateId;
-  Map<String, State> states = new HashMap<>();
+  java.util.Map<String, State> states = new HashMap<>();
   public static final String Menu_ID = "Menu";
   public static final String Game_ID = "Game";
   public static final String GAME_OVER = "Game Over!";
