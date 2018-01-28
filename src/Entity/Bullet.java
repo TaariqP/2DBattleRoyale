@@ -2,9 +2,12 @@ package Entity;
 
 import Map.Coordinate;
 import States.Camera;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -31,7 +34,7 @@ public class Bullet {
     this.rotation = rotation;
     this.x = iX;
     this.y = iY;
-    File location = new File("PNG/001-bullet.png");
+    File location = new File("PNG/rsz_ball.png");
     image = null;
     try {
       image = ImageIO.read(location);
@@ -49,16 +52,13 @@ public class Bullet {
         .getX() + 2000 && y >= camera.getY() - 2000
         && y <= camera.getY() + 2000) {
       //(int) (y + 2 * Math.sin(rotation));
+      System.out.println(Math.toDegrees(rotation));
+      x += 15 * Math.cos(rotation);
+      y += 15 * Math.sin(rotation);
       int onScreenX = x - camera.getX() + 640 - image.getWidth() / 2;
       int onScreenY = y - camera.getY() + 480 - image.getHeight() / 2;
-      System.out.println(onScreenX);
-      System.out.println(onScreenY);
-      Graphics2D copy = (Graphics2D)g.create();
-      AffineTransform at = new AffineTransform();
-      at.rotate(rotation, iX, iY);
-      at.translate(onScreenX, onScreenY);
-      copy.drawImage(image, at, null);
-      copy.dispose();
+      g.drawImage(image, onScreenX, onScreenY, null);
     }
   }
+
 }
