@@ -62,9 +62,7 @@ public class Client extends Thread{
 
   private void HandlePacket(byte[] data, InetAddress address, int port) {
     String dataString = new String(data).trim();
-    System.out.println("got stuff " + dataString);
     String[] parts = dataString.split(",");
-    System.out.println("switch: " + dataString.substring(0,2));
     switch (dataString.substring(0,2)){
       case "02":
         Player p = playerMap.get(parts[1]);

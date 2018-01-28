@@ -297,6 +297,9 @@ public class Game extends State {
   }
 
   public void setSeed(Integer seed) {
+    System.out.println("seed " + seed);
+    map = new Map("Maps/" + seed+".txt",
+        camera);
     this.seed = seed;
   }
 }

@@ -42,6 +42,7 @@ public class Server extends Thread{
     playersIdMap = new HashMap<>();
     bullets = new ArrayList<>();
     seed = new Random().nextInt(9);
+    System.out.println("Server set seed to " + seed);
     this.game = game;
     try {
       this.socket = new DatagramSocket(1337);
@@ -67,7 +68,6 @@ public class Server extends Thread{
   }
 
   private void HandlePacket(byte[] data, InetAddress address, int port) {
-    System.out.println("Recieved packet " + new String(data).trim());
     String datas = new String(data);
     switch (datas.substring(0,2)){
       case  "01" :
@@ -108,11 +108,13 @@ public class Server extends Thread{
       case "02":
         String[] parts = datas.split(",");
 
-        for(Connects cs: connects){
+        for(Connects cs: connects) {
           sendData(data, cs.getIp(), cs.getPort());
         }
+        break;
       case "05":
         System.out.println("Shot");
+        break;
     }
 
   }
