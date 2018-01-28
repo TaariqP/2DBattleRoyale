@@ -4,6 +4,7 @@ import Map.Coordinate;
 import States.Camera;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -14,7 +15,7 @@ import javax.imageio.ImageIO;
 
 public class Bullet {
 
-  private String weaponName;
+  private int damage;
   private BufferedImage image;
   private Coordinate position;
   private Camera camera;
@@ -24,9 +25,9 @@ public class Bullet {
   private int x;
   private int y;
 
-  public Bullet(Weapon weapon, double rotation,
+  public Bullet(int damage, double rotation,
       Coordinate position, Camera camera) {
-    this.weaponName = weapon.getWeaponName();
+    this.damage = damage;
     this.position = position;
     iX = position.getX();
     iY = position.getY();
@@ -43,8 +44,16 @@ public class Bullet {
     }
   }
 
+  public int getDamage() {
+    return damage;
+  }
+
   public void setPosition(Coordinate position) {
     this.position = position;
+  }
+
+  public Rectangle getBounds() {
+    return new Rectangle(x, y, image.getWidth(), image.getHeight());
   }
 
   public void draw(Graphics2D g) {
