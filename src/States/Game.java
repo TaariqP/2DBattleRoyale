@@ -167,7 +167,7 @@ public class Game extends State {
       }
       client.move(Integer.toString(player.getID()),
           player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
-          player.getRotation());
+          player.getRotation(), player.getState());
     }
   }
 
@@ -249,7 +249,7 @@ public class Game extends State {
     mousePos.setY(mouseEvent.getY());
     client.move(Integer.toString(player.getID()),
         player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
-        player.getRotation());
+        player.getRotation(), player.getState());
   }
 
 

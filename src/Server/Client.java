@@ -1,6 +1,7 @@
 package Server;
 
 import Entity.Player;
+import Entity.PlayerState;
 import Server.Packet.PacketJoin;
 import Server.Packet.PacketMove;
 import States.Camera;
@@ -100,8 +101,8 @@ public class Client extends Thread{
     System.out.println("Requested player");
   }
 
-  public void move(String id, int x, int y, double rot){
-    PacketMove move = new PacketMove(id, x, y, rot);
+  public void move(String id, int x, int y, double rot, PlayerState state){
+    PacketMove move = new PacketMove(id, x, y, rot, state);
     sendData(move.getData());
   }
 }
