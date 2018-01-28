@@ -1,6 +1,7 @@
 package States;
 
 
+import Map.Map;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import javax.imageio.ImageIO;
 
 public class Menu extends State {
@@ -17,6 +19,8 @@ public class Menu extends State {
   List<String> options;
   List<Button> buttons;
   BufferedImage titleImage;
+  Map map;
+  private Camera location;
 
   public Menu(int width, int height, StateManager stateManager) {
     super("Menu", width, height, stateManager);
@@ -26,6 +30,20 @@ public class Menu extends State {
     initExit();
     initHelp();
     initTitleImage();
+    pickaMap();
+  }
+
+  private void pickaMap() {
+    location = new Camera(64 * 64, 64 * 64);
+    Random picker = new Random();
+    int m = picker.nextInt(270);
+    map = new Map("Maps/map" + String.valueOf(m) + ".txt", location);
+  }
+
+  private void moveMap() {
+    if (location.getX() < 128*64 - getWidth()) {
+      location.setX(location.getX() + 4);
+    }
   }
 
 
@@ -36,6 +54,8 @@ public class Menu extends State {
 
   @Override
   public void draw(Graphics2D g) {
+    moveMap();
+    map.draw(g);
     for (Button b : buttons) {
       b.draw(g);
     }

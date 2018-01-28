@@ -8,7 +8,6 @@ import Entity.Entity;
 import Entity.Player;
 import Entity.Bullet;
 import Entity.dropCheck;
-import Entity.Player;
 import Hud.HealthBar;
 import Hud.Hud;
 import Hud.AmmoBar;
@@ -47,8 +46,9 @@ public class Game extends State {
   public Game(int width, int height, StateManager manager) {
     super("Game", width, height, manager);
     MapGeneration randMap = new MapGeneration();
+    Random mapChooser = new Random();
     camera = new Camera(64 * 64, 64 * 64);
-    map = new Map("Maps/output.txt", camera);
+    map = new Map("Maps/map" + mapChooser.nextInt(270) + ".txt", camera);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height, true);
     players = new ArrayList<>();
