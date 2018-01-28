@@ -16,6 +16,7 @@ public class Menu extends State {
 
   List<String> options;
   List<Button> buttons;
+  BufferedImage titleImage;
 
   public Menu(int width, int height, StateManager stateManager) {
     super("Menu", width, height, stateManager);
@@ -24,6 +25,7 @@ public class Menu extends State {
     initStart();
     initExit();
     initHelp();
+    initTitleImage();
   }
 
 
@@ -37,12 +39,26 @@ public class Menu extends State {
     for (Button b : buttons) {
       b.draw(g);
     }
-
+    drawTitle(g);
   }
 
   @Override
   public void update() {
     super.update();
+  }
+
+  private void drawTitle(Graphics2D g) {
+    g.drawImage(titleImage, getWidth() / 2 - 350, 0, null);
+  }
+
+  private void initTitleImage() {
+    File file = new File("PNG/title.png");
+    titleImage = null;
+    try {
+      titleImage = ImageIO.read(file);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   private void initStart() {

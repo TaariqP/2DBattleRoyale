@@ -5,6 +5,7 @@ import Entity.MachineGun;
 import Entity.Pistol;
 import Entity.Entity;
 import Entity.Player;
+import Entity.dropCheck;
 import Hud.HealthBar;
 import Hud.Hud;
 import Map.Coordinate;
@@ -96,15 +97,21 @@ public class Game extends State {
   }
 
   private void attemptPickUp() {
+    List<Entity> returned = new ArrayList<>();
     for (Iterator<Entity> it = items.iterator(); it.hasNext(); ) {
       Entity e = it.next();
       Rectangle b1 = player.getBounds();
       Rectangle b2 = e.getBounds();
       if (b1.intersects(b2)) {
-        if (player.pickUp(e)) {
-          ;
+        dropCheck dc = player.pickUp(e);
+        if (dc.isHasPickedUp()) {
+          it.remove();
+          if (dc.existsReturnedItem()) {
+            Entity e2 = dc.getReturnedItem();
+            e2.setPosition(e.getPosition());
+            returned.add(e2);
+          }
         }
-        it.remove();
       }
     }
   }
