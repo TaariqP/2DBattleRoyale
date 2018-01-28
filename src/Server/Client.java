@@ -29,7 +29,7 @@ public class Client extends Thread{
     playerMap = new HashMap<>();
     try {
       socket = new DatagramSocket();
-      ipAddress = InetAddress.getByName("129.31.184.75");
+      ipAddress = InetAddress.getByName("129.31.224.147");
     } catch (SocketException e) {
       e.printStackTrace();
     } catch (UnknownHostException e) {
