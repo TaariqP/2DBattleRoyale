@@ -2,6 +2,7 @@ package States;
 
 import Entity.AmmoBox;
 import Entity.Bandage;
+import Entity.Coordinates;
 import Entity.MachineGun;
 import Entity.Pistol;
 import Entity.Entity;
@@ -104,6 +105,7 @@ public class Game extends State {
         HUD.add(new HealthBar(p, camera, p.getPlayerPosition()));
       }
     }
+    HUD.add(new Coordinates(player));
   }
 
   public void restart() {
