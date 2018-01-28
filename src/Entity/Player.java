@@ -160,7 +160,7 @@ public class Player {
     return (equippedWeapon() && weapon.CURRENT_CLIP > 0);
   }
 
-  public void shoot(MouseEvent mouseEvent) {
+  public void shoot() {
     if (equippedWeapon() && weapon.CURRENT_CLIP > 0) {
       weapon.shoot();
       //Create projectile using mouseEvent

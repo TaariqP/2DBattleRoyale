@@ -37,6 +37,7 @@ public class Game extends State {
   private Hud hud;
   private HealthBar healthBar;
   private AmmoBar ammoBar;
+  private Bullet bullet;
   private List<Player> players;
   private Client client;
 
@@ -153,10 +154,10 @@ public class Game extends State {
   @Override
   public void clickAt(MouseEvent mouseEvent) {
     if (player.canShoot()) {
-      player.shoot(mouseEvent); // -1 off the ammo
-      Bullet bullet = new Bullet(player.getWeapon(), mouseEvent,
-          player.getRotation(), player.getPlayerPosition()); // generates
-
+      player.shoot(); // -1 off the ammo
+      Bullet bullet = new Bullet(player.getWeapon(),
+          player.getRotation(), player.getPlayerPosition(),
+          camera); // generates
     } else {
       return;
     }
@@ -179,6 +180,15 @@ public class Game extends State {
     ammoBar = new AmmoBar(player);
     healthBar.draw(g);
     ammoBar.draw(g);
+    if (player.canShoot()) {
+      player.shoot(); // -1 off the ammo
+      Bullet bullet = new Bullet(player.getWeapon(),
+          player.getRotation(), player.getPlayerPosition(),
+          camera); // generates
+    } else {
+      return;
+    }
+
     for (Entity b : items) {
       b.draw(g);
     }
