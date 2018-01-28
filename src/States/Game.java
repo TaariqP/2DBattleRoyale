@@ -44,7 +44,7 @@ public class Game extends State {
     camera = new Camera(64 * 64, 64 * 64);
     map = new Map("Maps/output.txt", camera);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
-        mousePos, camera, width, height,true);
+        mousePos, camera, width, height, true);
     players = new ArrayList<>();
     camera = new Camera(64 * 64, 64 * 64);
     client = new Client(this);
@@ -125,6 +125,9 @@ public class Game extends State {
         }
       }
     }
+    for (Entity e : returned) {
+      items.add(e);
+    }
   }
 
   @Override
@@ -139,7 +142,6 @@ public class Game extends State {
   }
 
 
-
   @Override
   public void draw(Graphics2D g) {
     System.out.println("Drawing");
@@ -152,15 +154,16 @@ public class Game extends State {
       b.draw(g);
     }
 
-    for(Player p : players){
+    for (Player p : players) {
       System.out.println(p.getPlayerPosition().getX() + " " +
           p.getPlayerPosition().getY());
       p.draw(g);
     }
   }
 
-  public Player addPlayer(String name,String id, int x, int y){
-    Player p = new Player(name, Integer.valueOf(id), new Coordinate(x,y),null,camera,
+  public Player addPlayer(String name, String id, int x, int y) {
+    Player p = new Player(name, Integer.valueOf(id), new Coordinate(x, y), null,
+        camera,
         width, height, false);
     players.add(p);
     System.out.println("Added player with id " + id);
@@ -168,8 +171,8 @@ public class Game extends State {
     return p;
   }
 
-  public Player addPlayableplayer(String name,String id, int x, int y) {
-    Player p = new Player(name, Integer.valueOf(id), new Coordinate(x,y),
+  public Player addPlayableplayer(String name, String id, int x, int y) {
+    Player p = new Player(name, Integer.valueOf(id), new Coordinate(x, y),
         mousePos, camera, width, height, true);
     player = p;
     players.add(p);
