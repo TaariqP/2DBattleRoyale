@@ -1,10 +1,12 @@
 package Server;
 
+import Entity.Bullet;
 import Entity.Player;
 import Map.Coordinate;
 import Server.Packet.Connects;
 import Server.Packet.PacketMove;
 import Server.Packet.PacketOtherPlayer;
+import Server.Packet.PacketSeed;
 import Server.Packet.PacketYourPlayer;
 import States.Game;
 import java.io.IOException;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Server extends Thread{
 
@@ -25,6 +28,8 @@ public class Server extends Thread{
   private int currentPlayerId = 0;
   private Map<Player, InetAddress> players;
   private Map<String,Player> playersIdMap;
+  private List<Bullet> bullets;
+  private int seed;
 
 
   public static void main(String[] args) {
@@ -35,6 +40,8 @@ public class Server extends Thread{
     connects = new ArrayList<>();
     players = new HashMap<>();
     playersIdMap = new HashMap<>();
+    bullets = new ArrayList<>();
+    seed = new Random().nextInt(9);
     this.game = game;
     try {
       this.socket = new DatagramSocket(1337);
@@ -94,6 +101,9 @@ public class Server extends Thread{
             sendData(other.getData(), c.getIp(), c.getPort());
           }
         }
+        PacketSeed seedPac = new PacketSeed(seed);
+        sendData(seedPac.getData(), address, port);
+
         break;
       case "02":
         String[] parts = datas.split(",");
@@ -101,6 +111,8 @@ public class Server extends Thread{
         for(Connects cs: connects){
           sendData(data, cs.getIp(), cs.getPort());
         }
+      case "05":
+        System.out.println("Shot");
     }
 
   }

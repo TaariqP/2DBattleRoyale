@@ -80,6 +80,9 @@ public class Client extends Thread{
         System.out.println("Server sent back another player");
         Player p3 = game.addPlayer(parts[1], parts[2], Integer.valueOf(parts[3]), Integer.valueOf(parts[4]));
         playerMap.put(parts[2],p3);
+        break;
+      case "06":
+        game.setSeed(Integer.valueOf(parts[1]));
     }
 
   }
