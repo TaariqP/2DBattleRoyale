@@ -34,6 +34,7 @@ public class Server extends Thread{
   public Server(Game game){
     connects = new ArrayList<>();
     players = new HashMap<>();
+    playersIdMap = new HashMap<>();
     this.game = game;
     try {
       this.socket = new DatagramSocket(1337);
@@ -67,18 +68,23 @@ public class Server extends Thread{
         currentPlayerId++;
         System.out.println("A player has joined");
         connects.add(new Connects(address, port));
-        players.put(new Player(datas.substring(2), id,
+
+        Player play = new Player(datas.substring(2), id,
             new Coordinate(64*64, 64*64)
-            , null, null,0, 0, false), address);
+            , null, null,0, 0, false);
+        players.put(play, address);
         System.out.println("Sending a player back");
         PacketYourPlayer p = new PacketYourPlayer("Dave", id);
+        playersIdMap.put(Integer.toString(id), play);
         sendData(p.getData(), address, port);
         System.out.println("Current id " + currentPlayerId);
         for(int oldID = 0; oldID < currentPlayerId - 1; oldID++){
+          System.out.println("oldID " + oldID);
           Player pl = playersIdMap.get(Integer.toString(oldID));
           Connects connect = getConnectFromIp(players.get(pl));
           PacketOtherPlayer other = new PacketOtherPlayer(pl.getName(),
               pl.getID(), pl.getPlayerPosition().getX(), pl.getPlayerPosition().getY());
+          sendData(other.getData(), connect.getIp(), connect.getPort());
         }
         for(Connects c : connects){
           if(c.getIp() != address){

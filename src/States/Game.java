@@ -121,21 +121,25 @@ public class Game extends State {
 
   @Override
   public void draw(Graphics2D g) {
+    System.out.println("Drawing");
     map.draw(g);
     for (Entity b : items) {
       b.draw(g);
     }
 
     for(Player p : players){
+      System.out.println(p.getPlayerPosition().getX() + " " +
+          p.getPlayerPosition().getY());
       p.draw(g);
     }
-    //player.draw(g);
   }
 
   public Player addPlayer(String name,String id, int x, int y){
     Player p = new Player(name, Integer.valueOf(id), new Coordinate(x,y),null,camera,
         width, height, false);
     players.add(p);
+    System.out.println("Added player with id " + id);
+    System.out.println("Num of players " + players.size());
     return p;
   }
 
