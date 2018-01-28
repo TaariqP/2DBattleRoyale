@@ -186,8 +186,9 @@ public class Game extends State {
     for (Entity b : items) {
       b.draw(g);
     }
-
+    System.out.println(players.size());
     for(Player p : players){
+      System.out.println("TEST");
       p.draw(g);
     }
   }
