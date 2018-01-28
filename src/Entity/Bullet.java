@@ -67,7 +67,7 @@ public class Bullet {
         .getX() + 2000 && y >= camera.getY() - 2000
         && y <= camera.getY() + 2000) {
       //(int) (y + 2 * Math.sin(rotation));
-      System.out.println(Math.toDegrees(rotation));
+      //System.out.println(Math.toDegrees(rotation));
       x += 15 * Math.cos(rotation);
       y += 15 * Math.sin(rotation);
       int onScreenX = x - camera.getX() + 640 - image.getWidth() / 2;
