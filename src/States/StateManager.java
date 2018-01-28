@@ -14,29 +14,32 @@ public class StateManager {
   public static final String Menu_ID = "Menu";
   public static final String Game_ID = "Game";
   public static final String GAME_OVER = "Game Over!";
-  public StateManager(int width, int height){
+  public static final String Help_ID = "Help";
+
+  public StateManager(int width, int height) {
     this.width = width;
     this.height = height;
     CurrentStateId = Menu_ID;
     states.put(Menu_ID, new Menu(width, height, this));
     states.put(Game_ID, new Game(width, height, this));
+    states.put(Help_ID, new Help(width, height, this));
     states.put(GAME_OVER, new GameOver(width, height, this));
   }
 
 
-  public State getCurrentState(){
+  public State getCurrentState() {
     return states.get(CurrentStateId);
   }
 
-  public void SwitchState(String ID){
+  public void SwitchState(String ID) {
     CurrentStateId = ID;
   }
 
-  public void draw(Graphics2D g){
+  public void draw(Graphics2D g) {
     getCurrentState().draw(g);
   }
 
-  public void update(){
+  public void update() {
     getCurrentState().update();
   }
 

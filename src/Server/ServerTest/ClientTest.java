@@ -6,7 +6,7 @@ public class ClientTest {
     // TODO Auto-generated method stub
 
     // 127.0.0.1 means localhost
-    Client testClient = new Client("127.0.0.1");
+    Client testClient = new Client("localhost");
 
     testClient.run();
     testClient.startRunning();

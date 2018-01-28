@@ -199,8 +199,7 @@ public class Player {
       return dc;
     } else if (inventory.size() >= MAX_BAG_SIZE) {
       return new dropCheck(false, Optional.empty());
-    }
-    else {
+    } else {
       if (e.type == EntityType.WEAPON) {
         weapon = (Weapon) e;
         changeState();
@@ -208,7 +207,7 @@ public class Player {
       } else if (e.type == EntityType.AMMO) {
         ammo += ((AmmoBox) e).getAddAmmo();
         return new dropCheck(true, Optional.empty());
-      }else {
+      } else {
         inventory.add(e);
         return new dropCheck(true, Optional.empty());
       }

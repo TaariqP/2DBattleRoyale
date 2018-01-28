@@ -25,7 +25,7 @@ public class Client {
     while (true) {
       System.out.println("attempting connection ...... ");
       try {
-        connection = new Socket("127.0.0.1", 1337);
+        connection = new Socket("localhost", 1337);
         if (connection.isConnected()) {
           break;
         }
@@ -49,7 +49,7 @@ public class Client {
     while (true) {
       System.out.println("attempting connection ...... ");
       try {
-        connection = new Socket("127.0.0.1", 1337);
+        connection = new Socket("localhost", 1337);
         if (connection.isConnected()) {
           break;
         }
