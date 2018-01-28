@@ -13,4 +13,8 @@ public abstract class Packet {
     return null;
   }
 
+  public String toString(){
+    return "Help :(";
+  }
+
 }
