@@ -83,6 +83,9 @@ public class Player {
     double onScreenY = playerPosition.getY() - camera.getY() + 480;
     double drawX = onScreenX - currentState.getWidth() / 2;
     double drawY = onScreenY - currentState.getHeight() / 2;
+    if(!isPlayable){
+      System.out.println(rotation);
+    }
     AffineTransform at = new AffineTransform();
     at.rotate(rotation, onScreenX, onScreenY);
     at.translate(drawX, drawY);
