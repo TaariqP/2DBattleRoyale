@@ -28,6 +28,7 @@ import java.util.Random;
 
 public class Game extends State {
 
+  private final static int NO_RANDOM_MAPS = 10;
   private final static int DEFAULT_SPEED = 5;
   private Coordinate mousePos = new Coordinate(0, 0);
   private Map map;
@@ -48,7 +49,7 @@ public class Game extends State {
     MapGeneration randMap = new MapGeneration();
     Random mapChooser = new Random();
     camera = new Camera(64 * 64, 64 * 64);
-    map = new Map("Maps/map" + mapChooser.nextInt(270) + ".txt", camera);
+    map = new Map("Maps/map" + mapChooser.nextInt(NO_RANDOM_MAPS) + ".txt", camera);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height, true);
     players = new ArrayList<>();

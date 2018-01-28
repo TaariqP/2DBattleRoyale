@@ -52,10 +52,9 @@ public class GameOver extends State {
 
   @Override
   public void draw(Graphics2D g) {
-    if (deathcamera != null) {
-      if (deathcamera.getX() < 128 * 64 - getWidth() && endmap != null) {
+    moveMap();
+      if (deathcamera.getX() < 128 * 64 - getWidth()) {
         endmap.draw(g);
-      }
     }
     g.setColor(Color.black);
     g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
