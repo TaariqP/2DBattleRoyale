@@ -44,8 +44,6 @@ public class Game extends State {
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height,true);
     players = new ArrayList<>();
-    camera = new Camera(64 * 64, 64 * 64);
-    map = new Map("Maps/map.txt", camera);
     client = new Client(this);
     client.requestPlayer();
     this.width = width;
