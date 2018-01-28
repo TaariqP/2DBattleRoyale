@@ -227,7 +227,7 @@ public class Player {
     return rotation;
   }
 
-  public Entity.PlayerState getState() {
+  public PlayerState getState() {
     return state;
   }
 }
