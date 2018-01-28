@@ -52,7 +52,7 @@ public class Menu extends State {
     if (location.getX() < 128 * 64 - getWidth()) {
       location.setX(location.getX() + 4);
     } else {
-      location.setX(0);
+      location.setX(getWidth());
     }
   }
 

@@ -34,7 +34,7 @@ public class Help extends State {
     Clickable exitClick = new Clickable() {
       @Override
       public void click() {
-        System.exit(0);
+        getManager().SwitchState(StateManager.Menu_ID);
       }
     };
     File file = new File("PNG/buttons/button_exit.png");
@@ -59,15 +59,15 @@ public class Help extends State {
   private void moveMap() {
     if (deathcamera.getX() < 128 * 64 - getWidth()) {
       deathcamera.setX(deathcamera.getX() + 4);
+    } else {
+      deathcamera.setX(getWidth());
     }
   }
 
   @Override
   public void draw(Graphics2D g) {
     moveMap();
-    if (deathcamera.getX() < 128 * 64 - getWidth()) {
       endmap.draw(g);
-    }
     g.setColor(Color.white);
     g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
     g.drawString(
@@ -78,31 +78,35 @@ public class Help extends State {
         "Left Click to Shoot",
         super.getWidth() / 2 - 400,
         super.getHeight() / 2 - 300);
-
     g.drawString(
-        "B for Bandage",
+        "R for Reload",
         super.getWidth() / 2 - 400,
         super.getHeight() / 2 - 250);
 
     g.drawString(
-        "F to pick up items",
+        "B for Bandage",
         super.getWidth() / 2 - 400,
         super.getHeight() / 2 - 200);
 
     g.drawString(
-        "WASD/Arrow Keys to move",
+        "F to pick up items",
         super.getWidth() / 2 - 400,
         super.getHeight() / 2 - 150);
 
     g.drawString(
-        "This Game is implemented without third party libraries.",
+        "WASD/Arrow Keys to move",
         super.getWidth() / 2 - 400,
         super.getHeight() / 2 - 100);
 
     g.drawString(
-        "Coded fully by Taariq, Luke, Robert, Matthew & Tiger",
+        "This Game is implemented without third party libraries.",
         super.getWidth() / 2 - 400,
         super.getHeight() / 2 - 50);
+
+    g.drawString(
+        "Coded fully by Taariq, Luke, Robert, Matthew & Tiger",
+        super.getWidth() / 2 - 400,
+        super.getHeight() / 2);
     for (Button b : buttons) {
       b.draw(g);
     }
