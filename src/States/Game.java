@@ -44,8 +44,6 @@ public class Game extends State {
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height,true);
     players = new ArrayList<>();
-    camera = new Camera(64 * 64, 64 * 64);
-    map = new Map("Maps/map.txt", camera);
     client = new Client(this);
     client.requestPlayer();
     this.width = width;
@@ -104,6 +102,8 @@ public class Game extends State {
     if (e.getKeyCode() == KeyEvent.VK_F) {
       attemptPickUp();
     }
+    client.move(Integer.toString(player.getID()) ,player.getPlayerPosition().getX(), player.getPlayerPosition().getY(),
+        player.getRotation());
   }
 
   private void attemptPickUp() {
@@ -124,6 +124,9 @@ public class Game extends State {
         }
       }
     }
+    for (Entity e : returned) {
+      items.add(e);
+    }
   }
 
   @Override
@@ -141,7 +144,6 @@ public class Game extends State {
 
   @Override
   public void draw(Graphics2D g) {
-    System.out.println("Drawing");
     map.draw(g);
     healthBar = new HealthBar(player, camera, player.getPlayerPosition());
     healthBar.draw(g);
@@ -150,8 +152,6 @@ public class Game extends State {
     }
 
     for(Player p : players){
-      System.out.println(p.getPlayerPosition().getX() + " " +
-          p.getPlayerPosition().getY());
       p.draw(g);
     }
   }
