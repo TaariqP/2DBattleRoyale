@@ -49,12 +49,12 @@ public class Game extends State {
   //Random mapChooser = new Random(); needs to be done in server so all maps
   // are same.
 
-  public Game(int width, int height, StateManager manager /*, int mapSeed*/) {
+  public Game(int width, int height, StateManager manager){
     super("Game", width, height, manager);
     camera = new Camera(64 * 64, 64 * 64);
-    //map = new Map("Maps/" + mapSeed + ".txt",
-    map = new Map("Maps/output.txt",
+    map = new Map("Maps/" + seed + ".txt",
         camera);
+    System.out.println(this.seed);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height, true);
     players = new ArrayList<>();
