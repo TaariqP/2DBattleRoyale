@@ -121,8 +121,8 @@ public class Game extends State {
       if ((k.getKey() == KeyEvent.VK_UP && k.isPressed()) || (k.getKey() ==
           KeyEvent.VK_W && k.isPressed())) {
         int nextPlayerY = player.getPlayerPosition().getY() - DEFAULT_SPEED;
-        if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY) &&
-            !playersCrossed()) {
+        if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY)) { //&&
+        // !playersCrossed()) {
           player.getPlayerPosition().setY(nextPlayerY);
           camera.setY(player.getPlayerPosition().getY());
         }
@@ -130,8 +130,8 @@ public class Game extends State {
       if ((k.getKey() == KeyEvent.VK_DOWN && k.isPressed()) || (k.getKey() ==
           KeyEvent.VK_S && k.isPressed())) {
         int nextPlayerY = player.getPlayerPosition().getY() + DEFAULT_SPEED;
-        if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY)
-            && !playersCrossed()) {
+        if (isGrassTile(player.getPlayerPosition().getX(), nextPlayerY)) {
+            //&& !playersCrossed()) {
           player.getPlayerPosition().setY(nextPlayerY);
           camera.setY(player.getPlayerPosition().getY());
         }
@@ -140,8 +140,8 @@ public class Game extends State {
       if ((k.getKey() == KeyEvent.VK_LEFT && k.isPressed()) || (k.getKey() ==
           KeyEvent.VK_A && k.isPressed())) {
         int nextPlayerX = player.getPlayerPosition().getX() - DEFAULT_SPEED;
-        if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY())
-            && !playersCrossed()) {
+        if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY())) {
+            //&& !playersCrossed()) {
           player.getPlayerPosition().setX(nextPlayerX);
           camera.setX(player.getPlayerPosition().getX());
         }
@@ -149,8 +149,8 @@ public class Game extends State {
       if ((k.getKey() == KeyEvent.VK_RIGHT && k.isPressed()) || (k.getKey() ==
           KeyEvent.VK_D && k.isPressed())) {
         int nextPlayerX = player.getPlayerPosition().getX() + DEFAULT_SPEED;
-        if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY()) &&
-            !playersCrossed()) {
+        if (isGrassTile(nextPlayerX, player.getPlayerPosition().getY())) {
+          //&& !playersCrossed()) {
           player.getPlayerPosition().setX(nextPlayerX);
           camera.setX(player.getPlayerPosition().getX());
         }
@@ -235,7 +235,7 @@ public class Game extends State {
   public void clickAt(MouseEvent mouseEvent) {
     if (player.canShoot()) {
       player.shoot(); // -1 off the ammo
-      Bullet bullet = new Bullet(player.getWeapon(),
+      Bullet bullet = new Bullet(player.getWeapon().getAttackDamage(),
           player.getRotation(), player.getPlayerPosition(),
           camera); // generates
       bullets.add(bullet);

@@ -34,4 +34,8 @@ public class Weapon extends Entity {
   public int getCURRENT_CLIP() {
     return CURRENT_CLIP;
   }
+
+  public int getAttackDamage() {
+    return attackDamage;
+  }
 }
