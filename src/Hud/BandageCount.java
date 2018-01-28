@@ -15,7 +15,7 @@ public class BandageCount extends Hud {
   public BandageCount(Player player) {
     super(player);
     image = null;
-    File location = new File("PNG/Bandage50.png");
+    File location = new File("PNG/bandage50.png");
     try {
       image = ImageIO.read(location);
     } catch (IOException e) {

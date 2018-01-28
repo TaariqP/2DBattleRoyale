@@ -45,12 +45,14 @@ public class Game extends State {
   List<Key> keys;
   List<Bullet> bullets;
 
-  public Game(int width, int height, StateManager manager) {
+  //Random mapChooser = new Random(); needs to be done in server so all maps
+  // are same.
+
+  public Game(int width, int height, StateManager manager /*, int mapSeed*/) {
     super("Game", width, height, manager);
-    MapGeneration randMap = new MapGeneration();
-    Random mapChooser = new Random();
     camera = new Camera(64 * 64, 64 * 64);
-    map = new Map("Maps/" + mapChooser.nextInt(NO_RANDOM_MAPS) + ".txt",
+    //map = new Map("Maps/" + mapSeed + ".txt",
+    map = new Map("Maps/output.txt",
         camera);
     player = new Player("Player 1", 1, new Coordinate(64 * 64, 64 * 64),
         mousePos, camera, width, height, true);
