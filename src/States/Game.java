@@ -8,6 +8,7 @@ import Entity.Player;
 import Entity.dropCheck;
 import Hud.HealthBar;
 import Hud.Hud;
+import Hud.AmmoBar;
 import Map.Coordinate;
 import Map.Map;
 import Map.MapGeneration;
@@ -33,6 +34,7 @@ public class Game extends State {
   private int height;
   private Hud hud;
   private HealthBar healthBar;
+  private AmmoBar ammoBar;
   private List<Player> players;
   private Client client;
 
@@ -45,7 +47,6 @@ public class Game extends State {
         mousePos, camera, width, height,true);
     players = new ArrayList<>();
     camera = new Camera(64 * 64, 64 * 64);
-    map = new Map("Maps/map.txt", camera);
     client = new Client(this);
     client.requestPlayer();
     this.width = width;
@@ -144,7 +145,9 @@ public class Game extends State {
     System.out.println("Drawing");
     map.draw(g);
     healthBar = new HealthBar(player, camera, player.getPlayerPosition());
+    ammoBar = new AmmoBar(player);
     healthBar.draw(g);
+    ammoBar.draw(g);
     for (Entity b : items) {
       b.draw(g);
     }
