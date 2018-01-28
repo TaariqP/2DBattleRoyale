@@ -88,10 +88,12 @@ public class Player {
     AffineTransform at = new AffineTransform();
     at.rotate(rotation, onScreenX, onScreenY);
     at.translate(drawX, drawY);
-    graphics.drawImage(currentState, at, null);
-    graphics.drawString(PLAYER_NAME, (int) drawX - currentState.getWidth() / 5,
+    Graphics2D copy = (Graphics2D)graphics.create();
+    copy.drawImage(currentState, at, null);
+    copy.drawString(PLAYER_NAME, (int) drawX - currentState.getWidth() / 5,
         (int)
             drawY);
+    copy.dispose();
   }
 
   private String location() {
