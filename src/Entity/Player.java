@@ -215,11 +215,12 @@ public class Player {
   }
 
   public void move(int x, int y, double rot, String state) {
-    playerPosition.setX(x);
-    playerPosition.setY(y);
-    rotation = rot;
-    this.state = PlayerState.valueOf(state);
-
+    if (!isPlayable) {
+      playerPosition.setX(x);
+      playerPosition.setY(y);
+      rotation = rot;
+      this.state = PlayerState.valueOf(state);
+    }
   }
 
   public double getRotation() {
